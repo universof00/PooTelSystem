@@ -1,0 +1,87 @@
+############################
+# SISTEMAS OPERACIONAIS
+############################
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+._*
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*~
+*.swp
+*.swo
+.cache/
+
+############################
+# JAVA
+############################
+*.class
+*.jar
+*.war
+*.ear
+*.log
+hs_err_pid*
+replay_pid*
+
+############################
+# MAVEN
+############################
+target/
+.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+############################
+# STS / Eclipse
+############################
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+############################
+# IntelliJ IDEA
+############################
+.idea
+*.iws
+*.iml
+*.ipr
+out/
+
+############################
+# NetBeans
+############################
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+############################
+# VS Code
+############################
+.vscode/
+
+############################
+# CONFIGS LOCAIS
+############################
+*.env
+.env.*
+*.local
+*.secret
+application-local.properties
+
