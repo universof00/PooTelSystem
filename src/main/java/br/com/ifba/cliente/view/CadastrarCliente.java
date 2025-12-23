@@ -59,14 +59,6 @@ public class CadastrarCliente extends javax.swing.JFrame {
 
         lblTelefone.setText("Telefone: ");
 
-        txtNome.setText("Digite aqui...");
-
-        txtCpf.setText("Digite aqui...");
-
-        txtEndereco.setText("Digite aqui...");
-
-        txtTelefone.setText("Digite aqui...");
-
         bntCadastrar.setText("Cadastrar");
         bntCadastrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

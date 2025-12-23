@@ -96,19 +96,10 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtValorTotal">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Digite aqui..."/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtDataEntrada">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Digite aqui..."/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtDataSaida">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Digite aqui..."/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="bntAdicionarReserva">
       <Properties>

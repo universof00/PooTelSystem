@@ -112,24 +112,12 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtNome">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Digite aqui..."/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtCpf">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Digite aqui..."/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtEndereco">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Digite aqui..."/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtTelefone">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Digite aqui..."/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="bntCadastrar">
       <Properties>

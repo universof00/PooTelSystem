@@ -12,10 +12,10 @@ public class PooTelSystemApplication {
 	public static void main(String[] args) {
              ConfigurableApplicationContext context = new SpringApplicationBuilder(PooTelSystemApplication.class)
               .headless(false).run(args); 
-             //ListarClientes novaTela = context.getBean(ListarClientes.class);
+             ListarClientes novaTela = context.getBean(ListarClientes.class);
              //HotelLitar novaTela = context.getBean(HotelLitar.class);
-            Teste novaTela = context.getBean(Teste.class);
+            //Teste novaTela = context.getBean(Teste.class);
             novaTela.setVisible(true);
         }
-
 }
+

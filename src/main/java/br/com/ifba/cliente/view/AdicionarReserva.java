@@ -62,12 +62,6 @@ public class AdicionarReserva extends javax.swing.JFrame {
 
         lblDataSaida.setText("Data de Saída: ");
 
-        txtValorTotal.setText("Digite aqui...");
-
-        txtDataEntrada.setText("Digite aqui...");
-
-        txtDataSaida.setText("Digite aqui...");
-
         bntAdicionarReserva.setText("Adicionar Reserva");
         bntAdicionarReserva.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
