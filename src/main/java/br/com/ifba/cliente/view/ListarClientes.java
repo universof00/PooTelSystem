@@ -6,6 +6,7 @@ package br.com.ifba.cliente.view;
 
 import br.com.ifba.cliente.controller.ClienteIController;
 import br.com.ifba.cliente.entity.Cliente;
+import br.com.ifba.infrastructure.util.Utils;
 import br.com.ifba.reserva.controller.ReservaIController;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -42,6 +43,10 @@ public class ListarClientes extends javax.swing.JFrame {
         configurarAcoesTabela();
         corrigirScroll();
         atualizarTabela();
+        
+        Utils.aplicarTemaTela(this);
+        Utils.estilizarBotao(bntAdicionar);
+        Utils.estilizarTabela(tblClientes);
 
         setTitle("Listagem de Clientes");
     }

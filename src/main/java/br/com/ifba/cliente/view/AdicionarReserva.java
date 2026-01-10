@@ -5,6 +5,7 @@
 package br.com.ifba.cliente.view;
 
 import br.com.ifba.cliente.entity.Cliente;
+import br.com.ifba.infrastructure.util.Utils;
 import br.com.ifba.reserva.controller.ReservaIController;
 import br.com.ifba.reserva.entity.Reserva;
 import java.time.LocalDate;
@@ -33,6 +34,9 @@ public class AdicionarReserva extends javax.swing.JFrame {
         this.telaDetalhes = telaDetalhes;
        
         initComponents();
+        
+        Utils.aplicarTemaTela(this);
+        Utils.estilizarBotao(bntAdicionarReserva);
         setLocationRelativeTo(null);
         setTitle("Adicionar Reserva");
     }
@@ -119,87 +123,55 @@ public class AdicionarReserva extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void bntAdicionarReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntAdicionarReservaActionPerformed
+        String valorTxt = txtValorTotal.getText().trim();
+        String dataEntradaTxt = txtDataEntrada.getText().trim();
+        String dataSaidaTxt = txtDataSaida.getText().trim();
+
+        if (valorTxt.isEmpty() || dataEntradaTxt.isEmpty() || dataSaidaTxt.isEmpty()) {
+            Utils.mostrarAviso(this, "Preencha todos os campos.");
+            return;
+        }
+
+        double valorTotal;
         try {
-            if (txtValorTotal.getText().trim().isEmpty()
-                    || txtDataEntrada.getText().trim().isEmpty()
-                    || txtDataSaida.getText().trim().isEmpty()) {
+            valorTotal = Double.parseDouble(valorTxt.replace(",", "."));
+        } catch (NumberFormatException e) {
+            Utils.mostrarErro(this, "Valor total inválido.");
+            return;
+        }
 
-                JOptionPane.showMessageDialog(
-                    this,
-                    "Preencha todos os campos.",
-                    "Validação",
-                    JOptionPane.WARNING_MESSAGE
-                );
-                return;
-            }
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-            double valorTotal = Double.parseDouble(
-                txtValorTotal.getText().trim().replace(",", ".")
-            );
+        LocalDate dataEntrada;
+        LocalDate dataSaida;
 
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            
-            LocalDate dataEntrada = LocalDate.parse(
-                txtDataEntrada.getText().trim(),
-                formatter
-            );
+        try {
+            dataEntrada = LocalDate.parse(dataEntradaTxt, formatter);
+            dataSaida = LocalDate.parse(dataSaidaTxt, formatter);
+        } catch (DateTimeParseException e) {
+            Utils.mostrarErro(this, "Data inválida. Use o formato dd/MM/yyyy.");
+            return;
+        }
 
-            LocalDate dataSaida = LocalDate.parse(
-                txtDataSaida.getText().trim(),
-                formatter
-            );
+        Reserva reserva = new Reserva();
+        reserva.setValorTotal(valorTotal);
+        reserva.setDataEntrada(dataEntrada);
+        reserva.setDataSaida(dataSaida);
+        reserva.setStatus(true);
+        reserva.setCliente(cliente);
 
-            if (dataSaida.isBefore(dataEntrada)) {
-                JOptionPane.showMessageDialog(
-                    this,
-                    "A data de saída deve ser depois da data de entrada.",
-                    "Validação",
-                    JOptionPane.WARNING_MESSAGE
-                );
-                return;
-            }
-
-            Reserva reserva = new Reserva();
-            reserva.setValorTotal(valorTotal);
-            reserva.setDataEntrada(dataEntrada);
-            reserva.setDataSaida(dataSaida);
-            reserva.setStatus(true);
-            reserva.setCliente(cliente);
-
+        try {
             reservaIController.save(reserva);
             telaDetalhes.carregarReservas();
 
-            JOptionPane.showMessageDialog(
-                this,
-                "Reserva cadastrada com sucesso!"
-            );
-
+            Utils.mostrarSucesso(this, "Reserva cadastrada com sucesso!");
             dispose();
 
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(
-                this,
-                "Valor total inválido.",
-                "Erro",
-                JOptionPane.ERROR_MESSAGE
-            );
+        } catch (RuntimeException e) {
+            Utils.mostrarErro(this,
+            "Erro ao cadastrar reserva: " + e.getMessage());
+}
 
-        } catch (DateTimeParseException e) {
-            JOptionPane.showMessageDialog(
-                this,
-                "Data inválida. Use o formato dd/MM/yyyy.",
-                "Erro",
-                JOptionPane.ERROR_MESSAGE
-            );
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(
-                this,
-                "Erro ao cadastrar reserva: " + e.getMessage(),
-                "Erro",
-                JOptionPane.ERROR_MESSAGE
-            );
-        }
     }//GEN-LAST:event_bntAdicionarReservaActionPerformed
 
 

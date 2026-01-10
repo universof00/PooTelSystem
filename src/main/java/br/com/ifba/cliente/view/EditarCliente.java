@@ -6,6 +6,7 @@ package br.com.ifba.cliente.view;
 
 import br.com.ifba.cliente.controller.ClienteIController;
 import br.com.ifba.cliente.entity.Cliente;
+import br.com.ifba.infrastructure.util.Utils;
 import javax.swing.JOptionPane;
 
 /**
@@ -35,6 +36,9 @@ public class EditarCliente extends javax.swing.JFrame {
         initComponents();
         carregarDadosCliente();
         setLocationRelativeTo(null);
+        
+        Utils.aplicarTemaTela(this);
+        Utils.estilizarBotao(bntSalvar);
         setTitle("Editar Dados do Cliente");
     }
     
@@ -147,35 +151,37 @@ public class EditarCliente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void bntSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntSalvarActionPerformed
-        try{
-            if(txtNovoNome.getText().trim().isEmpty() ||
-                    txtNovoCpf.getText().trim().isEmpty() ||
-                    txtNovoEndereco.getText().trim().isEmpty()||
-                    txtNovoTelefone.getText().trim().isEmpty()){
-                JOptionPane.showMessageDialog(this, 
-                        "Preencha todos os campos obrigatórios.",
-                        "Validação",
-                        JOptionPane.WARNING_MESSAGE);
-                return;
-            }
+        String nome = txtNovoNome.getText().trim();
+        String cpf = txtNovoCpf.getText().trim();
+        String endereco = txtNovoEndereco.getText().trim();
+        String telefone = txtNovoTelefone.getText().trim();
 
-            cliente.setNome(txtNovoNome.getText().trim());
-            cliente.setCpf(txtNovoCpf.getText().trim());
-            cliente.setEndereco(txtNovoEndereco.getText().trim());
-            cliente.setTelefone(txtNovoTelefone.getText().trim());
-            
-            clienteIController.update(cliente);
-            
+        if (nome.isEmpty() || cpf.isEmpty() || endereco.isEmpty() || telefone.isEmpty()) {
+            Utils.mostrarAviso(this, "Preencha todos os campos obrigatórios.");
+            return;
+        }
+
+        //  Validação de CPF (somente números)
+        if (!cpf.matches("\\d+")) {
+            Utils.mostrarErro(this, "CPF deve conter apenas números.");
+            return;
+        }
+
+        Cliente cliente = new Cliente();
+        cliente.setNome(nome);
+        cliente.setCpf(cpf);
+        cliente.setEndereco(endereco);
+        cliente.setTelefone(telefone);
+
+        try {
+            clienteIController.save(cliente);
+
             telaDetalhes.atualizarDados();
-            
-            JOptionPane.showMessageDialog(this,
-                "Dados atualizados com sucesso!");
-        }catch(NumberFormatException e){
-            JOptionPane.showMessageDialog(this, "Cpf deve conter apenas números.", 
-                    "Erro", JOptionPane.ERROR_MESSAGE);
-        }catch(RuntimeException e){
-            JOptionPane.showMessageDialog(this, e.getMessage(), 
-                    "Erro", JOptionPane.ERROR_MESSAGE);
+
+            Utils.mostrarSucesso(this, "Cliente cadastrado com sucesso!");
+
+        } catch (RuntimeException e) {
+            Utils.mostrarErro(this, e.getMessage());
         }
     }//GEN-LAST:event_bntSalvarActionPerformed
 

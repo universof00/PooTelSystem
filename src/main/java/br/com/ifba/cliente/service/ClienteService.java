@@ -33,6 +33,11 @@ public class ClienteService implements ClienteIService{
     @Override
     public void adicionarReserva(Long idCliente, Reserva reserva){
         Cliente cliente = clienteRepository.findById(idCliente).orElseThrow();
+        
+        if (reserva.getDataSaida().isBefore(reserva.getDataEntrada())) {
+        throw new IllegalArgumentException(
+            "A data de saída deve ser depois da data de entrada.");
+        }
         reserva.setCliente(cliente);
         reserva.setStatus(true);
         log.info("Reserva realizada!");

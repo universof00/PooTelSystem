@@ -6,6 +6,7 @@ package br.com.ifba.cliente.view;
 
 import br.com.ifba.cliente.controller.ClienteIController;
 import br.com.ifba.cliente.entity.Cliente;
+import br.com.ifba.infrastructure.util.Utils;
 import br.com.ifba.reserva.controller.ReservaIController;
 import br.com.ifba.reserva.entity.Reserva;
 import java.util.List;
@@ -36,6 +37,11 @@ public class DetalhesCliente extends javax.swing.JFrame {
         
         initComponents();
         
+        Utils.aplicarTemaTela(this);
+        Utils.estilizarBotao(bntCancelarReserva);
+        Utils.estilizarBotao(bntEditar);
+        Utils.estilizarBotao(bntExcluir);
+        Utils.estilizarBotao(bntReserva);
         configurarTabelaReservas();
         carregarDados();
         carregarReservas();

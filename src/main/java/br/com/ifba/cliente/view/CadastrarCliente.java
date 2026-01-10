@@ -6,7 +6,10 @@ package br.com.ifba.cliente.view;
 
 import br.com.ifba.cliente.controller.ClienteIController;
 import br.com.ifba.cliente.entity.Cliente;
+import br.com.ifba.infrastructure.util.TemaUtil;
+import br.com.ifba.infrastructure.util.Utils;
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -27,6 +30,9 @@ public class CadastrarCliente extends javax.swing.JFrame {
         this.clienteIController = clienteIController;
         this.telaListar = telaListar;
         initComponents();
+        
+        Utils.aplicarTemaTela(this);
+        Utils.estilizarBotao(bntCadastrar);
         setTitle("Cadastrar Cliente");
     }
 
@@ -124,37 +130,39 @@ public class CadastrarCliente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void bntCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntCadastrarActionPerformed
-        try{
-            if(txtNome.getText().trim().isEmpty() ||
-                    txtCpf.getText().trim().isEmpty() ||
-                    txtEndereco.getText().trim().isEmpty()||
-                    txtTelefone.getText().trim().isEmpty()){
-                JOptionPane.showMessageDialog(this, 
-                        "Preencha todos os campos obrigatórios.",
-                        "Validação",
-                        JOptionPane.WARNING_MESSAGE);
-                return;
-            }
-            
-            Cliente cliente = new Cliente();
-            cliente.setNome(txtNome.getText().trim());
-            cliente.setCpf(txtCpf.getText().trim());
-            cliente.setEndereco(txtEndereco.getText().trim());
-            cliente.setTelefone(txtTelefone.getText().trim());
-            
-            clienteIController.save(cliente);
-            
-            telaListar.atualizarTabela();
-             
-            JOptionPane.showMessageDialog(this,
-                "Cliente cadastrado com sucesso!");
-        }catch(NumberFormatException e){
-            JOptionPane.showMessageDialog(this, "Cpf deve conter apenas números.", 
-                    "Erro", JOptionPane.ERROR_MESSAGE);
-        }catch(RuntimeException e){
-            JOptionPane.showMessageDialog(this, e.getMessage(), 
-                    "Erro", JOptionPane.ERROR_MESSAGE);
+        String nome = txtNome.getText().trim();
+        String cpf = txtCpf.getText().trim();
+        String endereco = txtEndereco.getText().trim();
+        String telefone = txtTelefone.getText().trim();
+
+        if (nome.isEmpty() || cpf.isEmpty() || endereco.isEmpty() || telefone.isEmpty()) {
+            Utils.mostrarAviso(this, "Preencha todos os campos obrigatórios.");
+            return;
         }
+
+        //  Validação de CPF (somente números)
+        if (!cpf.matches("\\d+")) {
+            Utils.mostrarErro(this, "CPF deve conter apenas números.");
+            return;
+        }
+
+        Cliente cliente = new Cliente();
+        cliente.setNome(nome);
+        cliente.setCpf(cpf);
+        cliente.setEndereco(endereco);
+        cliente.setTelefone(telefone);
+
+        try {
+            clienteIController.save(cliente);
+
+            telaListar.atualizarTabela();
+
+            Utils.mostrarSucesso(this, "Cliente cadastrado com sucesso!");
+
+        } catch (RuntimeException e) {
+            Utils.mostrarErro(this, e.getMessage());
+        }
+
     }//GEN-LAST:event_bntCadastrarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
