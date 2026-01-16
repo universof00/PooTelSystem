@@ -7,11 +7,14 @@ package br.com.ifba.reserva.repository;
 import br.com.ifba.reserva.entity.Reserva;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author raiii
  */
-public interface ReservaRepository extends JpaRepository<Reserva, Long>{
-    List<Reserva> findByClienteId(Long idCliente);
+@Repository
+public interface ReservaRepository extends JpaRepository<Reserva, Long> { 
+    List<Reserva> findByClienteId(Long idCliente); 
 }
+
