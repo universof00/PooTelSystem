@@ -212,11 +212,13 @@ public class UsuarioCadastro extends javax.swing.JFrame {
         usuario.setEmail(email);
         usuario.setSenha(senha);
         usuario.setPerfil(TipoPerfil.CLIENTE);
+        usuario.setPessoa(cliente);
         
         try{
             usuarioIController.cadastroPublico(cliente, usuario);
 
             Utils.mostrarSucesso(this, "Cliente cadastrado com sucesso!");
+            dispose();
         }catch (RuntimeException e) {
             Utils.mostrarErro(this, e.getMessage());
         }

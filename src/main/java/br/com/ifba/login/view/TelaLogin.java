@@ -6,11 +6,9 @@ package br.com.ifba.login.view;
 
 import br.com.ifba.usuario.controller.UsuarioIController;
 import br.com.ifba.usuario.entity.Usuario;
-import br.com.ifba.usuario.view.MenuAdm;
 import br.com.ifba.usuario.view.MenuCliente;
-import br.com.ifba.usuario.view.MenuFuncionario;
-import br.com.ifba.usuario.view.MenuGerente;
 import br.com.ifba.usuario.view.UsuarioCadastro;
+import br.com.ifba.view.TelaPrincipal;
 import javax.swing.JOptionPane;
 import org.springframework.stereotype.Component;
 
@@ -120,43 +118,27 @@ public class TelaLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_lblCadastroMouseClicked
 
     private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
-        String usuario = txtUsuario.getText();
-        String senha = txtSenha.getText();
-        if(usuario.equals("Usuario") || senha.equals("Senha")){
-            JOptionPane.showMessageDialog(this, "Informe usuário e senha!", "Erro de validação.",
-                    JOptionPane.ERROR_MESSAGE);
+        String usuario = txtUsuario.getText().trim();
+        String senha = txtSenha.getText().trim();
+
+        if (usuario.equals("Usuario") || senha.equals("Senha")) {
+            JOptionPane.showMessageDialog(this, "Informe usuário e senha!",
+            "Erro de validação", JOptionPane.ERROR_MESSAGE);
             return;
-        }else if(usuario.isBlank() || senha.isBlank()){
-            JOptionPane.showMessageDialog(this, "Campos vazios!", "Digite seu Usuário e Senha.",
-                    JOptionPane.ERROR_MESSAGE);
+
+        } else if (usuario.isBlank() || senha.isBlank()) {
+            JOptionPane.showMessageDialog(this, "Campos vazios!", 
+            "Digite seu Usuário e Senha", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
+
         try {
             Usuario usuarioAutenticado = usuarioIController.authenticate(usuario, senha);
-
-            switch (usuarioAutenticado.getPerfil()) {
-                case CLIENTE -> {
-                    MenuCliente tela = new MenuCliente(usuarioAutenticado);
-                    tela.setVisible(true);
-                    dispose(); // fecha a tela de login (opcional)
-                }
-                case FUNCIONARIO -> {
-                    MenuFuncionario tela = new MenuFuncionario(usuarioAutenticado);
-                    tela.setVisible(true);
-                    dispose();
-                }
-                case GERENTE -> {
-                    MenuGerente tela = new MenuGerente(usuarioAutenticado);
-                    tela.setVisible(true);
-                    dispose();
-                }
-                case ADM -> {
-                   MenuAdm tela = new MenuAdm(usuarioAutenticado);
-                   tela.setVisible(true);
-                   dispose();
-                }
-            }
+            
+            //TelaPrincipal tela = new TelaPrincipal(usuarioAutenticado);
+            MenuCliente tela = new MenuCliente(usuarioAutenticado);
+            tela.setVisible(true);
+            dispose();
 
         } catch (RuntimeException e) {
             JOptionPane.showMessageDialog(this, e.getMessage(),
