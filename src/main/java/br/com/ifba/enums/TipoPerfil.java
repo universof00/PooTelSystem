@@ -9,8 +9,8 @@ package br.com.ifba.enums;
  * @author raiii
  */
 public enum TipoPerfil {
-    ADMNISTRADOR,
+    ADM,
     GERENTE,
-    FUNCIONÁRIO, 
+    FUNCIONARIO, 
     CLIENTE
 }

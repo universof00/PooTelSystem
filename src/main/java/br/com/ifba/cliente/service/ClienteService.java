@@ -6,6 +6,7 @@ package br.com.ifba.cliente.service;
 
 import br.com.ifba.cliente.entity.Cliente;
 import br.com.ifba.cliente.repository.ClienteRepository;
+import br.com.ifba.infrastructure.util.ValidacaoUtil;
 import br.com.ifba.reserva.entity.Reserva;
 import br.com.ifba.reserva.repository.ReservaRepository;
 import java.util.List;
@@ -54,11 +55,11 @@ public class ClienteService implements ClienteIService{
 
     @Override
     public Cliente save(Cliente cliente) throws RuntimeException {
-       if(cliente == null){
+        if(cliente == null){
            throw new RuntimeException("Dados do " + "cliente não preenchidos.");
-       } else if (cliente.getId() != null){
+        } else if (cliente.getId() != null){
            throw new RuntimeException("Cliente " + "já existente no banco de dados.");
-       }else {
+        }else {
            log.info("Salvando cliente!");
            return clienteRepository.save(cliente);
        }

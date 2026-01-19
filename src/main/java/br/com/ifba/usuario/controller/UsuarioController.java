@@ -4,6 +4,7 @@
  */
 package br.com.ifba.usuario.controller;
 
+import br.com.ifba.cliente.entity.Cliente;
 import br.com.ifba.usuario.entity.Usuario;
 import br.com.ifba.usuario.service.UsuarioIService;
 import java.util.List;
@@ -19,6 +20,11 @@ public class UsuarioController implements UsuarioIController{
     
     public UsuarioController(UsuarioIService usuarioIService){
         this.usuarioIService = usuarioIService;
+    }
+    
+    @Override
+    public void cadastroPublico(Cliente cliente, Usuario usuario) {
+        usuarioIService.cadastroPublico(cliente, usuario);
     }
     
     @Override
