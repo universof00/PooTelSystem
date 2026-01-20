@@ -8,6 +8,7 @@ import br.com.ifba.cliente.controller.ClienteIController;
 import br.com.ifba.cliente.entity.Cliente;
 import br.com.ifba.enums.TipoPerfil;
 import br.com.ifba.infrastructure.util.Utils;
+import br.com.ifba.login.termosUso.TermosUso;
 import br.com.ifba.usuario.controller.UsuarioIController;
 import br.com.ifba.usuario.entity.Usuario;
 import javax.swing.JOptionPane;
@@ -225,8 +226,8 @@ public class UsuarioCadastro extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnTermosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTermosActionPerformed
-        //TermodeUso termos = new TermodeUso();
-        //termos.abrirTermos();
+        TermosUso termos = new TermosUso();
+        termos.abrirTermos();
     }//GEN-LAST:event_btnTermosActionPerformed
 
     /**
