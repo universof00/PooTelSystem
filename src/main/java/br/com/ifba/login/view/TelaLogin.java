@@ -4,6 +4,8 @@
  */
 package br.com.ifba.login.view;
 
+import br.com.ifba.devs.view.Desenvolvedores;
+import br.com.ifba.login.termosUso.TermosUso;
 import br.com.ifba.usuario.controller.UsuarioIController;
 import br.com.ifba.usuario.entity.Usuario;
 import br.com.ifba.usuario.view.MenuCliente;
@@ -40,21 +42,32 @@ public class TelaLogin extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
         lblTitulo = new javax.swing.JLabel();
         txtUsuario = new javax.swing.JTextField();
         txtSenha = new javax.swing.JTextField();
         btnEntrar = new javax.swing.JButton();
         lblCadastro = new javax.swing.JLabel();
+        lblEmail = new javax.swing.JLabel();
+        lblSenha = new javax.swing.JLabel();
+        lblOtel = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        lblTermosUso = new javax.swing.JLabel();
+        lblPoliticasPrivacidade = new javax.swing.JLabel();
+        lblDevs = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        lblTitulo.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 18)); // NOI18N
+        jPanel1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        lblTitulo.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 32)); // NOI18N
         lblTitulo.setText("Login");
 
-        txtUsuario.setText("Usuario");
+        txtUsuario.setFont(new java.awt.Font("Liberation Sans", 0, 24)); // NOI18N
 
-        txtSenha.setText("Senha");
+        txtSenha.setFont(new java.awt.Font("Liberation Sans", 0, 24)); // NOI18N
 
+        btnEntrar.setFont(new java.awt.Font("Liberation Sans", 0, 24)); // NOI18N
         btnEntrar.setText("Entrar");
         btnEntrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -62,7 +75,7 @@ public class TelaLogin extends javax.swing.JFrame {
             }
         });
 
-        lblCadastro.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
+        lblCadastro.setFont(new java.awt.Font("Segoe UI", 2, 18)); // NOI18N
         lblCadastro.setForeground(new java.awt.Color(102, 102, 255));
         lblCadastro.setText("Não tem conta? Clique e cadastre");
         lblCadastro.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -72,41 +85,133 @@ public class TelaLogin extends javax.swing.JFrame {
             }
         });
 
+        lblEmail.setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N
+        lblEmail.setText("Email:");
+
+        lblSenha.setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N
+        lblSenha.setText("Senha:");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(52, 52, 52)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblSenha)
+                    .addComponent(lblEmail)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblCadastro, javax.swing.GroupLayout.Alignment.TRAILING)))
+                .addContainerGap(57, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnEntrar)
+                        .addGap(154, 154, 154))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(lblTitulo)
+                        .addGap(149, 149, 149))))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(11, 11, 11)
+                .addComponent(lblTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblEmail)
+                .addGap(18, 18, 18)
+                .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(29, 29, 29)
+                .addComponent(lblSenha)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32)
+                .addComponent(btnEntrar)
+                .addGap(30, 30, 30)
+                .addComponent(lblCadastro)
+                .addGap(46, 46, 46))
+        );
+
+        lblOtel.setFont(new java.awt.Font("Liberation Sans", 0, 48)); // NOI18N
+        lblOtel.setText("PooTelSystem");
+
+        lblTermosUso.setFont(new java.awt.Font("Liberation Sans", 1, 14)); // NOI18N
+        lblTermosUso.setForeground(new java.awt.Color(0, 0, 255));
+        lblTermosUso.setText("Termos de Uso");
+        lblTermosUso.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblTermosUsoMouseClicked(evt);
+            }
+        });
+
+        lblPoliticasPrivacidade.setFont(new java.awt.Font("Liberation Sans", 1, 13)); // NOI18N
+        lblPoliticasPrivacidade.setForeground(new java.awt.Color(0, 0, 255));
+        lblPoliticasPrivacidade.setText("Politicas de Privacidades");
+        lblPoliticasPrivacidade.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblPoliticasPrivacidadeMouseClicked(evt);
+            }
+        });
+
+        lblDevs.setFont(new java.awt.Font("Liberation Sans", 1, 13)); // NOI18N
+        lblDevs.setForeground(new java.awt.Color(0, 0, 255));
+        lblDevs.setText("Devs do Projeto");
+        lblDevs.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblDevsMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(260, 260, 260)
+                .addComponent(lblTermosUso)
+                .addGap(56, 56, 56)
+                .addComponent(lblPoliticasPrivacidade)
+                .addGap(60, 60, 60)
+                .addComponent(lblDevs)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblTermosUso)
+                    .addComponent(lblPoliticasPrivacidade)
+                    .addComponent(lblDevs))
+                .addContainerGap(12, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(155, 155, 155)
-                        .addComponent(btnEntrar))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(104, 104, 104)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(lblCadastro)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(169, 169, 169)
-                        .addComponent(lblTitulo)))
-                .addContainerGap(118, Short.MAX_VALUE))
+                .addGap(54, 54, 54)
+                .addComponent(lblOtel, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(85, 308, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(297, 297, 297))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(82, 82, 82)
-                .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnEntrar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lblCadastro)
-                .addContainerGap(44, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(lblOtel)
+                .addGap(57, 57, 57)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 140, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -146,6 +251,23 @@ public class TelaLogin extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnEntrarActionPerformed
 
+    private void lblTermosUsoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblTermosUsoMouseClicked
+        // TODO add your handling code here:
+        TermosUso termos = new TermosUso();
+        termos.abrirTermos();
+    }//GEN-LAST:event_lblTermosUsoMouseClicked
+
+    private void lblPoliticasPrivacidadeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPoliticasPrivacidadeMouseClicked
+        // TODO add your handling code here:
+        JOptionPane.showMessageDialog(rootPane, "NÃO TEMOS E NEM PRETENDEMOS TER!", "MENSAGEM AMIGÁVEL", JOptionPane.INFORMATION_MESSAGE);
+    }//GEN-LAST:event_lblPoliticasPrivacidadeMouseClicked
+
+    private void lblDevsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblDevsMouseClicked
+        // TODO add your handling code here:
+        Desenvolvedores tela = new Desenvolvedores();
+        tela.setVisible(true);
+    }//GEN-LAST:event_lblDevsMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -153,7 +275,15 @@ public class TelaLogin extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEntrar;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel lblCadastro;
+    private javax.swing.JLabel lblDevs;
+    private javax.swing.JLabel lblEmail;
+    private javax.swing.JLabel lblOtel;
+    private javax.swing.JLabel lblPoliticasPrivacidade;
+    private javax.swing.JLabel lblSenha;
+    private javax.swing.JLabel lblTermosUso;
     private javax.swing.JLabel lblTitulo;
     private javax.swing.JTextField txtSenha;
     private javax.swing.JTextField txtUsuario;
