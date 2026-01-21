@@ -23,5 +23,6 @@ public interface ReservaIService {
     List<Reserva> listarReservas();
     Reserva lerReserva(Long id);
     Reserva atualizarReserva(Long id, Reserva novaReserva);
+    public void adicionarReserva(Long idCliente, Reserva reserva);
     boolean deletarReserva(Long id);
 }

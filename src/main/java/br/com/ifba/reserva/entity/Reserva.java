@@ -6,12 +6,15 @@ package br.com.ifba.reserva.entity;
 
 import br.com.ifba.cliente.entity.Cliente;
 import br.com.ifba.infrastructure.entity.PersistenceEntity;
+import br.com.ifba.servico.entity.ServicoAdicional;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import java.time.LocalDate;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,6 +33,10 @@ public class Reserva extends PersistenceEntity{
     
     @Id 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    
+    @ManyToMany
+    private List<ServicoAdicional> servicosAdicionais;
+
     private Long id;
 
     private boolean status;

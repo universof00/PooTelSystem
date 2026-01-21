@@ -18,6 +18,5 @@ public interface ClienteIService {
     public Cliente update(Cliente cliente) throws RuntimeException;
     public List<Cliente> findAll() throws RuntimeException;
     public Cliente findById(Long id) throws RuntimeException;
-    public void adicionarReserva(Long idCliente, Reserva reserva);
-    public void cancelarReserva(Long idReserva);
+   
 }

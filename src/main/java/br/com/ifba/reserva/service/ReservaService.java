@@ -1,9 +1,15 @@
 package br.com.ifba.reserva.service;
 
+import br.com.ifba.cliente.entity.Cliente;
+import br.com.ifba.cliente.repository.ClienteRepository;
+import br.com.ifba.cliente.service.ClienteService;
 import br.com.ifba.reserva.entity.Reserva;
 import br.com.ifba.reserva.repository.ReservaRepository;
 import java.util.List;
 import java.util.Optional;
+import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,24 +17,42 @@ import org.springframework.stereotype.Service;
  *
  * @author crisl
  */
-
+@AllArgsConstructor
 @Service
 public class ReservaService implements ReservaIService {
 
+    
     @Autowired
     private ReservaRepository reservaRepository;
+
+    private final ClienteRepository clienteRepository;
+    
+    private static final Logger log = LoggerFactory.getLogger(ClienteService.class);
 
     @Override
     public void save(Reserva reserva) {
         reservaRepository.save(reserva);
     }
     
-    @Override
-    public void cancelarReserva(Long idReserva) {
-        Reserva reserva = reservaRepository.findById(idReserva)
-                .orElseThrow(() -> new RuntimeException("Reserva não encontrada"));
-
-        reserva.setStatus(false); // cancelada
+    
+    public void adicionarReserva(Long idCliente, Reserva reserva){
+        Cliente cliente = clienteRepository.findById(idCliente).orElseThrow();
+        
+        if (reserva.getDataSaida().isBefore(reserva.getDataEntrada())) {
+        throw new IllegalArgumentException(
+            "A data de saída deve ser depois da data de entrada.");
+        }
+        reserva.setCliente(cliente);
+        reserva.setStatus(true);
+        log.info("Reserva realizada!");
+        reservaRepository.save(reserva);
+    }
+    
+      @Override
+    public void cancelarReserva(Long idReserva){
+        Reserva reserva = reservaRepository.findById(idReserva).orElseThrow();
+        reserva.setStatus(false);
+        log.info("Reserva cancelada!");
         reservaRepository.save(reserva);
     }
 
