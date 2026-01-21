@@ -33,12 +33,11 @@ public class Reserva extends PersistenceEntity{
     
     @Id 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     
     @ManyToMany
     private List<ServicoAdicional> servicosAdicionais;
-
-    private Long id;
-
+    
     private boolean status;
     private double valorTotal;
     private LocalDate dataEntrada;
