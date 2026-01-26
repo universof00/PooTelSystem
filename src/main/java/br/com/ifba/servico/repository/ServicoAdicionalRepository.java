@@ -6,11 +6,13 @@ package br.com.ifba.servico.repository;
 
 import br.com.ifba.servico.entity.ServicoAdicional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author crisl
  */
+@Repository
 public interface ServicoAdicionalRepository extends JpaRepository<ServicoAdicional, Long>{
     
 }

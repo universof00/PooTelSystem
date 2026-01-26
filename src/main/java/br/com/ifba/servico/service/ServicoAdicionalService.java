@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
  * @author crisl
  */
 @Service
+
 public class ServicoAdicionalService implements ServicoAdicionalIService{
     
    private final ServicoAdicionalRepository repository;
