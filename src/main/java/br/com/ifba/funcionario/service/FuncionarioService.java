@@ -7,8 +7,8 @@ package br.com.ifba.funcionario.service;
 import br.com.ifba.funcionario.entity.Funcionario;
 import br.com.ifba.funcionario.repository.FuncionarioRepository;
 import java.util.List;
-import java.util.logging.Logger;
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
@@ -20,8 +20,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class FuncionarioService implements FuncionarioIService{
     private final FuncionarioRepository funcionarioRepository;
-    private static final Logger log = (Logger) LoggerFactory.getLogger(FuncionarioService.class);
-
+    private static final Logger log = LoggerFactory.getLogger(FuncionarioService.class);
 
     @Override
     public Funcionario save(Funcionario funcionario) throws RuntimeException {
