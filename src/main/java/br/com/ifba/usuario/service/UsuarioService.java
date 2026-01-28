@@ -7,7 +7,10 @@ package br.com.ifba.usuario.service;
 import br.com.ifba.cliente.entity.Cliente;
 import br.com.ifba.cliente.repository.ClienteRepository;
 import br.com.ifba.enums.TipoPerfil;
+import br.com.ifba.funcionario.entity.Funcionario;
+import br.com.ifba.funcionario.repository.FuncionarioRepository;
 import br.com.ifba.infrastructure.util.ValidacaoUtil;
+import br.com.ifba.pessoa.entity.Pessoa;
 import br.com.ifba.usuario.entity.Usuario;
 import br.com.ifba.usuario.repository.UsuarioRepository;
 import java.util.NoSuchElementException;
@@ -24,27 +27,75 @@ public class UsuarioService implements UsuarioIService{
     
     private final UsuarioRepository usuarioRepository;
     private final ClienteRepository clienteRepository;
+    private final FuncionarioRepository funcionarioRepository;
     
     @Override
-    public void cadastroPublico(Cliente cliente, Usuario usuario){
-         if (!ValidacaoUtil.emailValido(usuario.getEmail())) {
+    public void cadastroPublico(Pessoa pessoa, Usuario usuario) {
+
+        if (!ValidacaoUtil.emailValido(usuario.getEmail())) {
             throw new IllegalStateException("Email Inválido.");
         }
 
         if (usuarioRepository.existsByEmail(usuario.getEmail())) {
             throw new IllegalStateException("Email já cadastrado.");
         }
-        
+
         if (usuario.getSenha().length() < 9) {
             throw new IllegalStateException("Senha muito curta.");
         }
-        
-        if (!ValidacaoUtil.telefoneValido(cliente.getTelefone())) {
+
+        // 🔹 Se for CLIENTE
+        if (pessoa instanceof Cliente cliente) {
+
+            if (!ValidacaoUtil.telefoneValido(cliente.getTelefone())) {
+                throw new IllegalStateException("Telefone inválido.");
+            }
+
+            usuario.setPerfil(TipoPerfil.CLIENTE);
+            clienteRepository.save(cliente);
+        }
+
+        // 🔹 Se for FUNCIONÁRIO
+        else if (pessoa instanceof Funcionario funcionario) {
+
+            if (!ValidacaoUtil.telefoneValido(funcionario.getTelefone())) {
+                throw new IllegalStateException("Telefone inválido.");
+            }
+
+            usuario.setPerfil(TipoPerfil.FUNCIONARIO);
+            funcionarioRepository.save(funcionario);
+        }
+
+        usuarioRepository.save(usuario);
+    }
+    
+    @Override
+    public void update(Pessoa pessoa, Usuario usuario) {
+        if (!ValidacaoUtil.emailValido(usuario.getEmail())) {
+            throw new IllegalStateException("Email Inválido.");
+        }
+
+        if (usuarioRepository.existsByEmail(usuario.getEmail())) {
+            throw new IllegalStateException("Email já cadastrado.");
+        }
+
+        if (!ValidacaoUtil.telefoneValido(pessoa.getTelefone())) {
             throw new IllegalStateException("Telefone inválido.");
         }
-        usuario.setPerfil(TipoPerfil.CLIENTE);
-        
-        clienteRepository.save(cliente);
+
+    // regras específicas por tipo
+        if (pessoa instanceof Cliente cliente) {
+            usuario.setPerfil(TipoPerfil.CLIENTE);
+            clienteRepository.save(cliente);
+
+        } else if (pessoa instanceof Funcionario funcionario) {
+            usuario.setPerfil(TipoPerfil.FUNCIONARIO);
+            funcionarioRepository.save(funcionario);
+
+        } else {
+            throw new IllegalStateException("Tipo de pessoa inválido.");
+        }
+
         usuarioRepository.save(usuario);
     }
     

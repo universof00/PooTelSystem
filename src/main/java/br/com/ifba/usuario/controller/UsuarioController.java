@@ -4,7 +4,7 @@
  */
 package br.com.ifba.usuario.controller;
 
-import br.com.ifba.cliente.entity.Cliente;
+import br.com.ifba.pessoa.entity.Pessoa;
 import br.com.ifba.usuario.entity.Usuario;
 import br.com.ifba.usuario.service.UsuarioIService;
 import java.util.List;
@@ -23,8 +23,13 @@ public class UsuarioController implements UsuarioIController{
     }
     
     @Override
-    public void cadastroPublico(Cliente cliente, Usuario usuario) {
-        usuarioIService.cadastroPublico(cliente, usuario);
+    public void update(Pessoa pessoa, Usuario usuario) throws RuntimeException{
+        usuarioIService.update(pessoa, usuario);
+    }
+    
+    @Override
+    public void cadastroPublico(Pessoa pessoa, Usuario usuario) {
+        usuarioIService.cadastroPublico(pessoa, usuario);
     }
     
     @Override

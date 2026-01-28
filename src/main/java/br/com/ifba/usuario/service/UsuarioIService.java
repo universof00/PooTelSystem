@@ -4,7 +4,7 @@
  */
 package br.com.ifba.usuario.service;
 
-import br.com.ifba.cliente.entity.Cliente;
+import br.com.ifba.pessoa.entity.Pessoa;
 import br.com.ifba.usuario.entity.Usuario;
 
 /**
@@ -12,7 +12,8 @@ import br.com.ifba.usuario.entity.Usuario;
  * @author raiii
  */
 public interface UsuarioIService {
-    public void cadastroPublico(Cliente cliente, Usuario usuario);
+    public void update(Pessoa pessoa, Usuario usuario);
+    public void cadastroPublico(Pessoa pessoa, Usuario usuario);
     public Usuario save(Usuario usuario) throws RuntimeException;
     public Usuario update(Usuario usuario);
     public Usuario findByEmail(String email);
