@@ -2,11 +2,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package br.com.ifba.usuario.view;
+package br.com.ifba.funcionario.view;
 
+import br.com.ifba.usuario.view.*;
 import br.com.ifba.cliente.controller.ClienteIController;
 import br.com.ifba.cliente.entity.Cliente;
 import br.com.ifba.enums.TipoPerfil;
+import br.com.ifba.funcionario.entity.Funcionario;
 import br.com.ifba.infrastructure.util.Utils;
 import br.com.ifba.login.termosUso.TermosUso;
 import br.com.ifba.usuario.controller.UsuarioIController;
@@ -20,14 +22,14 @@ import org.springframework.stereotype.Component;
  */
 
 @Component
-public class UsuarioCadastro extends javax.swing.JFrame {
+public class CadastrarFuncionarios extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(UsuarioCadastro.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(CadastrarFuncionarios.class.getName());
     /**
      * Creates new form UsuarioCadastro
      */
     private final UsuarioIController usuarioIController;
-    public UsuarioCadastro(UsuarioIController usuarioIController) {
+    public CadastrarFuncionarios(UsuarioIController usuarioIController) {
         this.usuarioIController = usuarioIController;
         initComponents();
         setLocationRelativeTo(null);
@@ -47,8 +49,6 @@ public class UsuarioCadastro extends javax.swing.JFrame {
         txtNome = new javax.swing.JTextField();
         lblCelular = new javax.swing.JLabel();
         txtCelular = new javax.swing.JTextField();
-        jckTermos = new javax.swing.JCheckBox();
-        btnTermos = new javax.swing.JButton();
         btnSalvar = new javax.swing.JButton();
         lblEndereco = new javax.swing.JLabel();
         txtEndereco = new javax.swing.JTextField();
@@ -58,29 +58,22 @@ public class UsuarioCadastro extends javax.swing.JFrame {
         txtEmail = new javax.swing.JTextField();
         lblSenha = new javax.swing.JLabel();
         txtSenha = new javax.swing.JTextField();
+        lblServico = new javax.swing.JLabel();
+        txtServico = new javax.swing.JTextField();
+        lblSalario = new javax.swing.JLabel();
+        txtSalario = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        lblTítulo.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        lblTítulo.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
         lblTítulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblTítulo.setText("Cadastro de Cliente");
+        lblTítulo.setText("Cadastro de Funcionário");
 
         lblNome.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lblNome.setText("Nome Completo: ");
 
         lblCelular.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lblCelular.setText("Celular: ");
-
-        jckTermos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jckTermos.setText("Termos de Serviço");
-
-        btnTermos.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        btnTermos.setText("Ler Termos de Serviço");
-        btnTermos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnTermosActionPerformed(evt);
-            }
-        });
 
         btnSalvar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         btnSalvar.setText("Criar Conta");
@@ -102,42 +95,44 @@ public class UsuarioCadastro extends javax.swing.JFrame {
         lblSenha.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lblSenha.setText("Senha: ");
 
+        lblServico.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblServico.setText("Serviço: ");
+
+        lblSalario.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblSalario.setText("Salário: ");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(btnTermos)
-                .addGap(85, 85, 85))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(49, 49, 49)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(lblTítulo, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(lblSenha)
-                                    .addComponent(lblEmail)
-                                    .addComponent(lblCpf)
-                                    .addComponent(lblEndereco)
-                                    .addComponent(lblCelular)
-                                    .addComponent(txtNome)
-                                    .addComponent(lblNome)
-                                    .addComponent(txtCelular)
-                                    .addComponent(txtEndereco)
-                                    .addComponent(txtCpf)
-                                    .addComponent(txtEmail)
-                                    .addComponent(txtSenha, javax.swing.GroupLayout.DEFAULT_SIZE, 271, Short.MAX_VALUE))
-                                .addGap(8, 8, 8))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(136, 136, 136)
                         .addComponent(btnSalvar))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(132, 132, 132)
-                        .addComponent(jckTermos)))
-                .addContainerGap(60, Short.MAX_VALUE))
+                        .addGap(49, 49, 49)
+                        .addComponent(lblTítulo))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(61, 61, 61)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(lblSenha)
+                            .addComponent(lblEmail)
+                            .addComponent(lblCpf)
+                            .addComponent(lblEndereco)
+                            .addComponent(lblCelular)
+                            .addComponent(txtNome)
+                            .addComponent(lblNome)
+                            .addComponent(txtCelular)
+                            .addComponent(txtEndereco)
+                            .addComponent(txtCpf)
+                            .addComponent(txtEmail)
+                            .addComponent(txtSenha, javax.swing.GroupLayout.DEFAULT_SIZE, 271, Short.MAX_VALUE)
+                            .addComponent(lblServico)
+                            .addComponent(txtServico)
+                            .addComponent(lblSalario)
+                            .addComponent(txtSalario))))
+                .addContainerGap(50, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -168,11 +163,15 @@ public class UsuarioCadastro extends javax.swing.JFrame {
                 .addComponent(lblSenha)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
-                .addComponent(jckTermos)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnTermos)
                 .addGap(18, 18, 18)
+                .addComponent(lblServico)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtServico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(lblSalario)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtSalario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                 .addComponent(btnSalvar)
                 .addGap(34, 34, 34))
         );
@@ -187,48 +186,51 @@ public class UsuarioCadastro extends javax.swing.JFrame {
         String telefone = txtCelular.getText().trim();
         String email = txtEmail.getText().trim();
         String senha = txtSenha.getText().trim();
-        
-        if (nome.isBlank() || cpf.isBlank() || endereco.isBlank() 
-                || telefone.isBlank() || email.isBlank()  || senha.isBlank()){
-            JOptionPane.showMessageDialog(this, "Campos vazios!", "Preencha todos os campos.",
-                    JOptionPane.ERROR_MESSAGE);
+        String servico = txtServico.getText().trim();
+
+        Long salario;
+        try {
+            salario = Long.parseLong(txtSalario.getText().trim());
+        } catch (NumberFormatException e) {
+            Utils.mostrarErro(this, "Salário inválido. Digite apenas números.");
             return;
         }
+
+        if (nome.isBlank() || cpf.isBlank() || endereco.isBlank() 
+            || telefone.isBlank() || email.isBlank() 
+            || senha.isBlank() || servico.isBlank()) {
+
+            JOptionPane.showMessageDialog(this, "Campos vazios!",
+            "Preencha todos os campos.", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
         if (!cpf.matches("\\d+")) {
             Utils.mostrarErro(this, "CPF deve conter apenas números.");
             return;
         }
-        if (!jckTermos.isSelected()) {
-            Utils.mostrarErro(this, "Você deve aceitar os termos de serviço.");
-            return;
-        }
-        
-        Cliente cliente = new Cliente();
-        cliente.setNome(nome);
-        cliente.setCpf(cpf);
-        cliente.setTelefone(telefone);
-        cliente.setEndereco(endereco);
+
+        Funcionario funcionario = new Funcionario();
+        funcionario.setNome(nome);
+        funcionario.setCpf(cpf);
+        funcionario.setTelefone(telefone);
+        funcionario.setEndereco(endereco);
+        funcionario.setSalario(salario);   
+        funcionario.setServico(servico);  
 
         Usuario usuario = new Usuario();
         usuario.setEmail(email);
         usuario.setSenha(senha);
-        usuario.setPerfil(TipoPerfil.CLIENTE);
-        usuario.setPessoa(cliente);
-        
-        try{
-            usuarioIController.cadastroPublico(cliente, usuario);
+        usuario.setPessoa(funcionario);
 
-            Utils.mostrarSucesso(this, "Cliente cadastrado com sucesso!");
+        try {
+            usuarioIController.cadastroPublico(funcionario, usuario);
+            Utils.mostrarSucesso(this, "Funcionário cadastrado com sucesso!");
             dispose();
-        }catch (RuntimeException e) {
+        } catch (RuntimeException e) {
             Utils.mostrarErro(this, e.getMessage());
         }
     }//GEN-LAST:event_btnSalvarActionPerformed
-
-    private void btnTermosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTermosActionPerformed
-        TermosUso termos = new TermosUso();
-        termos.abrirTermos();
-    }//GEN-LAST:event_btnTermosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -236,20 +238,22 @@ public class UsuarioCadastro extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSalvar;
-    private javax.swing.JButton btnTermos;
-    private javax.swing.JCheckBox jckTermos;
     private javax.swing.JLabel lblCelular;
     private javax.swing.JLabel lblCpf;
     private javax.swing.JLabel lblEmail;
     private javax.swing.JLabel lblEndereco;
     private javax.swing.JLabel lblNome;
+    private javax.swing.JLabel lblSalario;
     private javax.swing.JLabel lblSenha;
+    private javax.swing.JLabel lblServico;
     private javax.swing.JLabel lblTítulo;
     private javax.swing.JTextField txtCelular;
     private javax.swing.JTextField txtCpf;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtEndereco;
     private javax.swing.JTextField txtNome;
+    private javax.swing.JTextField txtSalario;
     private javax.swing.JTextField txtSenha;
+    private javax.swing.JTextField txtServico;
     // End of variables declaration//GEN-END:variables
 }
