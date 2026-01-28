@@ -40,7 +40,7 @@ public class FuncionarioController implements FuncionarioIController{
     }
 
     @Override
-    public Funcionario funcionarioById(Long id) throws RuntimeException {
+    public Funcionario findById(Long id) throws RuntimeException {
         return funcionarioIService.findById(id);
     }
     

@@ -16,5 +16,5 @@ public interface FuncionarioIController {
     public void delete(Funcionario funcionario) throws RuntimeException;
     public Funcionario update(Funcionario funcionario) throws RuntimeException;
     public List<Funcionario> findAll() throws RuntimeException;
-    public Funcionario funcionarioById(Long id) throws RuntimeException;
+    public Funcionario findById(Long id) throws RuntimeException;
 }
