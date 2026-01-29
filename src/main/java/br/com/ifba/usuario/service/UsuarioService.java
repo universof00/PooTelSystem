@@ -75,10 +75,6 @@ public class UsuarioService implements UsuarioIService{
             throw new IllegalStateException("Email Inválido.");
         }
 
-        if (usuarioRepository.existsByEmail(usuario.getEmail())) {
-            throw new IllegalStateException("Email já cadastrado.");
-        }
-
         if (!ValidacaoUtil.telefoneValido(pessoa.getTelefone())) {
             throw new IllegalStateException("Telefone inválido.");
         }
