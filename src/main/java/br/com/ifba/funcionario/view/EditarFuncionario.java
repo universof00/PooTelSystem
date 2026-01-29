@@ -6,6 +6,8 @@ package br.com.ifba.funcionario.view;
 
 import br.com.ifba.funcionario.entity.Funcionario;
 import br.com.ifba.infrastructure.util.Utils;
+import br.com.ifba.infrastructure.viewlistener.FuncionarioAlteradoListener;
+import br.com.ifba.infrastructure.viewlistener.FuncionarioAtualizadoListener;
 import br.com.ifba.login.termosUso.TermosUso;
 import br.com.ifba.usuario.controller.UsuarioIController;
 import br.com.ifba.usuario.entity.Usuario;
@@ -16,9 +18,11 @@ public class EditarFuncionario extends javax.swing.JFrame {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(EditarFuncionario.class.getName());
     private Funcionario funcionario;
     private final UsuarioIController usuarioIController;
-    public EditarFuncionario(Funcionario funcionario, UsuarioIController usuarioIController) { 
+    private final FuncionarioAtualizadoListener funcionarioAtualizadoListener;
+    public EditarFuncionario(Funcionario funcionario, UsuarioIController usuarioIController, FuncionarioAtualizadoListener funcionarioAtualizadoListener) { 
         this.funcionario = funcionario;
         this.usuarioIController = usuarioIController;
+        this.funcionarioAtualizadoListener = funcionarioAtualizadoListener;
         initComponents();
         preencherCampos();
     }
@@ -155,6 +159,10 @@ public class EditarFuncionario extends javax.swing.JFrame {
         usuario.setEmail(email);
         try {
             usuarioIController.update(funcionario, usuario);
+            
+            if (funcionarioAtualizadoListener != null) {
+                funcionarioAtualizadoListener.onFuncionarioAtualizado();
+            }
             Utils.mostrarSucesso(this, "Dados atualizados com sucesso!");
             dispose();
         } catch (RuntimeException e) {

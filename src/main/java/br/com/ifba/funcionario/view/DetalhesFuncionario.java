@@ -9,13 +9,14 @@ import br.com.ifba.cliente.controller.ClienteIController;
 import br.com.ifba.cliente.entity.Cliente;
 import br.com.ifba.funcionario.controller.FuncionarioIController;
 import br.com.ifba.funcionario.entity.Funcionario;
-import br.com.ifba.infrastructure.viewlistener.ClienteAlteradoListener;
 import br.com.ifba.reserva.controller.ReservaIController;
 import br.com.ifba.reserva.entity.Reserva;
 import br.com.ifba.usuario.controller.UsuarioIController;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import br.com.ifba.infrastructure.viewlistener.FuncionarioAlteradoListener;
+import br.com.ifba.infrastructure.viewlistener.FuncionarioAtualizadoListener;
 
 /**
  *
@@ -28,11 +29,14 @@ public class DetalhesFuncionario extends javax.swing.JFrame {
     private Funcionario funcionario;
     private FuncionarioIController funcionarioIController;
     private UsuarioIController usuarioIController;
-    public DetalhesFuncionario(Funcionario funcionario, FuncionarioIController funcionarioIController, UsuarioIController usuarioIController) {
+    private FuncionarioAtualizadoListener funcionarioAtualizadoListener;
+    public DetalhesFuncionario(Funcionario funcionario, FuncionarioIController funcionarioIController,
+            UsuarioIController usuarioIController, FuncionarioAtualizadoListener funcionarioAtualizadoListener) {
         
         this.funcionario = funcionario;
         this.funcionarioIController = funcionarioIController;
         this.usuarioIController = usuarioIController;
+        this.funcionarioAtualizadoListener = funcionarioAtualizadoListener;
         
         initComponents();
         configurarTabelaFuncionarios();
@@ -182,7 +186,8 @@ public class DetalhesFuncionario extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        EditarFuncionario tela = new EditarFuncionario(funcionario, usuarioIController);
+
+        EditarFuncionario tela = new EditarFuncionario(funcionario, usuarioIController, funcionarioAtualizadoListener);
         tela.setVisible(true);
     }//GEN-LAST:event_btnEditarActionPerformed
 
@@ -196,6 +201,9 @@ public class DetalhesFuncionario extends javax.swing.JFrame {
 
         if (opc == JOptionPane.YES_OPTION) {
             funcionarioIController.delete(funcionario);
+            if (funcionarioAtualizadoListener != null) {
+                funcionarioAtualizadoListener.onFuncionarioAtualizado();
+            }
             JOptionPane.showMessageDialog(this, "Funcionário excluído!");
             dispose(); // fecha a tela de detalhes
         }

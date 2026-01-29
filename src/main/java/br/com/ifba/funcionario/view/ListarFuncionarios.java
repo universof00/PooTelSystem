@@ -9,6 +9,7 @@ import br.com.ifba.cliente.controller.ClienteIController;
 import br.com.ifba.cliente.entity.Cliente;
 import br.com.ifba.funcionario.controller.FuncionarioIController;
 import br.com.ifba.funcionario.entity.Funcionario;
+import br.com.ifba.infrastructure.viewlistener.FuncionarioAtualizadoListener;
 import br.com.ifba.reserva.controller.ReservaIController;
 import br.com.ifba.usuario.controller.UsuarioIController;
 import java.awt.event.MouseAdapter;
@@ -166,8 +167,9 @@ private void criarModeloTabela() {
                 Funcionario funcionario = funcionarioIController.findById(id);
 
                 if (funcionario != null) {
+                    FuncionarioAtualizadoListener listener = () -> atualizarTabela();
                     DetalhesFuncionario tela =
-                        new DetalhesFuncionario(funcionario, funcionarioIController,usuarioIController);
+                        new DetalhesFuncionario(funcionario, funcionarioIController,usuarioIController, listener);
                         tela.setVisible(true);
                 }
             }
