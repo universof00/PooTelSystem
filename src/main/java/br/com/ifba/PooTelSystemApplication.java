@@ -1,7 +1,9 @@
 package br.com.ifba;
 
+import br.com.ifba.cliente.view.ListarCliente;
+import br.com.ifba.funcionario.view.CadastrarFuncionarios;
 import br.com.ifba.login.view.TelaLogin;
-import br.com.ifba.servico.view.ServicoAdicionalView;
+import br.com.ifba.reserva.view.TelaReserva;
 import com.formdev.flatlaf.FlatLightLaf;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
@@ -26,6 +28,9 @@ public class PooTelSystemApplication {
                         .run(args);
 
         SwingUtilities.invokeLater(() -> {
+            //CadastrarFuncionarios tela = context.getBean(CadastrarFuncionarios.class);
+            //ListarCliente tela = context.getBean(ListarCliente.class);
+            //TelaReserva tela = context.getBean(TelaReserva.class);
             TelaLogin telaLogin = context.getBean(TelaLogin.class);
             telaLogin.setVisible(true);
         });
