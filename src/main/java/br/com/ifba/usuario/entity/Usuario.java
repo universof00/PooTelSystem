@@ -10,6 +10,7 @@ import br.com.ifba.pessoa.entity.Pessoa;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import lombok.Getter;
 import lombok.Setter;
@@ -29,5 +30,6 @@ public class Usuario extends PersistenceEntity{
     private TipoPerfil perfil;
     
     @OneToOne
+    @JoinColumn(name = "pessoaId")
     private Pessoa pessoa;
 }

@@ -4,9 +4,14 @@
  */
 package br.com.ifba.hotel.entity;
 
+import br.com.ifba.cliente.entity.Cliente;
+import br.com.ifba.funcionario.entity.Funcionario;
+import br.com.ifba.quarto.entity.Quarto;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,11 +26,20 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "hoteis")
-@Component
+@Getter @Setter
 public class Hotel {
     @Id
-    @Getter @Setter private String cnpj;
-    @Getter @Setter private String nome;
-    @Getter @Setter private String endereco;
-    @Getter @Setter private int classificacao;
+    private String cnpj;
+    private String nome;
+    private String endereco;
+    private int classificacao;
+    
+    @OneToMany(mappedBy = "hotel")
+    private List<Cliente> clientes;
+    
+    @OneToMany(mappedBy = "hotel")
+    private List<Funcionario> funcionarios;
+    
+    @OneToMany(mappedBy = "hotel")
+    private List<Quarto> quartos;
 }

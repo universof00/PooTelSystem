@@ -4,10 +4,16 @@
  */
 package br.com.ifba.servico.entity;
 
+import br.com.ifba.funcionario.entity.Funcionario;
+import br.com.ifba.quarto.entity.Quarto;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
+import java.math.BigDecimal;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,13 +27,17 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ServicoAdicional {
-    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    
     private Long id;
     
     private String nome;
     private String descricao;
-    private double preco;
+    private BigDecimal preco;
+    
+    @ManyToMany(mappedBy = "servicos")
+    private List<Quarto> quartos;
+    
+    @OneToMany(mappedBy = "funcionarioId")
+    private List<Funcionario> funcionarios;
 }
