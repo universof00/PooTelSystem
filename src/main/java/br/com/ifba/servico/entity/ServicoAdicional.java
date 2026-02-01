@@ -40,4 +40,5 @@ public class ServicoAdicional {
     
     @ManyToMany(mappedBy = "servicos")
     private List<Funcionario> funcionarios;
+    
 }

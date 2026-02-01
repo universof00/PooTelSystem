@@ -22,6 +22,6 @@ import lombok.Setter;
 public class Cliente extends Pessoa{
     private String numeroCartao;
     @ManyToOne
-    @JoinColumn(name = "hotelId") // Nome da coluna no banco
+    @JoinColumn(name = "hotel_cnpj")
     private Hotel hotel;
 }

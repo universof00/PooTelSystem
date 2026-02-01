@@ -54,18 +54,18 @@ public class Quarto {
     private EstadoQuarto estado;
     
     @ManyToOne
-    @JoinColumn(name = "hotelCnpj")
+    @JoinColumn(name = "hotel_cnpj")
     private Hotel hotel;
     
     @ManyToMany
-    @JoinTable(
-        name = "quarto_servico",
-        joinColumns = @JoinColumn(name = "quarto_id"),
-        inverseJoinColumns = @JoinColumn(name = "servico_id")
+     @JoinTable(
+    name = "quarto_servico",
+    joinColumns = @JoinColumn(name = "quarto_id"),
+    inverseJoinColumns = @JoinColumn(name = "servico_id")
     )
     private List<ServicoAdicional> servicos;
     
-    @OneToMany
-    @JoinColumn(name = "funcionarioId")
-    private List<Funcionario> funcionarios;
+    @ManyToOne
+    @JoinColumn(name = "funcionario_id")
+    private Funcionario responsavel;
 }

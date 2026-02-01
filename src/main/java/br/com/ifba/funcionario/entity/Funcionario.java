@@ -10,6 +10,7 @@ import br.com.ifba.quarto.entity.Quarto;
 import br.com.ifba.servico.entity.ServicoAdicional;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
@@ -30,15 +31,18 @@ public class Funcionario extends Pessoa{
     private BigDecimal salario;
     private String servico;
     
-    @OneToOne
-    @JoinColumn(name = "hotelCnpj")
+    @ManyToOne
+    @JoinColumn(name = "hotel_cnpj")
     private Hotel hotel;
-    
-    @OneToMany
-    @JoinColumn(name = "quartoId")
+
+    @OneToMany(mappedBy = "responsavel") 
     private List<Quarto> quartos;
-    
+
     @ManyToMany
+    @JoinTable(
+        name = "funcionario_servico",
+        joinColumns = @JoinColumn(name = "funcionario_id"),
+        inverseJoinColumns = @JoinColumn(name = "servico_id")
+    )
     private List<ServicoAdicional> servicos;
-    
 }
