@@ -38,6 +38,6 @@ public class ServicoAdicional {
     @ManyToMany(mappedBy = "servicos")
     private List<Quarto> quartos;
     
-    @OneToMany(mappedBy = "funcionarioId")
+    @ManyToMany(mappedBy = "servicos")
     private List<Funcionario> funcionarios;
 }

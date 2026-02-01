@@ -10,6 +10,7 @@ import br.com.ifba.quarto.entity.Quarto;
 import br.com.ifba.servico.entity.ServicoAdicional;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
@@ -37,8 +38,7 @@ public class Funcionario extends Pessoa{
     @JoinColumn(name = "quartoId")
     private List<Quarto> quartos;
     
-    @OneToOne
-    @JoinColumn(name = "servicoId")
+    @ManyToMany
     private List<ServicoAdicional> servicos;
     
 }

@@ -4,8 +4,11 @@
  */
 package br.com.ifba.cliente.entity;
 
+import br.com.ifba.hotel.entity.Hotel;
 import br.com.ifba.pessoa.entity.Pessoa;
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,4 +21,7 @@ import lombok.Setter;
 @Entity
 public class Cliente extends Pessoa{
     private String numeroCartao;
+    @ManyToOne
+    @JoinColumn(name = "hotelId") // Nome da coluna no banco
+    private Hotel hotel;
 }
