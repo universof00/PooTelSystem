@@ -59,16 +59,22 @@ public class HotelAdicionar extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        lblCadastrarHotel.setText("Cadastrar novo Hotel");
+        lblCadastrarHotel.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
+        lblCadastrarHotel.setText("Cadastrar Novo Hotel");
 
-        lblCnpj.setText("CNPJ");
+        lblCnpj.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblCnpj.setText("CNPJ: ");
 
-        lblNome.setText("NOME");
+        lblNome.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblNome.setText("Nome: ");
 
-        lblEndereco.setText("ENDEREÇO");
+        lblEndereco.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblEndereco.setText("Endereço: ");
 
-        lblClassificacao.setText("CLASSIFICACAO");
+        lblClassificacao.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblClassificacao.setText("Classificação: ");
 
+        btnCadastrarHoterl.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         btnCadastrarHoterl.setText("Cadastrar Hotel");
         btnCadastrarHoterl.addActionListener(this::btnCadastrarHoterlActionPerformed);
 
@@ -77,101 +83,99 @@ public class HotelAdicionar extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(267, 267, 267)
-                        .addComponent(lblCadastrarHotel))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(77, 77, 77)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(lblCnpj)
-                                    .addGap(92, 92, 92)
-                                    .addComponent(txtCnpj, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(lblNome)
-                                    .addGap(76, 76, 76)
-                                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(lblEndereco)
-                                    .addGap(36, 36, 36)
-                                    .addComponent(txtendereco, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txtClassificacao, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(59, 59, 59)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(lblCnpj)
+                                .addComponent(lblNome)
+                                .addComponent(lblEndereco)
                                 .addComponent(lblClassificacao)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtClassificacao, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(244, 244, 244)
-                        .addComponent(btnCadastrarHoterl)))
-                .addContainerGap(77, Short.MAX_VALUE))
+                                .addComponent(txtCnpj, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lblCadastrarHotel)))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(105, 105, 105)
+                            .addComponent(btnCadastrarHoterl))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addContainerGap()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(txtNome, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtendereco, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(65, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(41, 41, 41)
+                .addGap(42, 42, 42)
                 .addComponent(lblCadastrarHotel)
                 .addGap(44, 44, 44)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblCnpj)
-                    .addComponent(txtCnpj, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(lblCnpj)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtCnpj, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblNome)
-                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(22, 22, 22)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblEndereco)
-                    .addComponent(txtendereco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(26, 26, 26)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtClassificacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblClassificacao))
-                .addGap(70, 70, 70)
+                .addComponent(lblNome)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(lblEndereco)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtendereco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(lblClassificacao)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtClassificacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(72, 72, 72)
                 .addComponent(btnCadastrarHoterl)
-                .addContainerGap(109, Short.MAX_VALUE))
+                .addContainerGap(106, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCadastrarHoterlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarHoterlActionPerformed
-        // TODO add your handling code here:
-        String cnpj = txtCnpj.getText();
-        String nome = txtNome.getText();
-        String endereco = txtendereco.getText();
-        int classificacao = Integer.parseInt(txtClassificacao.getText());
-        
-        //Hotel novoHotel = new Hotel(cnpj, nome, endereco, classificacao);
-        
-        Hotel hotelSalvo = new Hotel();
-
         try {
-            
-           // this.hotelController.save(novoHotel);
-            hotelSalvo = this.hotelController.findBycnpj(txtCnpj.getText());
-          
-            JOptionPane.showMessageDialog(this, "Curso " + hotelSalvo.getNome() + " Salvo com sucesso!");
+            String cnpj = txtCnpj.getText();
+            String nome = txtNome.getText();
+            String endereco = txtendereco.getText();
+            int classificacao = Integer.parseInt(txtClassificacao.getText());
 
-            
-            if (this.telaPrincipal != null) {
-                this.telaPrincipal.adicionarLinhaNaTabela(hotelSalvo); 
+            Hotel novoHotel = new Hotel();
+            novoHotel.setCnpj(cnpj);
+            novoHotel.setNome(nome);
+            novoHotel.setEndereco(endereco);
+            novoHotel.setClassificacao(classificacao);
+
+            Hotel hotelSalvo = hotelController.save(novoHotel);
+
+            JOptionPane.showMessageDialog(
+                this,
+                "Hotel " + hotelSalvo.getNome() + " salvo com sucesso!"
+            );
+
+            if (telaPrincipal != null) {
+                telaPrincipal.adicionarLinhaNaTabela(hotelSalvo);
             }
 
-        }catch (Exception e) {
-            // Erros inesperados
-            JOptionPane.showMessageDialog(this, 
-                "Ocorreu um erro inesperado ao salvar o curso.", 
+            dispose();
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(
+                this,
+                "Classificação deve ser um número.",
                 "Erro",
                 JOptionPane.ERROR_MESSAGE
             );
-        } finally {
-                txtClassificacao.setText("");
-                txtCnpj.setText("");
-                txtNome.setText("");
-                txtendereco.setText("");
-                dispose();
-          }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(
+                this,
+                "Erro ao salvar Hotel: " + e.getMessage(),
+                "Erro",
+                JOptionPane.ERROR_MESSAGE
+            );
+            e.printStackTrace(); // MUITO importante no desenvolvimento
+        }
     }//GEN-LAST:event_btnCadastrarHoterlActionPerformed
 
     /**

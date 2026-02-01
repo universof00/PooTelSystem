@@ -6,6 +6,7 @@ package br.com.ifba.hotel.view;
 
 import br.com.ifba.hotel.controller.HotelIController;
 import br.com.ifba.hotel.entity.Hotel;
+import br.com.ifba.infrastructure.viewlistener.HotelAtualizadoListener;
 import javax.swing.JOptionPane;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -23,9 +24,11 @@ public class HotelAtualizar extends javax.swing.JFrame {
      * Creates new form HotelAtualizar
      */
     
-    private Hotel cursoSelecionado;
+    private Hotel hotelSelecionado;
     
     private HotelLitar telaPrincipal;
+    
+    private HotelAtualizadoListener hotelAtualizadoListener;
     
     
     @Autowired
@@ -43,27 +46,32 @@ public class HotelAtualizar extends javax.swing.JFrame {
     public HotelAtualizar(HotelLitar telaPrincipal) {
         initComponents();
         this.telaPrincipal = telaPrincipal; // Armazena a referência
-        this.cursoSelecionado = telaPrincipal.getHotelSelecionado();
+        this.hotelSelecionado = telaPrincipal.getHotelSelecionado();
          // Caso um curso esteja selecionado, preenche as labels com dados antigos
-         if(cursoSelecionado != null){
-             txtCnpj.setText(cursoSelecionado.getCnpj());
-             txtNome.setText(cursoSelecionado.getNome());
-             txtEndereco.setText(cursoSelecionado.getEndereco());
-             txtClassificacao.setText(String.valueOf(cursoSelecionado.getClassificacao()));
+         if(hotelSelecionado != null){
+             txtCnpj.setText(hotelSelecionado.getCnpj());
+             txtNome.setText(hotelSelecionado.getNome());
+             txtEndereco.setText(hotelSelecionado.getEndereco());
+             txtClassificacao.setText(String.valueOf(hotelSelecionado.getClassificacao()));
              
         }
     }
     
     public void setHotelSelecionado(br.com.ifba.hotel.entity.Hotel cursoSelecionado) {
-        this.cursoSelecionado = cursoSelecionado;
+        this.hotelSelecionado = cursoSelecionado;
 
-        if (this.cursoSelecionado != null) {
+        if (this.hotelSelecionado != null) {
             txtCnpj.setText(cursoSelecionado.getCnpj());
             txtNome.setText(cursoSelecionado.getNome());
             txtEndereco.setText(cursoSelecionado.getEndereco());
             txtClassificacao.setText(String.valueOf(cursoSelecionado.getClassificacao()));
         }
     }
+    
+    public void setHotelAtualizadoListener(HotelAtualizadoListener listener) {
+        this.hotelAtualizadoListener = listener;
+    }
+    
     
     private void salvarEdicao() {
         
@@ -93,6 +101,9 @@ public class HotelAtualizar extends javax.swing.JFrame {
             
             try{
                 hotelISalvar.save(hotelSelecionado);
+                if (hotelAtualizadoListener != null) {
+                    hotelAtualizadoListener.onHotelAtualizado();
+                }
                 JOptionPane.showMessageDialog(this, "Hotel atualizado com SUCESSO!");
                 dispose();
             }catch(IllegalArgumentException e){
@@ -136,27 +147,26 @@ public class HotelAtualizar extends javax.swing.JFrame {
         lblAtualizarCurso = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(400, 593));
 
+        btnAtualizarHotel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnAtualizarHotel.setText("Salvar Alteração do Hotel");
         btnAtualizarHotel.addActionListener(this::btnAtualizarHotelActionPerformed);
 
-        lblCnpj.setText("CNPJ");
+        lblCnpj.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblCnpj.setText("CNPJ: ");
 
-        lblNome.setText("NOME");
+        lblNome.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblNome.setText("Nome: ");
 
-        lblEndereco.setText("ENDERECO");
+        lblEndereco.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblEndereco.setText("Endereço: ");
 
-        lblClassificacao.setText("CLASSIFICACAO");
+        lblClassificacao.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblClassificacao.setText("Classificação: ");
 
-        txtCnpj.setText("jTextField1");
-
-        txtNome.setText("jTextField2");
-
-        txtEndereco.setText("jTextField3");
-
-        txtClassificacao.setText("jTextField4");
-
-        lblAtualizarCurso.setText("Atualizar Hotel");
+        lblAtualizarCurso.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
+        lblAtualizarCurso.setText("Atualizar Dados do Hotel");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -165,58 +175,46 @@ public class HotelAtualizar extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(87, 87, 87)
+                        .addGap(46, 46, 46)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblEndereco)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
-                                .addComponent(txtEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, 374, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblNome)
-                                    .addComponent(lblCnpj))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtCnpj, javax.swing.GroupLayout.PREFERRED_SIZE, 392, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblClassificacao)
-                                .addGap(68, 68, 68)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(btnAtualizarHotel)
-                                        .addGap(0, 0, Short.MAX_VALUE))
-                                    .addComponent(txtClassificacao)))))
+                            .addComponent(txtClassificacao, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblCnpj)
+                            .addComponent(lblAtualizarCurso)
+                            .addComponent(txtCnpj, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblNome)
+                            .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblEndereco)
+                            .addComponent(txtEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblClassificacao)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(287, 287, 287)
-                        .addComponent(lblAtualizarCurso)))
-                .addGap(129, 129, 129))
+                        .addGap(81, 81, 81)
+                        .addComponent(btnAtualizarHotel)))
+                .addContainerGap(33, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(32, 32, 32)
+                .addGap(58, 58, 58)
                 .addComponent(lblAtualizarCurso)
-                .addGap(46, 46, 46)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblCnpj)
-                    .addComponent(txtCnpj, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblNome)
-                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(lblCnpj)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtCnpj, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblEndereco)
-                    .addComponent(txtEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(lblNome)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblClassificacao)
-                    .addComponent(txtClassificacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 98, Short.MAX_VALUE)
+                .addComponent(lblEndereco)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(lblClassificacao)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtClassificacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(66, 66, 66)
                 .addComponent(btnAtualizarHotel)
-                .addGap(86, 86, 86))
+                .addContainerGap(145, Short.MAX_VALUE))
         );
 
         pack();
@@ -224,8 +222,7 @@ public class HotelAtualizar extends javax.swing.JFrame {
 
     private void btnAtualizarHotelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarHotelActionPerformed
         // TODO add your handling code here:
-            salvarEdicao();
-            this.telaPrincipal.carregarHoteis(); 
+            salvarEdicao(); 
             this.dispose();
         
     }//GEN-LAST:event_btnAtualizarHotelActionPerformed
