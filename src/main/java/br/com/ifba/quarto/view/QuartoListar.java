@@ -4,6 +4,7 @@
  */
 package br.com.ifba.quarto.view;
 
+import br.com.ifba.infrastructure.viewlistener.QuartoAtualizadoListener;
 import br.com.ifba.quarto.controller.QuartoIController;
 import br.com.ifba.quarto.entity.Quarto;
 import br.com.ifba.quarto.ennum.TipoQuarto;
@@ -27,7 +28,7 @@ import org.springframework.stereotype.Component;
  * @author igo
  */
 @Component
-public class QuartoListar extends javax.swing.JFrame {
+public class QuartoListar extends javax.swing.JFrame implements QuartoAtualizadoListener{
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(QuartoListar.class.getName());
     
@@ -46,57 +47,72 @@ public class QuartoListar extends javax.swing.JFrame {
         this.quartoController = quartoController;
         this.applicationContext = applicationContext;
         initComponents();
-        
-        
-        carregarQuartos();
-        DefaultTableModel modelo = (DefaultTableModel) jtListaDeQuartos.getModel();
-        
-        sorter = new TableRowSorter<>(modelo);
-        jtListaDeQuartos.setRowSorter(sorter); // Ativa ordenação automática na tabela
+        DefaultTableModel model = (DefaultTableModel) jtListaDeQuartos.getModel();
+        sorter = new TableRowSorter<>(model);
+        jtListaDeQuartos.setRowSorter(sorter);
+
         anexarListenerBusca();
-        
-         btnEditar.setVisible(false);
-         btnApagar.setVisible(false);
-         
-         
-         
-         /**
-         * Listener para detectar seleção de linhas na tabela.
-         * Faz com que os botões "Editar" e "Apagar" só apareçam se existir seleção.
-         */
-        jtListaDeQuartos.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-        
-        public void valueChanged(ListSelectionEvent e) {
-            if (!e.getValueIsAdjusting()) { 
-                
-                // Lógica de verificação embutida
-                int linhaSelecionadaView = jtListaDeQuartos.getSelectedRow();
-                boolean linhaEhSelecionada = (linhaSelecionadaView >= 0);
-                
-                // Define a visibilidade
-                btnEditar.setVisible(linhaEhSelecionada);
-                btnApagar.setVisible(linhaEhSelecionada);
-                }
-            }
-        });
-        
+        configurarDuploClique();
+        carregarQuartos();
     }
     
-    
-    void carregarQuartos() {
-
+    public void carregarQuartos() {
         List<Quarto> quartos = quartoController.findAll();
         DefaultTableModel model = (DefaultTableModel) jtListaDeQuartos.getModel();
         model.setRowCount(0);
-        for (Quarto q: quartos) {
+
+        for (Quarto q : quartos) {
             model.addRow(new Object[]{
-                q.getNumero(),
-                q.getTipo(),
-                q.getCapacidade(),
-                q.getPrecoDiaria()
+            q.getId(),          // coluna 0 (oculta)
+            q.getNumero(),
+            q.getTipo(),
+            q.getCapacidade(),
+            q.getPrecoDiaria()
             });
         }
     }
+
+    private Quarto getQuartoSelecionado() {
+        int linhaView = jtListaDeQuartos.getSelectedRow();
+        if (linhaView >= 0) {
+            int linhaModel = jtListaDeQuartos.convertRowIndexToModel(linhaView);
+            Long id = (Long) jtListaDeQuartos.getModel().getValueAt(linhaModel, 0);
+
+            return quartoController.findById(id);
+        }
+        return null;
+    }
+    
+    private void configurarDuploClique() {
+        jtListaDeQuartos.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                if (evt.getClickCount() == 2) {
+                    abrirTelaDetalhes();
+                }
+            }
+        });
+    }
+    
+    private void abrirTelaDetalhes() {
+        Quarto quartoSelecionado = getQuartoSelecionado();
+
+        if (quartoSelecionado == null) {
+            JOptionPane.showMessageDialog(this, "Selecione um quarto.");
+            return;
+        }
+
+        QuartoDetalhes tela = applicationContext.getBean(QuartoDetalhes.class);
+        tela.setQuarto(quartoSelecionado);
+        tela.setQuartoAtualizadoListener(QuartoListar.this);
+        tela.setVisible(true);
+    }
+    
+    @Override
+    public void onQuartoAtualizado() {
+        carregarQuartos();
+    }
+
     
     
     private void anexarListenerBusca() {
@@ -153,43 +169,7 @@ public class QuartoListar extends javax.swing.JFrame {
         }
     }
     
-    public void adicionarLinhaNaTabela(Quarto novoQuarto) {
-      
-        DefaultTableModel modelo = (DefaultTableModel) jtListaDeQuartos.getModel(); 
-        // Adiciona cada curso como linha da tabela
-        modelo.addRow(new Object[]{
-            novoQuarto.getNumero(),
-            novoQuarto.getTipo(),
-            novoQuarto.getCapacidade(),
-            novoQuarto.getPrecoDiaria()
-        });
-    }
-    
-    public Quarto getHotelSelecionado() {
-        int linhaSelecionada = jtListaDeQuartos.getSelectedRow();
-        if (linhaSelecionada >= 0) {
-            String numero = (String) jtListaDeQuartos.getValueAt(linhaSelecionada, 0);
-            TipoQuarto tipo = (TipoQuarto) jtListaDeQuartos.getValueAt(linhaSelecionada, 1);
-            int capacidade = (int) jtListaDeQuartos.getValueAt(linhaSelecionada, 2);
-            BigDecimal diaria = (BigDecimal) jtListaDeQuartos.getValueAt(linhaSelecionada, 3);
-            Quarto quartoSelecionado = new Quarto();
-            quartoSelecionado.setNumero(numero);
-            quartoSelecionado.setTipo(tipo);
-            quartoSelecionado.setCapacidade(capacidade);
-            quartoSelecionado.setPrecoDiaria(diaria);
-            return quartoSelecionado;
-        } else {
-            return null;
-        }
-    }
-    
-    
-    
-    /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
-     */
+   
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -199,11 +179,11 @@ public class QuartoListar extends javax.swing.JFrame {
         jtListaDeQuartos = new javax.swing.JTable();
         lblTextoPesquisar = new javax.swing.JLabel();
         txtPesquisar = new javax.swing.JTextField();
-        btnEditar = new javax.swing.JButton();
-        btnApagar = new javax.swing.JButton();
+        lblTitulo = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
+        btnAdicionar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnAdicionar.setText("Adicionar Quarto");
         btnAdicionar.addActionListener(this::btnAdicionarActionPerformed);
 
@@ -235,51 +215,48 @@ public class QuartoListar extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jtListaDeQuartos);
 
-        lblTextoPesquisar.setText("Pesquisar ");
+        lblTextoPesquisar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblTextoPesquisar.setText("Pesquisar:");
 
-        btnEditar.setText("Editar");
-        btnEditar.addActionListener(this::btnEditarActionPerformed);
-
-        btnApagar.setText("Apagar");
-        btnApagar.addActionListener(this::btnApagarActionPerformed);
+        lblTitulo.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
+        lblTitulo.setText("Lista de Quartos ");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(48, 48, 48)
-                        .addComponent(lblTextoPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(33, 33, 33)
-                        .addComponent(txtPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(83, 83, 83)
-                .addComponent(btnAdicionar, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(41, 41, 41)
-                .addComponent(btnEditar)
-                .addGap(37, 37, 37)
-                .addComponent(btnApagar)
-                .addContainerGap(209, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblTextoPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 528, Short.MAX_VALUE)
+                                .addComponent(txtPesquisar))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(239, 239, 239)
+                        .addComponent(btnAdicionar)))
+                .addContainerGap(39, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(lblTitulo)
+                .addGap(187, 187, 187))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(41, 41, 41)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblTextoPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btnAdicionar, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnEditar)
-                        .addComponent(btnApagar)))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(27, 27, 27)
+                .addComponent(lblTitulo)
+                .addGap(32, 32, 32)
+                .addComponent(lblTextoPesquisar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnAdicionar)
+                .addContainerGap(12, Short.MAX_VALUE))
         );
 
         pack();
@@ -291,89 +268,13 @@ public class QuartoListar extends javax.swing.JFrame {
         this.quartoAdicionar.setVisible(true);
     }//GEN-LAST:event_btnAdicionarActionPerformed
 
-    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-//        // TODO add your handling code here:
-        Quarto quartoParaAtualizar = getHotelSelecionado();
-
-        if (quartoParaAtualizar == null) {
-            JOptionPane.showMessageDialog(this, "Nenhum Quarto foi selecionado para editar.", "Erro", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        
-        System.out.println(quartoParaAtualizar);
-
-        // Chamada ao Controller para verificar a existência (baseado no seu código original)
-        Quarto validarAtualizar = quartoController.findBynumero(quartoParaAtualizar.getNumero());
-
-//        if (validarAtualizar != null) {
-//
-//            HotelAtualizar telaAtualizar = applicationContext.getBean(HotelAtualizar.class);
-//
-//            // 2. CHAMADA DOS SETTERS: Aqui você passa os dados e a referência da tela principal
-//            //telaAtualizar.setHotelSelecionado(validarAtualizar);
-//            telaAtualizar.setHotelSelecionado(validarAtualizar);
-//            telaAtualizar.setTelaPrincipal(this);
-//
-//            // 3. Torna a tela visível
-//            telaAtualizar.setVisible(true);
-//
-//        } else {
-//            JOptionPane.showMessageDialog(this, "O Hotel selecionado não foi encontrado no banco de dados.", "Erro", JOptionPane.ERROR_MESSAGE);
-//        }
-    }//GEN-LAST:event_btnEditarActionPerformed
-
-    private void btnApagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnApagarActionPerformed
-        // TODO add your handling code here:
-//        Hotel hotelParaDeletar = getHotelSelecionado();
-//
-//        if (hotelParaDeletar == null) {
-//            JOptionPane.showMessageDialog(this, "Nenhum Hotel foi selecionado para apagar.", "Erro", JOptionPane.ERROR_MESSAGE);
-//            return;
-//        }
-//
-//        int confirmacao = JOptionPane.showConfirmDialog(
-//            this,
-//            "AVISO! O HOTEL SERÁ APAGADO!\nTem certeza que deseja continuar?",
-//            "Apagar HOTEL",
-//            JOptionPane.YES_NO_OPTION,
-//            JOptionPane.WARNING_MESSAGE
-//        );
-//
-//        if (confirmacao == JOptionPane.YES_OPTION) {
-//            try {
-//                // 1. CHAMA O CONTROLLER INJETADO para realizar a operação.
-//                // A verificação de existência será feita implicitamente no Service/DAO.
-//                hotelController.delete(hotelParaDeletar.getCnpj());
-//
-//                JOptionPane.showMessageDialog(this,
-//                    "Hotel '" + hotelParaDeletar.getNome() + "' apagado com sucesso!");
-//
-//                // 2. Atualiza a lista
-//                carregarHoteis();
-//
-//            } catch (Exception e) {
-//                JOptionPane.showMessageDialog(this,
-//                    "Erro ao apagar Hotel: " + e.getMessage() + "\nO ID pode não existir ou há restrições de chave estrangeira.",
-//                    "Erro",
-//                    JOptionPane.ERROR_MESSAGE);
-//
-//                e.printStackTrace(); // para debug no console
-//            }
-//        }
-    }//GEN-LAST:event_btnApagarActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdicionar;
-    private javax.swing.JButton btnApagar;
-    private javax.swing.JButton btnEditar;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jtListaDeQuartos;
     private javax.swing.JLabel lblTextoPesquisar;
+    private javax.swing.JLabel lblTitulo;
     private javax.swing.JTextField txtPesquisar;
     // End of variables declaration//GEN-END:variables
 }
