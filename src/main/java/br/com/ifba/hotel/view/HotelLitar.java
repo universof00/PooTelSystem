@@ -39,8 +39,7 @@ public final class HotelLitar extends javax.swing.JFrame {
     @Autowired
     private HotelIController hotelController;
     
-    @Autowired
-    private Hotel novoHotel;
+    private Hotel novoHotel = new Hotel();
     
     @Autowired
     private HotelAdicionar novoHotelAdicionar;

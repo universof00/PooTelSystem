@@ -189,10 +189,10 @@ public class ServicoAdicionalView extends javax.swing.JFrame {
         double preco = Double.parseDouble(txtPreco.getText());
 
         // cria objeto usando Lombok (AllArgsConstructor)
-        ServicoAdicional servico = new ServicoAdicional(null, nome, descricao, preco);
+        //ServicoAdicional servico = new ServicoAdicional(null, nome, descricao, preco);
 
         // chama o service para salvar
-        service.salvar(servico);
+        //service.salvar(servico);
 
         JOptionPane.showMessageDialog(this, "Serviço salvo com sucesso!");
         atualizarTabela();
@@ -237,10 +237,10 @@ public class ServicoAdicionalView extends javax.swing.JFrame {
 
         String nome = txtNome.getText();
         String descricao = txtDescricao.getText();
-        double preco = Double.parseDouble(txtPreco.getText());
+        //double preco = Double.parseDouble(txtPreco.getText());
 
-        ServicoAdicional novo = new ServicoAdicional(id, nome, descricao, preco);
-        service.atualizar(id, novo);
+        //ServicoAdicional novo = new ServicoAdicional(id, nome, descricao, preco);
+        //service.atualizar(id, novo);
 
         JOptionPane.showMessageDialog(this, "Serviço atualizado!");
         atualizarTabela();

@@ -215,7 +215,7 @@ public class CadastrarFuncionarios extends javax.swing.JFrame {
         funcionario.setCpf(cpf);
         funcionario.setTelefone(telefone);
         funcionario.setEndereco(endereco);
-        funcionario.setSalario(salario);   
+        //funcionario.setSalario(salario);   
         funcionario.setServico(servico);  
 
         Usuario usuario = new Usuario();

@@ -142,13 +142,13 @@ public class HotelAdicionar extends javax.swing.JFrame {
         String endereco = txtendereco.getText();
         int classificacao = Integer.parseInt(txtClassificacao.getText());
         
-        Hotel novoHotel = new Hotel(cnpj, nome, endereco, classificacao);
+        //Hotel novoHotel = new Hotel(cnpj, nome, endereco, classificacao);
         
         Hotel hotelSalvo = new Hotel();
 
         try {
             
-            this.hotelController.save(novoHotel);
+           // this.hotelController.save(novoHotel);
             hotelSalvo = this.hotelController.findBycnpj(txtCnpj.getText());
           
             JOptionPane.showMessageDialog(this, "Curso " + hotelSalvo.getNome() + " Salvo com sucesso!");

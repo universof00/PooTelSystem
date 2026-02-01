@@ -155,7 +155,7 @@ public class AdicionarReservas extends javax.swing.JFrame {
         }
 
         Reserva reserva = new Reserva();
-        reserva.setValorTotal(valorTotal);
+        //reserva.setValorTotal(valorTotal);
         reserva.setDataEntrada(dataEntrada);
         reserva.setDataSaida(dataSaida);
         reserva.setStatus(true);
