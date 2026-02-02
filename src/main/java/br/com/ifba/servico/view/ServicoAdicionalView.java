@@ -7,6 +7,7 @@ package br.com.ifba.servico.view;
 import br.com.ifba.servico.entity.ServicoAdicional;
 import br.com.ifba.servico.repository.ServicoAdicionalRepository;
 import br.com.ifba.servico.service.ServicoAdicionalService;
+import java.math.BigDecimal;
 import javax.swing.JOptionPane;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -41,7 +42,6 @@ public class ServicoAdicionalView extends javax.swing.JFrame {
         btnSalvar = new javax.swing.JButton();
         btnAtulizar = new javax.swing.JButton();
         btnExcluir = new javax.swing.JButton();
-        btnListar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jLabel4 = new javax.swing.JLabel();
@@ -75,13 +75,6 @@ public class ServicoAdicionalView extends javax.swing.JFrame {
             }
         });
 
-        btnListar.setText("LISTAR");
-        btnListar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnListarActionPerformed(evt);
-            }
-        });
-
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -110,22 +103,21 @@ public class ServicoAdicionalView extends javax.swing.JFrame {
                             .addComponent(jLabel1)
                             .addComponent(jLabel2)
                             .addComponent(jLabel3)
-                            .addComponent(txtPreco, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(64, 64, 64)
+                                .addGap(95, 95, 95)
                                 .addComponent(btnAtulizar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnListar, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(68, 68, 68)
+                                .addGap(90, 90, 90)
                                 .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 576, Short.MAX_VALUE)
-                            .addComponent(txtDescricao)
-                            .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(txtPreco, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(txtDescricao, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(txtNome, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE))
+                            .addComponent(jScrollPane1)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(249, 249, 249)
                         .addComponent(jLabel4)))
-                .addContainerGap(278, Short.MAX_VALUE))
+                .addContainerGap(367, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -150,7 +142,6 @@ public class ServicoAdicionalView extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSalvar)
                     .addComponent(btnAtulizar)
-                    .addComponent(btnListar)
                     .addComponent(btnExcluir))
                 .addContainerGap(80, Short.MAX_VALUE))
         );
@@ -187,16 +178,16 @@ public class ServicoAdicionalView extends javax.swing.JFrame {
         String descricao = txtDescricao.getText();
         double preco = Double.parseDouble(txtPreco.getText());
 
-        // cria objeto usando Lombok (AllArgsConstructor)
-        //ServicoAdicional servico = new ServicoAdicional(null, nome, descricao, preco);
+        ServicoAdicional servico = new ServicoAdicional();
+        servico.setNome(nome);
+        servico.setDescricao(descricao);
+        servico.setPreco(BigDecimal.valueOf(preco));
 
-        // chama o service para salvar
-        //service.salvar(servico);
+        service.salvar(servico);
 
         JOptionPane.showMessageDialog(this, "Serviço salvo com sucesso!");
         atualizarTabela();
 
-        // limpa os campos
         txtNome.setText("");
         txtDescricao.setText("");
         txtPreco.setText("");
@@ -207,46 +198,48 @@ public class ServicoAdicionalView extends javax.swing.JFrame {
  
     }//GEN-LAST:event_btnSalvarActionPerformed
 
-    private void btnListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarActionPerformed
-        // TODO add your handling code here:
-        btnListar.addActionListener(e -> atualizarTabela());
-
-    }//GEN-LAST:event_btnListarActionPerformed
-
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-        btnExcluir.addActionListener(e -> {
-    int linha = jTable1.getSelectedRow();
+        int linha = jTable1.getSelectedRow();
+
     if (linha >= 0) {
         Long id = (Long) jTable1.getValueAt(linha, 0);
+
         service.deletar(id);
-        JOptionPane.showMessageDialog(this, "Serviço excluído!");
+
+    JOptionPane.showMessageDialog(this, "Serviço excluído!");
         atualizarTabela();
+
     } else {
         JOptionPane.showMessageDialog(this, "Selecione um serviço para excluir.");
     }
-        });
 
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void btnAtulizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtulizarActionPerformed
-        btnAtulizar.addActionListener(e -> {
-    int linha = jTable1.getSelectedRow();
+      int linha = jTable1.getSelectedRow();
+
     if (linha >= 0) {
         Long id = (Long) jTable1.getValueAt(linha, 0);
 
         String nome = txtNome.getText();
         String descricao = txtDescricao.getText();
-        //double preco = Double.parseDouble(txtPreco.getText());
+        double preco = Double.parseDouble(txtPreco.getText());
 
-        //ServicoAdicional novo = new ServicoAdicional(id, nome, descricao, preco);
-        //service.atualizar(id, novo);
+        ServicoAdicional novo = new ServicoAdicional();
+        novo.setId(id);
+        novo.setNome(nome);
+        novo.setDescricao(descricao);
+        novo.setPreco(BigDecimal.valueOf(preco));
+
+        service.atualizar(id, novo);
 
         JOptionPane.showMessageDialog(this, "Serviço atualizado!");
         atualizarTabela();
+
     } else {
         JOptionPane.showMessageDialog(this, "Selecione um serviço para atualizar.");
     }
-});
+    
 
     }//GEN-LAST:event_btnAtulizarActionPerformed
 
@@ -291,7 +284,6 @@ public class ServicoAdicionalView extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAtulizar;
     private javax.swing.JButton btnExcluir;
-    private javax.swing.JButton btnListar;
     private javax.swing.JButton btnSalvar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

@@ -1,6 +1,7 @@
 package br.com.ifba;
 
 import br.com.ifba.login.view.TelaLogin;
+import br.com.ifba.servico.view.ServicoAdicionalView;
 import com.formdev.flatlaf.FlatLightLaf;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
@@ -26,7 +27,7 @@ public class PooTelSystemApplication {
 
         SwingUtilities.invokeLater(() -> {
             TelaLogin telaLogin = context.getBean(TelaLogin.class);
-            telaLogin.setVisible(true);
+            telaLogin.setVisible(true);   
         });
     }
 }
