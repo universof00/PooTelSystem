@@ -26,8 +26,12 @@ public class PooTelSystemApplication {
                         .run(args);
 
         SwingUtilities.invokeLater(() -> {
+            //CadastrarFuncionarios tela = context.getBean(CadastrarFuncionarios.class);
+            //ListarCliente tela = context.getBean(ListarCliente.class);
+            //TelaReserva tela = context.getBean(TelaReserva.class);
+            //QuartoListar telaLogin = context.getBean(QuartoListar.class);
             TelaLogin telaLogin = context.getBean(TelaLogin.class);
-            telaLogin.setVisible(true);   
+            telaLogin.setVisible(true);
         });
     }
 }
