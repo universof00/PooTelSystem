@@ -10,7 +10,6 @@ import br.com.ifba.usuario.controller.UsuarioIController;
 import br.com.ifba.usuario.entity.Usuario;
 import br.com.ifba.usuario.view.MenuCliente;
 import br.com.ifba.usuario.view.UsuarioCadastro;
-import br.com.ifba.view.TelaPrincipal;
 import javax.swing.JOptionPane;
 import org.springframework.stereotype.Component;
 
