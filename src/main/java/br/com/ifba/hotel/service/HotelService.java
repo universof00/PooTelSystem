@@ -4,6 +4,7 @@
  */
 package br.com.ifba.hotel.service;
 
+import br.com.ifba.auditoria.AuditoriaService;
 import br.com.ifba.hotel.entity.Hotel;
 import br.com.ifba.hotel.repository.HotelRepository;
 import java.util.List;
@@ -29,6 +30,7 @@ public class HotelService implements HotelIService {
     @Override
     public Hotel update(Hotel hotel) {
         if (repository.existsById(hotel.getCnpj())) {
+            AuditoriaService.registrar(hotel.getNome(), "SALVAR", "Salvando Dados");
             return repository.save(hotel);
         }
         throw new RuntimeException("Hotel não encontrado para atualização.");
@@ -36,6 +38,7 @@ public class HotelService implements HotelIService {
 
     @Override
     public void delete(String cnpj) {
+        AuditoriaService.registrar(findByCnpj(cnpj).getNome(), "EXCLUIR", "Excluindo Dados");
         repository.deleteById(cnpj);
     }
 

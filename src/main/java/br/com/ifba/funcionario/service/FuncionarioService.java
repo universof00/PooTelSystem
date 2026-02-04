@@ -4,12 +4,11 @@
  */
 package br.com.ifba.funcionario.service;
 
+import br.com.ifba.auditoria.AuditoriaService;
 import br.com.ifba.funcionario.entity.Funcionario;
 import br.com.ifba.funcionario.repository.FuncionarioRepository;
 import java.util.List;
 import lombok.AllArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 /**
@@ -20,8 +19,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class FuncionarioService implements FuncionarioIService{
     private final FuncionarioRepository funcionarioRepository;
-    private static final Logger log = LoggerFactory.getLogger(FuncionarioService.class);
-
+    
     @Override
     public Funcionario save(Funcionario funcionario) throws RuntimeException {
         if(funcionario == null){
@@ -29,7 +27,7 @@ public class FuncionarioService implements FuncionarioIService{
         } else if (funcionario.getId() != null){
            throw new RuntimeException("Funcionário " + "já existente no banco de dados.");
         }else {
-           log.info("Salvando funcionário!");
+           AuditoriaService.registrar(funcionario.getNome(), "SALVAR", "Salvando Dados" + funcionario.getId());
            return funcionarioRepository.save(funcionario);   
         }
     }
@@ -41,7 +39,7 @@ public class FuncionarioService implements FuncionarioIService{
         }else if (funcionario.getId() == null){
             throw new RuntimeException("Funcionário " + "não existente no banco de dados.");
         }else {
-            log.info("Excluindo cliente!");
+            AuditoriaService.registrar(funcionario.getNome(), "EXCLUIR", "Excluindo Dados" + funcionario.getId());
             funcionarioRepository.delete(funcionario);
         }    
     }
@@ -51,7 +49,7 @@ public class FuncionarioService implements FuncionarioIService{
         if (funcionario == null){
             throw new RuntimeException("Dados do " + "funcionário não preenchidos.");
         }else {
-            log.info("Atualizando dados do funcionário!");
+            AuditoriaService.registrar(funcionario.getNome(), "ATUALIZAR", "Atualizando Dados" + funcionario.getId());
             return funcionarioRepository.save(funcionario);
         }    }
 

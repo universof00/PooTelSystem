@@ -4,6 +4,7 @@
  */
 package br.com.ifba.usuario.service;
 
+import br.com.ifba.auditoria.AuditoriaService;
 import br.com.ifba.cliente.entity.Cliente;
 import br.com.ifba.cliente.repository.ClienteRepository;
 import br.com.ifba.enums.TipoPerfil;
@@ -52,6 +53,7 @@ public class UsuarioService implements UsuarioIService{
             }
 
             usuario.setPerfil(TipoPerfil.CLIENTE);
+            AuditoriaService.registrar(cliente.getNome(), "SALVAR", "Salvando Dados" + cliente.getId());
             clienteRepository.save(cliente);
         }
 
@@ -63,9 +65,10 @@ public class UsuarioService implements UsuarioIService{
             }
 
             usuario.setPerfil(TipoPerfil.FUNCIONARIO);
+            AuditoriaService.registrar(funcionario.getNome(), "SALVAR", "Salvando Dados" + funcionario.getId());
             funcionarioRepository.save(funcionario);
         }
-
+        AuditoriaService.registrar(usuario.getEmail(), "SALVAR", "Salvando Dados" + usuario.getId());
         usuarioRepository.save(usuario);
     }
     
@@ -82,16 +85,18 @@ public class UsuarioService implements UsuarioIService{
     // regras específicas por tipo
         if (pessoa instanceof Cliente cliente) {
             usuario.setPerfil(TipoPerfil.CLIENTE);
+            AuditoriaService.registrar(cliente.getNome(), "ATUALIZAR", "Atualizando Dados" + cliente.getId());
             clienteRepository.save(cliente);
 
         } else if (pessoa instanceof Funcionario funcionario) {
-            usuario.setPerfil(TipoPerfil.FUNCIONARIO);
+            usuario.setPerfil(TipoPerfil.FUNCIONARIO);            
+            AuditoriaService.registrar(funcionario.getNome(), "ATUALIZAR", "Atualizando Dados" + funcionario.getId());
             funcionarioRepository.save(funcionario);
 
         } else {
             throw new IllegalStateException("Tipo de pessoa inválido.");
         }
-
+        AuditoriaService.registrar(usuario.getEmail(), "ATUALIZAR", "Atualizando Dados" + usuario.getId());
         usuarioRepository.save(usuario);
     }
     
@@ -146,6 +151,7 @@ public class UsuarioService implements UsuarioIService{
         }else if (usuario.getId() == null){
             throw new NoSuchElementException("Usuário não encontrado.");
         }else{
+            AuditoriaService.registrar(usuario.getEmail(), "EXCLUIR", "Excluindo Dados" + usuario.getId());
             usuarioRepository.delete(usuario);
         }
     }

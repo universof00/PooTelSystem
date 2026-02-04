@@ -1,5 +1,6 @@
 package br.com.ifba.reserva.service;
 
+import br.com.ifba.auditoria.AuditoriaService;
 import br.com.ifba.cliente.entity.Cliente;
 import br.com.ifba.cliente.repository.ClienteRepository;
 import br.com.ifba.cliente.service.ClienteService;
@@ -44,7 +45,7 @@ public class ReservaService implements ReservaIService {
         }
         reserva.setCliente(cliente);
         reserva.setStatus(true);
-        log.info("Reserva realizada!");
+        AuditoriaService.registrar(reserva.getCliente().getNome(), "SALVAR", "Salvando Dados");
         reservaRepository.save(reserva);
     }
     
@@ -52,7 +53,7 @@ public class ReservaService implements ReservaIService {
     public void cancelarReserva(Long idReserva){
         Reserva reserva = reservaRepository.findById(idReserva).orElseThrow();
         reserva.setStatus(false);
-        log.info("Reserva cancelada!");
+        AuditoriaService.registrar(reserva.getCliente().getNome(), "EXCLUIR", "Excluindo Dados");
         reservaRepository.save(reserva);
     }
 
@@ -85,7 +86,8 @@ public class ReservaService implements ReservaIService {
         reserva.setDataEntrada(novaReserva.getDataEntrada());
         reserva.setDataSaida(novaReserva.getDataSaida());
         reserva.setStatus(novaReserva.isStatus());
-
+        AuditoriaService.registrar(reserva.getCliente().getNome(), "ATUALIZAR", "Atualizando Dados");
+        
         return reservaRepository.save(reserva);
     }
 
@@ -93,6 +95,7 @@ public class ReservaService implements ReservaIService {
     public boolean deletarReserva(Long id) {
         if (reservaRepository.existsById(id)) {
             reservaRepository.deleteById(id);
+            AuditoriaService.registrar(id.toString(), "EXLUIR", "Excluindo Dados");
             return true;
         }
         return false;

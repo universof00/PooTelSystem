@@ -4,6 +4,7 @@
  */
 package br.com.ifba.quarto.service;
 
+import br.com.ifba.auditoria.AuditoriaService;
 import br.com.ifba.quarto.entity.Quarto;
 import br.com.ifba.quarto.repository.QuartoRepository;
 import java.util.List;
@@ -21,14 +22,17 @@ public class QuartoService implements QuartoIService {
     private QuartoRepository repository;
 
     public Quarto save(Quarto quarto) {
+        AuditoriaService.registrar(quarto.getNumero(), "SALVAR", "Salvando Dados" + quarto.getId());
         return repository.save(quarto);
     }
 
     public void delete(Long id) {
+        AuditoriaService.registrar(findById(id).getNumero(), "EXCLUIR", "Excluindo Dados" + id);
         repository.deleteById(id);
     }
 
     public Quarto update(Quarto quarto) {
+        AuditoriaService.registrar(quarto.getNumero(), "ATUALIZAR", "Atualizando Dados" + quarto.getId());
         return repository.save(quarto);
     }
 

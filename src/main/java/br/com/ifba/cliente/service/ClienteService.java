@@ -4,16 +4,12 @@
  */
 package br.com.ifba.cliente.service;
 
+import br.com.ifba.auditoria.AuditoriaService;
 import br.com.ifba.cliente.entity.Cliente;
 import br.com.ifba.cliente.repository.ClienteRepository;
-import br.com.ifba.infrastructure.util.ValidacaoUtil;
-import br.com.ifba.reserva.entity.Reserva;
 import br.com.ifba.reserva.repository.ReservaRepository;
 import java.util.List;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 /**
@@ -28,11 +24,6 @@ public class ClienteService implements ClienteIService{
         
     private final ReservaRepository reservaRepository;
     
-    private static final Logger log = LoggerFactory.getLogger(ClienteService.class);
-
-
-   
-
     @Override
     public Cliente save(Cliente cliente) throws RuntimeException {
         if(cliente == null){
@@ -40,7 +31,7 @@ public class ClienteService implements ClienteIService{
         } else if (cliente.getId() != null){
            throw new RuntimeException("Cliente " + "já existente no banco de dados.");
         }else {
-           log.info("Salvando cliente!");
+           AuditoriaService.registrar(cliente.getNome(), "SALVAR", "Salvando Dados" + cliente.getId());
            return clienteRepository.save(cliente);
        }
     }
@@ -52,7 +43,7 @@ public class ClienteService implements ClienteIService{
         }else if (cliente.getId() == null){
             throw new RuntimeException("Cliente " + "não existente no banco de dados.");
         }else {
-            log.info("Excluindo cliente!");
+            AuditoriaService.registrar(cliente.getNome(), "EXCLUIR", "Excluindo dados do cliente" + cliente.getId());
             clienteRepository.delete(cliente);
         }
     }
@@ -62,7 +53,7 @@ public class ClienteService implements ClienteIService{
         if (cliente == null){
             throw new RuntimeException("Dados do " + "cliente não preenchidos.");
         }else {
-            log.info("Atualizando dados do cliente!");
+            AuditoriaService.registrar(cliente.getNome(), "ATUALIZAR", "Atualizando dados do cliente" + cliente.getId());
             return clienteRepository.save(cliente);
         }
     }

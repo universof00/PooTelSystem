@@ -4,6 +4,7 @@
  */
 package br.com.ifba.servico.service;
 
+import br.com.ifba.auditoria.AuditoriaService;
 import br.com.ifba.servico.entity.ServicoAdicional;
 import br.com.ifba.servico.repository.ServicoAdicionalRepository;
 import java.util.List;
@@ -25,6 +26,7 @@ public ServicoAdicionalService(ServicoAdicionalRepository repository) {
 
 // Criar
 public ServicoAdicional salvar(ServicoAdicional servico) {
+    AuditoriaService.registrar(servico.getNome(), "SALVAR", "Salvando Dados");
     return repository.save(servico);
 }
 
@@ -44,11 +46,14 @@ public ServicoAdicional atualizar(Long id, ServicoAdicional novo) {
     servico.setNome(novo.getNome());
     servico.setDescricao(novo.getDescricao());
     servico.setPreco(novo.getPreco());
+    AuditoriaService.registrar(servico.getNome(), "ATUALIZAR", "Atualizando Dados");
+
     return repository.save(servico);
 }
 
 // Deletar
 public void deletar(Long id) {
+    AuditoriaService.registrar(buscarPorId(id).getNome(), "EXCLUIR", "Excluindo Dados");
     repository.deleteById(id);
 }
 
