@@ -4,7 +4,11 @@
  */
 package br.com.ifba.login.view;
 
+import br.com.ifba.dashboard.DashAdmin;
+import br.com.ifba.dashboard.DashFuncionario;
+import br.com.ifba.dashboard.DashUsuario;
 import br.com.ifba.devs.view.Desenvolvedores;
+import br.com.ifba.enums.TipoPerfil;
 import br.com.ifba.login.termosUso.TermosUso;
 import br.com.ifba.usuario.controller.UsuarioIController;
 import br.com.ifba.usuario.entity.Usuario;
@@ -238,11 +242,24 @@ public class TelaLogin extends javax.swing.JFrame {
 
         try {
             Usuario usuarioAutenticado = usuarioIController.authenticate(usuario, senha);
-            
-            //TelaPrincipal tela = new TelaPrincipal(usuarioAutenticado);
-            MenuCliente tela = new MenuCliente(usuarioAutenticado);
-            tela.setVisible(true);
-            dispose();
+            usuarioAutenticado.setPerfil(TipoPerfil.ADM);
+            TipoPerfil perfil = usuarioAutenticado.getPerfil();
+            switch(perfil){
+                case ADM -> {
+                    DashAdmin telaLogin = new DashAdmin();
+                    telaLogin.setVisible(true);
+                }
+                case FUNCIONARIO -> {
+                    DashFuncionario telaLogin2 = new DashFuncionario();
+                    telaLogin2.setVisible(true);
+                }
+                case CLIENTE -> {
+                    DashUsuario telaLogin3 = new DashUsuario();
+                    telaLogin3.setVisible(true);
+                }
+                default -> JOptionPane.showMessageDialog(rootPane, "O Batman está de olho....");
+                    
+            }
 
         } catch (RuntimeException e) {
             JOptionPane.showMessageDialog(this, e.getMessage(),
