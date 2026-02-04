@@ -32,6 +32,7 @@ public class DashUsuario extends javax.swing.JFrame {
         btnReservar = new javax.swing.JButton();
         lblImagemMinhasReservas = new javax.swing.JLabel();
         btnMinhasReservas = new javax.swing.JButton();
+        lblBemVindo = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         meMenuPrincipal = new javax.swing.JMenu();
         meMeusDados = new javax.swing.JMenuItem();
@@ -51,6 +52,9 @@ public class DashUsuario extends javax.swing.JFrame {
 
         btnMinhasReservas.setFont(new java.awt.Font("Liberation Sans", 0, 25)); // NOI18N
         btnMinhasReservas.setText("Minhas Reservas");
+
+        lblBemVindo.setFont(new java.awt.Font("Liberation Sans", 0, 36)); // NOI18N
+        lblBemVindo.setText("Seja Bem-Vindo, ");
 
         jMenuBar1.setFont(new java.awt.Font("Liberation Sans", 0, 25)); // NOI18N
 
@@ -73,30 +77,36 @@ public class DashUsuario extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(140, 140, 140)
+                .addGap(103, 103, 103)
+                .addComponent(lblImagemReserva)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 220, Short.MAX_VALUE)
+                .addComponent(lblImagemMinhasReservas)
+                .addGap(115, 115, 115))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(136, 136, 136)
                 .addComponent(btnReservar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnMinhasReservas)
-                .addGap(125, 125, 125))
+                .addGap(124, 124, 124))
             .addGroup(layout.createSequentialGroup()
-                .addGap(93, 93, 93)
-                .addComponent(lblImagemReserva)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 240, Short.MAX_VALUE)
-                .addComponent(lblImagemMinhasReservas)
-                .addGap(105, 105, 105))
+                .addGap(16, 16, 16)
+                .addComponent(lblBemVindo)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(171, 171, 171)
+                .addGap(60, 60, 60)
+                .addComponent(lblBemVindo)
+                .addGap(176, 176, 176)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblImagemReserva)
                     .addComponent(lblImagemMinhasReservas))
-                .addGap(190, 190, 190)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 191, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnReservar)
                     .addComponent(btnMinhasReservas))
-                .addContainerGap(245, Short.MAX_VALUE))
+                .addGap(137, 137, 137))
         );
 
         pack();
@@ -131,6 +141,7 @@ public class DashUsuario extends javax.swing.JFrame {
     private javax.swing.JButton btnMinhasReservas;
     private javax.swing.JButton btnReservar;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JLabel lblBemVindo;
     private javax.swing.JLabel lblImagemMinhasReservas;
     private javax.swing.JLabel lblImagemReserva;
     private javax.swing.JMenu meMenuPrincipal;

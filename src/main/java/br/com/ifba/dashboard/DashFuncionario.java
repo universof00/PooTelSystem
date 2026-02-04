@@ -30,6 +30,7 @@ public class DashFuncionario extends javax.swing.JFrame {
 
         lblImagemServico = new javax.swing.JLabel();
         btnServicos = new javax.swing.JButton();
+        lblBemVindo = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         meMenuPrincipal = new javax.swing.JMenu();
         meMeusDados = new javax.swing.JMenuItem();
@@ -42,6 +43,9 @@ public class DashFuncionario extends javax.swing.JFrame {
 
         btnServicos.setFont(new java.awt.Font("Liberation Sans", 0, 25)); // NOI18N
         btnServicos.setText("Serviços");
+
+        lblBemVindo.setFont(new java.awt.Font("Liberation Sans", 0, 36)); // NOI18N
+        lblBemVindo.setText("Seja Bem-Vindo, ");
 
         jMenuBar1.setFont(new java.awt.Font("Liberation Sans", 0, 25)); // NOI18N
 
@@ -66,21 +70,26 @@ public class DashFuncionario extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(357, 357, 357)
-                        .addComponent(lblImagemServico))
+                        .addGap(26, 26, 26)
+                        .addComponent(lblBemVindo))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(406, 406, 406)
-                        .addComponent(btnServicos)))
-                .addGap(105, 375, Short.MAX_VALUE))
+                        .addGap(402, 402, 402)
+                        .addComponent(btnServicos))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(366, 366, 366)
+                        .addComponent(lblImagemServico)))
+                .addGap(147, 366, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(171, 171, 171)
+                .addGap(43, 43, 43)
+                .addComponent(lblBemVindo)
+                .addGap(107, 107, 107)
                 .addComponent(lblImagemServico)
-                .addGap(174, 174, 174)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 165, Short.MAX_VALUE)
                 .addComponent(btnServicos)
-                .addContainerGap(176, Short.MAX_VALUE))
+                .addGap(164, 164, 164))
         );
 
         pack();
@@ -114,6 +123,7 @@ public class DashFuncionario extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnServicos;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JLabel lblBemVindo;
     private javax.swing.JLabel lblImagemServico;
     private javax.swing.JMenu meMenuPrincipal;
     private javax.swing.JMenuItem meMeusDados;
