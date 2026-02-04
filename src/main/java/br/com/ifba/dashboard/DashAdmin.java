@@ -28,17 +28,78 @@ public class DashAdmin extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        btnAuditoria = new javax.swing.JButton();
+        lblImagemAuditoria = new javax.swing.JLabel();
+        lblBemVindo = new javax.swing.JLabel();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        meMenuPrincipal = new javax.swing.JMenu();
+        meCiente = new javax.swing.JMenuItem();
+        meFuncionario = new javax.swing.JMenuItem();
+        meHotel = new javax.swing.JMenuItem();
+        meSobre = new javax.swing.JMenuItem();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        btnAuditoria.setFont(new java.awt.Font("Liberation Sans", 0, 25)); // NOI18N
+        btnAuditoria.setText("Log de Auditoria");
+
+        lblImagemAuditoria.setFont(new java.awt.Font("Liberation Sans", 0, 25)); // NOI18N
+        lblImagemAuditoria.setText("Imagem de auditoria");
+
+        lblBemVindo.setFont(new java.awt.Font("Liberation Sans", 0, 36)); // NOI18N
+        lblBemVindo.setText("Seja Bem-Vindo, ");
+
+        jMenuBar1.setFont(new java.awt.Font("Liberation Sans", 0, 24)); // NOI18N
+
+        meMenuPrincipal.setText("Menu");
+        meMenuPrincipal.setFont(new java.awt.Font("Liberation Sans", 0, 25)); // NOI18N
+
+        meCiente.setFont(new java.awt.Font("Liberation Sans", 0, 25)); // NOI18N
+        meCiente.setText("Cliente");
+        meMenuPrincipal.add(meCiente);
+
+        meFuncionario.setFont(new java.awt.Font("Liberation Sans", 0, 25)); // NOI18N
+        meFuncionario.setText("Funcionario");
+        meMenuPrincipal.add(meFuncionario);
+
+        meHotel.setFont(new java.awt.Font("Liberation Sans", 0, 25)); // NOI18N
+        meHotel.setText("Hotel");
+        meMenuPrincipal.add(meHotel);
+
+        meSobre.setFont(new java.awt.Font("Liberation Sans", 0, 25)); // NOI18N
+        meSobre.setText("Sobre");
+        meMenuPrincipal.add(meSobre);
+
+        jMenuBar1.add(meMenuPrincipal);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnAuditoria)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(37, 37, 37)
+                            .addComponent(lblBemVindo))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(344, 344, 344)
+                            .addComponent(lblImagemAuditoria))))
+                .addContainerGap(390, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(36, 36, 36)
+                .addComponent(lblBemVindo)
+                .addGap(148, 148, 148)
+                .addComponent(lblImagemAuditoria)
+                .addGap(139, 139, 139)
+                .addComponent(btnAuditoria)
+                .addContainerGap(209, Short.MAX_VALUE))
         );
 
         pack();
@@ -70,5 +131,14 @@ public class DashAdmin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAuditoria;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JLabel lblBemVindo;
+    private javax.swing.JLabel lblImagemAuditoria;
+    private javax.swing.JMenuItem meCiente;
+    private javax.swing.JMenuItem meFuncionario;
+    private javax.swing.JMenuItem meHotel;
+    private javax.swing.JMenu meMenuPrincipal;
+    private javax.swing.JMenuItem meSobre;
     // End of variables declaration//GEN-END:variables
 }
