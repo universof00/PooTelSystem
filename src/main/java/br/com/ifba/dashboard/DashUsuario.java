@@ -28,17 +28,75 @@ public class DashUsuario extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        lblImagemReserva = new javax.swing.JLabel();
+        btnReservar = new javax.swing.JButton();
+        lblImagemMinhasReservas = new javax.swing.JLabel();
+        btnMinhasReservas = new javax.swing.JButton();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        meMenuPrincipal = new javax.swing.JMenu();
+        meMeusDados = new javax.swing.JMenuItem();
+        meSobre = new javax.swing.JMenuItem();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(965, 677));
+
+        lblImagemReserva.setFont(new java.awt.Font("Liberation Sans", 0, 25)); // NOI18N
+        lblImagemReserva.setText("Imagem de reserva");
+
+        btnReservar.setFont(new java.awt.Font("Liberation Sans", 0, 25)); // NOI18N
+        btnReservar.setText("Reservar");
+
+        lblImagemMinhasReservas.setFont(new java.awt.Font("Liberation Sans", 0, 25)); // NOI18N
+        lblImagemMinhasReservas.setText("Imagem de Minhas reservas");
+
+        btnMinhasReservas.setFont(new java.awt.Font("Liberation Sans", 0, 25)); // NOI18N
+        btnMinhasReservas.setText("Minhas Reservas");
+
+        jMenuBar1.setFont(new java.awt.Font("Liberation Sans", 0, 25)); // NOI18N
+
+        meMenuPrincipal.setText("Menu");
+
+        meMeusDados.setFont(new java.awt.Font("Liberation Sans", 0, 25)); // NOI18N
+        meMeusDados.setText("Meus dados");
+        meMenuPrincipal.add(meMeusDados);
+
+        meSobre.setFont(new java.awt.Font("Liberation Sans", 0, 25)); // NOI18N
+        meSobre.setText("Sobre");
+        meMenuPrincipal.add(meSobre);
+
+        jMenuBar1.add(meMenuPrincipal);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(140, 140, 140)
+                .addComponent(btnReservar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnMinhasReservas)
+                .addGap(125, 125, 125))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(93, 93, 93)
+                .addComponent(lblImagemReserva)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 240, Short.MAX_VALUE)
+                .addComponent(lblImagemMinhasReservas)
+                .addGap(105, 105, 105))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(171, 171, 171)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblImagemReserva)
+                    .addComponent(lblImagemMinhasReservas))
+                .addGap(190, 190, 190)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnReservar)
+                    .addComponent(btnMinhasReservas))
+                .addContainerGap(245, Short.MAX_VALUE))
         );
 
         pack();
@@ -70,5 +128,13 @@ public class DashUsuario extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnMinhasReservas;
+    private javax.swing.JButton btnReservar;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JLabel lblImagemMinhasReservas;
+    private javax.swing.JLabel lblImagemReserva;
+    private javax.swing.JMenu meMenuPrincipal;
+    private javax.swing.JMenuItem meMeusDados;
+    private javax.swing.JMenuItem meSobre;
     // End of variables declaration//GEN-END:variables
 }
