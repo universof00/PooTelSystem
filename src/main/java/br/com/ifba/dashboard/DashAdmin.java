@@ -33,7 +33,7 @@ public class DashAdmin extends javax.swing.JFrame {
         meHotel = new javax.swing.JMenuItem();
         meSobre = new javax.swing.JMenuItem();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         btnAuditoria.setFont(new java.awt.Font("Liberation Sans", 0, 25)); // NOI18N
         btnAuditoria.setText("Log de Auditoria");

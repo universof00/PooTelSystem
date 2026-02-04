@@ -38,7 +38,7 @@ public class DashUsuario extends javax.swing.JFrame {
         meMeusDados = new javax.swing.JMenuItem();
         meSobre = new javax.swing.JMenuItem();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(965, 677));
 
         lblImagemReserva.setFont(new java.awt.Font("Liberation Sans", 0, 25)); // NOI18N

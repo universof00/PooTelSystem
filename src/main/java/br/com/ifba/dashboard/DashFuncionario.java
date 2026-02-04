@@ -36,7 +36,7 @@ public class DashFuncionario extends javax.swing.JFrame {
         meMeusDados = new javax.swing.JMenuItem();
         meSobre = new javax.swing.JMenuItem();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         lblImagemServico.setFont(new java.awt.Font("Liberation Sans", 0, 25)); // NOI18N
         lblImagemServico.setText("Imagem de serviço");
