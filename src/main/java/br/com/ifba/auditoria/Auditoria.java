@@ -4,7 +4,9 @@
  */
 package br.com.ifba.auditoria;
 
+import static java.lang.Character.FORMAT;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,6 +18,10 @@ public class Auditoria {
     private String acao;
     private LocalDateTime dataHora;
     private String descricao;
+    
+    private static final DateTimeFormatter FORMATO =
+            DateTimeFormatter.ofPattern("dd/MM/yyyy - HH:mm:ss");
+
 
     public Auditoria(String usuario, String acao, String descricao) {
         this.usuario = usuario;
@@ -27,6 +33,7 @@ public class Auditoria {
     
     @Override
     public String toString() {
-        return "[" + dataHora + "] " + usuario + " - " + acao + " → " + descricao;
+        String dataMelhorada = dataHora.format(FORMATO);
+        return "[" + dataMelhorada + "] " + usuario + " - " + acao + " → " + descricao;
     }
 }
