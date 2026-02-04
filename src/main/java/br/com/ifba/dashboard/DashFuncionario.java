@@ -28,17 +28,59 @@ public class DashFuncionario extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        lblImagemServico = new javax.swing.JLabel();
+        btnServicos = new javax.swing.JButton();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        meMenuPrincipal = new javax.swing.JMenu();
+        meMeusDados = new javax.swing.JMenuItem();
+        meSobre = new javax.swing.JMenuItem();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        lblImagemServico.setFont(new java.awt.Font("Liberation Sans", 0, 25)); // NOI18N
+        lblImagemServico.setText("Imagem de serviço");
+
+        btnServicos.setFont(new java.awt.Font("Liberation Sans", 0, 25)); // NOI18N
+        btnServicos.setText("Serviços");
+
+        jMenuBar1.setFont(new java.awt.Font("Liberation Sans", 0, 25)); // NOI18N
+
+        meMenuPrincipal.setText("Menu");
+
+        meMeusDados.setFont(new java.awt.Font("Liberation Sans", 0, 25)); // NOI18N
+        meMeusDados.setText("Meus dados");
+        meMenuPrincipal.add(meMeusDados);
+
+        meSobre.setFont(new java.awt.Font("Liberation Sans", 0, 25)); // NOI18N
+        meSobre.setText("Sobre");
+        meMenuPrincipal.add(meSobre);
+
+        jMenuBar1.add(meMenuPrincipal);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(357, 357, 357)
+                        .addComponent(lblImagemServico))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(406, 406, 406)
+                        .addComponent(btnServicos)))
+                .addGap(105, 375, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(171, 171, 171)
+                .addComponent(lblImagemServico)
+                .addGap(174, 174, 174)
+                .addComponent(btnServicos)
+                .addContainerGap(176, Short.MAX_VALUE))
         );
 
         pack();
@@ -70,5 +112,11 @@ public class DashFuncionario extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnServicos;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JLabel lblImagemServico;
+    private javax.swing.JMenu meMenuPrincipal;
+    private javax.swing.JMenuItem meMeusDados;
+    private javax.swing.JMenuItem meSobre;
     // End of variables declaration//GEN-END:variables
 }
