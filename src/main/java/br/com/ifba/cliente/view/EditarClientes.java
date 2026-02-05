@@ -14,7 +14,6 @@ import org.springframework.stereotype.Component;
 import br.com.ifba.infrastructure.viewlistener.ClienteAlteradoListener;
 import br.com.ifba.infrastructure.viewlistener.ClienteAtualizadoListener;
 import br.com.ifba.infrastructure.windowmanager.WindowManager;
-import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Component
@@ -38,8 +37,8 @@ public class EditarClientes extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }
     
-    @PostConstruct
-    private void init() {
+
+    public void init() {
         this.cliente = windowManager.getClienteSelecionado();
 
         if (cliente != null) {

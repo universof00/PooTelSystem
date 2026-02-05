@@ -35,8 +35,7 @@ public class AdicionarReservas extends javax.swing.JFrame {
         initComponents();
     }
     
-     @PostConstruct
-    private void init() {
+    public void init() {
         this.cliente = windowManager.getClienteSelecionado();
     }
 

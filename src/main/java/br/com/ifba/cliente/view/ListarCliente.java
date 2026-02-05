@@ -17,6 +17,7 @@ import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 /**
@@ -24,6 +25,7 @@ import org.springframework.stereotype.Component;
  * @author raiii
  */
 @Component
+@Lazy
 public class ListarCliente extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ListarCliente.class.getName());
@@ -175,7 +177,9 @@ private void criarModeloTabela() {
 
                 if (cliente != null) {
                     windowManager.setClienteSelecionado(cliente);
-                    windowManager.navigate(ListarCliente.this, DetalheCliente.class);
+                    DetalheCliente telaDetalhe = windowManager.navigate(ListarCliente.this, DetalheCliente.class);
+                    telaDetalhe.initCliente();
+                    atualizarTabela();
                 }
             }
         }

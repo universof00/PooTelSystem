@@ -12,10 +12,9 @@ import br.com.ifba.usuario.controller.UsuarioIController;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import br.com.ifba.infrastructure.viewlistener.ClienteAtualizadoListener;
 import br.com.ifba.infrastructure.windowmanager.WindowManager;
-import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 /**
@@ -23,6 +22,7 @@ import org.springframework.stereotype.Component;
  * @author raiii
  */
 @Component
+@Lazy
 public class DetalheCliente extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(DetalheCliente.class.getName());
@@ -44,10 +44,12 @@ public class DetalheCliente extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }
     
-    private void initCliente() {
+    public void initCliente() {
         this.cliente = windowManager.getClienteSelecionado();
-        carregarDados();
-        carregarReservas();
+        if (this.cliente != null) {
+            carregarDados();
+            carregarReservas();
+        }
     }
     
     
@@ -222,8 +224,8 @@ public class DetalheCliente extends javax.swing.JFrame {
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         windowManager.setClienteSelecionado(cliente);
-        windowManager.navigate(this, EditarClientes.class);
-        atualizarDados();
+        EditarClientes telaEdicao = windowManager.navigate(this, EditarClientes.class);
+        telaEdicao.init();
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
@@ -246,7 +248,8 @@ public class DetalheCliente extends javax.swing.JFrame {
 
     private void btnAdicionarReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarReservaActionPerformed
         windowManager.setClienteSelecionado(cliente);
-        windowManager.navigate(this, AdicionarReservas.class);
+        AdicionarReservas telaReserva = windowManager.navigate(this, AdicionarReservas.class);
+        telaReserva.init();
         carregarReservas();
     }//GEN-LAST:event_btnAdicionarReservaActionPerformed
 

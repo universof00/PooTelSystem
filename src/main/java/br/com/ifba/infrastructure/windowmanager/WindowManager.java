@@ -46,8 +46,8 @@ public class WindowManager {
     }
 
     // Método para fechar a tela atual e abrir outra
-    public <T extends JFrame> void navigate(JFrame current, Class<T> nextScreenClass) {
+    public <T extends JFrame> T navigate(JFrame current, Class<T> nextScreenClass) {
         //current.dispose();
-        open(nextScreenClass);
+        return open(nextScreenClass);
     }
 }
