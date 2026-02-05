@@ -10,8 +10,10 @@ import br.com.ifba.cliente.entity.Cliente;
 import br.com.ifba.funcionario.controller.FuncionarioIController;
 import br.com.ifba.funcionario.entity.Funcionario;
 import br.com.ifba.infrastructure.viewlistener.FuncionarioAtualizadoListener;
+import br.com.ifba.infrastructure.windowmanager.WindowManager;
 import br.com.ifba.reserva.controller.ReservaIController;
 import br.com.ifba.usuario.controller.UsuarioIController;
+import jakarta.annotation.PostConstruct;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
@@ -31,20 +33,26 @@ public class ListarFuncionarios extends javax.swing.JFrame {
 
     private TableRowSorter<DefaultTableModel> sorter;
     private DefaultTableModel modelo;
+    
+    @Autowired
+    private WindowManager windowManager;
     @Autowired
     private FuncionarioIController funcionarioIController;
+    @Autowired
     private UsuarioIController usuarioIController;
-    public ListarFuncionarios(FuncionarioIController funcionarioIController, UsuarioIController usuarioIController) {
-        this.funcionarioIController = funcionarioIController;
-        this.usuarioIController = usuarioIController;
+    public ListarFuncionarios() {
         
         initComponents();
         criarModeloTabela();
         configurarTabela();
         configurarAcoesTabela();
         corrigirScroll();
-        atualizarTabela();
         setLocationRelativeTo(null);
+    }
+    
+    @PostConstruct
+    private void init() {
+        atualizarTabela();
     }
 
     @SuppressWarnings("unchecked")
@@ -167,10 +175,8 @@ private void criarModeloTabela() {
                 Funcionario funcionario = funcionarioIController.findById(id);
 
                 if (funcionario != null) {
-                    FuncionarioAtualizadoListener listener = () -> atualizarTabela();
-                    DetalhesFuncionario tela =
-                        new DetalhesFuncionario(funcionario, funcionarioIController,usuarioIController, listener);
-                        tela.setVisible(true);
+                    windowManager.setFuncionarioSelecionado(funcionario);
+                    windowManager.navigate(ListarFuncionarios.this, DetalhesFuncionario.class);
                 }
             }
         }

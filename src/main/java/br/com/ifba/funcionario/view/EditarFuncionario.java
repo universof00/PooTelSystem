@@ -8,23 +8,39 @@ import br.com.ifba.funcionario.entity.Funcionario;
 import br.com.ifba.infrastructure.util.Utils;
 import br.com.ifba.infrastructure.viewlistener.FuncionarioAlteradoListener;
 import br.com.ifba.infrastructure.viewlistener.FuncionarioAtualizadoListener;
+import br.com.ifba.infrastructure.windowmanager.WindowManager;
 import br.com.ifba.login.termosUso.TermosUso;
 import br.com.ifba.usuario.controller.UsuarioIController;
 import br.com.ifba.usuario.entity.Usuario;
+import jakarta.annotation.PostConstruct;
 import javax.swing.JOptionPane;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public class EditarFuncionario extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(EditarFuncionario.class.getName());
+    
+    @Autowired
+    private WindowManager windowManager;
+
     private Funcionario funcionario;
-    private final UsuarioIController usuarioIController;
-    private final FuncionarioAtualizadoListener funcionarioAtualizadoListener;
-    public EditarFuncionario(Funcionario funcionario, UsuarioIController usuarioIController, FuncionarioAtualizadoListener funcionarioAtualizadoListener) { 
-        this.funcionario = funcionario;
-        this.usuarioIController = usuarioIController;
-        this.funcionarioAtualizadoListener = funcionarioAtualizadoListener;
+    @Autowired
+    private UsuarioIController usuarioIController;
+    /*@Autowired
+    private FuncionarioAtualizadoListener funcionarioAtualizadoListener;*/
+    public EditarFuncionario() { 
         initComponents();
-        preencherCampos();
+    }
+    
+    @PostConstruct
+    private void init() {
+        this.funcionario = windowManager.getFuncionarioSelecionado();
+
+        if (funcionario != null) {
+            preencherCampos();
+        }
     }
 
     private void preencherCampos() {
@@ -160,9 +176,9 @@ public class EditarFuncionario extends javax.swing.JFrame {
         try {
             usuarioIController.update(funcionario, usuario);
             
-            if (funcionarioAtualizadoListener != null) {
+            /*if (funcionarioAtualizadoListener != null) {
                 funcionarioAtualizadoListener.onFuncionarioAtualizado();
-            }
+            }*/
             Utils.mostrarSucesso(this, "Dados atualizados com sucesso!");
             dispose();
         } catch (RuntimeException e) {

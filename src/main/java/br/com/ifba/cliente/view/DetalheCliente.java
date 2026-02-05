@@ -13,36 +13,43 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import br.com.ifba.infrastructure.viewlistener.ClienteAtualizadoListener;
+import br.com.ifba.infrastructure.windowmanager.WindowManager;
+import jakarta.annotation.PostConstruct;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author raiii
  */
+@Component
 public class DetalheCliente extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(DetalheCliente.class.getName());
-
+    @Autowired
+    private WindowManager windowManager;
     private Cliente cliente;
+    @Autowired
     private ClienteIController clienteIController;
-    private ClienteAtualizadoListener clienteAtualizadoListener;
+    /*@Autowired
+    private ClienteAtualizadoListener clienteAtualizadoListener;*/
+    @Autowired
     private ReservaIController reservaIController;
+    @Autowired
     private UsuarioIController usuarioIController;
-    public DetalheCliente(Cliente cliente, ClienteIController clienteIController, 
-            ClienteAtualizadoListener clienteAtualizadoListener, 
-            ReservaIController reservaIController, UsuarioIController usuarioIController) {
-        
-        this.cliente = cliente;
-        this.clienteIController = clienteIController;
-        this.clienteAtualizadoListener = clienteAtualizadoListener;
-        this.reservaIController = reservaIController;
-        this.usuarioIController = usuarioIController;
-        
+    
+    public DetalheCliente() {
         initComponents();
         configurarTabelaReservas();
-        carregarDados();
-        carregarReservas();
         setLocationRelativeTo(null);
     }
+    
+    private void initCliente() {
+        this.cliente = windowManager.getClienteSelecionado();
+        carregarDados();
+        carregarReservas();
+    }
+    
     
     private void carregarDados() {
         lblNome.setText("Nome: " + cliente.getNome());
@@ -55,9 +62,9 @@ public class DetalheCliente extends javax.swing.JFrame {
         lblCpf.setText("CPF: " + cliente.getCpf());
         lblTelefone.setText("Telefone: " + cliente.getTelefone());
 
-        if (clienteAtualizadoListener != null) {
+        /*if (clienteAtualizadoListener != null) {
             clienteAtualizadoListener.onClienteAtualizado();
-        }
+        }*/
     }
     
     private void configurarTabelaReservas() {
@@ -214,8 +221,9 @@ public class DetalheCliente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        EditarClientes tela = new EditarClientes(cliente, clienteIController, clienteAtualizadoListener, usuarioIController);
-        tela.setVisible(true);
+        windowManager.setClienteSelecionado(cliente);
+        windowManager.navigate(this, EditarClientes.class);
+        atualizarDados();
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
@@ -228,17 +236,18 @@ public class DetalheCliente extends javax.swing.JFrame {
 
         if (opc == JOptionPane.YES_OPTION) {
             clienteIController.delete(cliente);
-            if (clienteAtualizadoListener != null) {
+            /*if (clienteAtualizadoListener != null) {
                 clienteAtualizadoListener.onClienteAtualizado();
-            }
+            }*/
             JOptionPane.showMessageDialog(this, "Cliente excluído!");
             dispose(); // fecha a tela de detalhes
         }
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void btnAdicionarReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarReservaActionPerformed
-        AdicionarReservas tela = new AdicionarReservas(cliente, reservaIController, () -> carregarReservas());
-        tela.setVisible(true);
+        windowManager.setClienteSelecionado(cliente);
+        windowManager.navigate(this, AdicionarReservas.class);
+        carregarReservas();
     }//GEN-LAST:event_btnAdicionarReservaActionPerformed
 
     private void btnCancelarReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarReservaActionPerformed

@@ -7,8 +7,10 @@ package br.com.ifba.cliente.view;
 import br.com.ifba.cliente.controller.ClienteIController;
 import br.com.ifba.cliente.entity.Cliente;
 import br.com.ifba.infrastructure.viewlistener.ClienteAtualizadoListener;
+import br.com.ifba.infrastructure.windowmanager.WindowManager;
 import br.com.ifba.reserva.controller.ReservaIController;
 import br.com.ifba.usuario.controller.UsuarioIController;
+import jakarta.annotation.PostConstruct;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
@@ -28,22 +30,27 @@ public class ListarCliente extends javax.swing.JFrame {
 
     private TableRowSorter<DefaultTableModel> sorter;
     private DefaultTableModel modelo;
+    
+    @Autowired
+    private WindowManager windowManager;
     @Autowired
     private ClienteIController clienteIController;
+    @Autowired
     private ReservaIController reservaIController;
+    @Autowired
     private UsuarioIController usuarioIController;
-    public ListarCliente(ClienteIController clienteIController, ReservaIController reservaIController, UsuarioIController usuarioIController) {
-        this.clienteIController = clienteIController;
-        this.reservaIController = reservaIController;
-        this.usuarioIController = usuarioIController;
-        
+    public ListarCliente() {
         initComponents();
         criarModeloTabela();
         configurarTabela();
         configurarAcoesTabela();
         corrigirScroll();
-        atualizarTabela();
         setLocationRelativeTo(null);
+    }
+    
+    @PostConstruct
+    private void init() {
+        atualizarTabela();
     }
 
     @SuppressWarnings("unchecked")
@@ -167,10 +174,8 @@ private void criarModeloTabela() {
                 Cliente cliente = clienteIController.findById(id);
 
                 if (cliente != null) {
-                    ClienteAtualizadoListener listener = () -> atualizarTabela();
-                    DetalheCliente tela =
-                        new DetalheCliente(cliente, clienteIController, listener, reservaIController, usuarioIController);
-                        tela.setVisible(true);
+                    windowManager.setClienteSelecionado(cliente);
+                    windowManager.navigate(ListarCliente.this, DetalheCliente.class);
                 }
             }
         }

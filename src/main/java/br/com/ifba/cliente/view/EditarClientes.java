@@ -13,34 +13,38 @@ import javax.swing.JOptionPane;
 import org.springframework.stereotype.Component;
 import br.com.ifba.infrastructure.viewlistener.ClienteAlteradoListener;
 import br.com.ifba.infrastructure.viewlistener.ClienteAtualizadoListener;
+import br.com.ifba.infrastructure.windowmanager.WindowManager;
+import jakarta.annotation.PostConstruct;
+import org.springframework.beans.factory.annotation.Autowired;
 
-/**
- *
- * @author raiii
- */
-
-
+@Component
 public class EditarClientes extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(EditarClientes.class.getName());
-    /**
-     * Creates new form UsuarioCadastro
-     */
-    private final Cliente cliente;
-    private final UsuarioIController usuarioIController;
-    private final ClienteIController clienteIController;
-    private final ClienteAtualizadoListener clienteAtualizadoListener;
     
-    public EditarClientes(Cliente cliente,
-            ClienteIController clienteIController,
-            ClienteAtualizadoListener clienteAtualizadoListener, UsuarioIController usuarioIController) {
-        this.usuarioIController = usuarioIController;
-        this.cliente = cliente;
-        this.clienteIController = clienteIController;
-        this.clienteAtualizadoListener = clienteAtualizadoListener;
+    @Autowired
+    private WindowManager windowManager;
+    
+    private Cliente cliente;
+    @Autowired
+    private UsuarioIController usuarioIController;
+    @Autowired
+    private ClienteIController clienteIController;
+    /*@Autowired
+    private ClienteAtualizadoListener clienteAtualizadoListener;*/
+    
+    public EditarClientes() {
         initComponents();
-        preencherCampos();
         setLocationRelativeTo(null);
+    }
+    
+    @PostConstruct
+    private void init() {
+        this.cliente = windowManager.getClienteSelecionado();
+
+        if (cliente != null) {
+            preencherCampos();
+        }
     }
 
     private void preencherCampos() {
@@ -176,9 +180,9 @@ public class EditarClientes extends javax.swing.JFrame {
         usuario.setEmail(email);
         try {
             usuarioIController.update(cliente, usuario);
-            if (clienteAtualizadoListener != null) {
+            /*if (clienteAtualizadoListener != null) {
                 clienteAtualizadoListener.onClienteAtualizado();
-            }
+            }*/
             Utils.mostrarSucesso(this, "Dados atualizados com sucesso!");
             dispose();
         } catch (RuntimeException e) {

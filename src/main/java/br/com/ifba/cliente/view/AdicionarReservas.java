@@ -7,30 +7,37 @@ package br.com.ifba.cliente.view;
 import br.com.ifba.cliente.entity.Cliente;
 import br.com.ifba.infrastructure.util.Utils;
 import br.com.ifba.infrastructure.viewlistener.ReservaAlteradaListener;
+import br.com.ifba.infrastructure.windowmanager.WindowManager;
 import br.com.ifba.reserva.controller.ReservaIController;
 import br.com.ifba.reserva.entity.Reserva;
+import jakarta.annotation.PostConstruct;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-/**
- *
- * @author raiii
- */
+@Component
 public class AdicionarReservas extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(AdicionarReservas.class.getName());
-
-    private final Cliente cliente;
-    private final ReservaIController reservaIController;
-    private final ReservaAlteradaListener reservaAlteradaListener;
-    public AdicionarReservas(Cliente cliente, ReservaIController reservaIController, ReservaAlteradaListener reservaAlteradaListener) {
-        this.cliente = cliente;
-        this.reservaIController = reservaIController;
-        this.reservaAlteradaListener = reservaAlteradaListener;
-        
+    
+    
+    @Autowired
+    private WindowManager windowManager;
+    
+    private Cliente cliente;
+    @Autowired
+    private ReservaIController reservaIController;
+    /*@Autowired
+    private ReservaAlteradaListener reservaAlteradaListener;*/
+    public AdicionarReservas() {
         initComponents();
-        setLocationRelativeTo(null);
+    }
+    
+     @PostConstruct
+    private void init() {
+        this.cliente = windowManager.getClienteSelecionado();
     }
 
     @SuppressWarnings("unchecked")
@@ -124,6 +131,10 @@ public class AdicionarReservas extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        if (cliente == null) {
+            Utils.mostrarErro(this, "Cliente não informado.");
+            return;
+        }  
         String valorTxt = txtValorTotal.getText().trim();
         String dataEntradaTxt = txtDataEntrada.getText().trim();
         String dataSaidaTxt = txtDataSaida.getText().trim();
@@ -163,9 +174,9 @@ public class AdicionarReservas extends javax.swing.JFrame {
 
         try {
             reservaIController.save(reserva);
-            if (reservaAlteradaListener != null) {
+            /*if (reservaAlteradaListener != null) {
                 reservaAlteradaListener.onReservaAlterada();
-            }
+            }*/
 
             Utils.mostrarSucesso(this, "Reserva cadastrada com sucesso!");
             dispose();
