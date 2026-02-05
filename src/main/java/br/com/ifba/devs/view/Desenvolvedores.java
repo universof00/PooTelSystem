@@ -4,10 +4,13 @@
  */
 package br.com.ifba.devs.view;
 
+import org.springframework.stereotype.Component;
+
 /**
  *
  * @author igo
  */
+@Component
 public class Desenvolvedores extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Desenvolvedores.class.getName());
