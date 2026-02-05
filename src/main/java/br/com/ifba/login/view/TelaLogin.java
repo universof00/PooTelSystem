@@ -9,12 +9,14 @@ import br.com.ifba.dashboard.DashFuncionario;
 import br.com.ifba.dashboard.DashUsuario;
 import br.com.ifba.devs.view.Desenvolvedores;
 import br.com.ifba.enums.TipoPerfil;
+import br.com.ifba.infrastructure.windowmanager.WindowManager;
 import br.com.ifba.login.termosUso.TermosUso;
 import br.com.ifba.usuario.controller.UsuarioIController;
 import br.com.ifba.usuario.entity.Usuario;
 import br.com.ifba.usuario.view.MenuCliente;
 import br.com.ifba.usuario.view.UsuarioCadastro;
 import javax.swing.JOptionPane;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -29,6 +31,10 @@ public class TelaLogin extends javax.swing.JFrame {
     /**
      * Creates new form TelaLogin
      */
+    
+    @Autowired
+    private WindowManager windowManager;
+    
     private UsuarioIController usuarioIController;
     public TelaLogin(UsuarioIController usuarioIController) {
         this.usuarioIController = usuarioIController;
@@ -242,19 +248,17 @@ public class TelaLogin extends javax.swing.JFrame {
 
         try {
             Usuario usuarioAutenticado = usuarioIController.authenticate(usuario, senha);
+            usuarioAutenticado.setPerfil(TipoPerfil.ADM);
             TipoPerfil perfil = usuarioAutenticado.getPerfil();
             switch(perfil){
                 case ADM -> {
-                    DashAdmin telaLogin = new DashAdmin();
-                    telaLogin.setVisible(true);
+                   windowManager.navigate(this, DashAdmin.class);
                 }
                 case FUNCIONARIO -> {
-                    DashFuncionario telaLogin2 = new DashFuncionario();
-                    telaLogin2.setVisible(true);
+                    windowManager.navigate(this, DashFuncionario.class);
                 }
                 case CLIENTE -> {
-                    DashUsuario telaLogin3 = new DashUsuario();
-                    telaLogin3.setVisible(true);
+                   windowManager.navigate(this, DashUsuario.class);
                 }
                 default -> JOptionPane.showMessageDialog(rootPane, "O Batman está de olho....");
                     
@@ -279,8 +283,7 @@ public class TelaLogin extends javax.swing.JFrame {
 
     private void lblDevsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblDevsMouseClicked
         // TODO add your handling code here:
-        Desenvolvedores tela = new Desenvolvedores();
-        tela.setVisible(true);
+        windowManager.navigate(this, Desenvolvedores.class);
     }//GEN-LAST:event_lblDevsMouseClicked
 
     /**
