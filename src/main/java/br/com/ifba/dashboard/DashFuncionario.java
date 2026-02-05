@@ -42,7 +42,7 @@ public class DashFuncionario extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         lblImagemServico.setFont(new java.awt.Font("Liberation Sans", 0, 25)); // NOI18N
-        lblImagemServico.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/ifba/dashboard/images/pootelimage4 (2).png"))); // NOI18N
+        lblImagemServico.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/pootelimage4 (2).png"))); // NOI18N
 
         btnServicos.setFont(new java.awt.Font("Liberation Sans", 0, 25)); // NOI18N
         btnServicos.setText("Serviços");

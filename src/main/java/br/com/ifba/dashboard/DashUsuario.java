@@ -45,13 +45,13 @@ public class DashUsuario extends javax.swing.JFrame {
         setPreferredSize(new java.awt.Dimension(965, 677));
 
         lblImagemReserva.setFont(new java.awt.Font("Liberation Sans", 0, 25)); // NOI18N
-        lblImagemReserva.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/ifba/dashboard/images/pootelimag1 (1).jpg"))); // NOI18N
+        lblImagemReserva.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/pootelimag1 (1).jpg"))); // NOI18N
 
         btnReservar.setFont(new java.awt.Font("Liberation Sans", 0, 25)); // NOI18N
         btnReservar.setText("Reservar");
 
         lblImagemMinhasReservas.setFont(new java.awt.Font("Liberation Sans", 0, 25)); // NOI18N
-        lblImagemMinhasReservas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/ifba/dashboard/images/pootelimag3 (1).jpg"))); // NOI18N
+        lblImagemMinhasReservas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/pootelimag3 (1).jpg"))); // NOI18N
 
         btnMinhasReservas.setFont(new java.awt.Font("Liberation Sans", 0, 25)); // NOI18N
         btnMinhasReservas.setText("Minhas Reservas");

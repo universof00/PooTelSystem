@@ -42,7 +42,7 @@ public class DashAdmin extends javax.swing.JFrame {
         btnAuditoria.addActionListener(this::btnAuditoriaActionPerformed);
 
         lblImagemAuditoria.setFont(new java.awt.Font("Liberation Sans", 0, 25)); // NOI18N
-        lblImagemAuditoria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/ifba/dashboard/images/pootelimag5 (1).jpg"))); // NOI18N
+        lblImagemAuditoria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/pootelimag5 (1).jpg"))); // NOI18N
 
         lblBemVindo.setFont(new java.awt.Font("Liberation Sans", 0, 36)); // NOI18N
         lblBemVindo.setText("Seja Bem-Vindo, ");
