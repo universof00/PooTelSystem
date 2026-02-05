@@ -6,14 +6,9 @@ package br.com.ifba.funcionario.view;
 
 import br.com.ifba.funcionario.entity.Funcionario;
 import br.com.ifba.infrastructure.util.Utils;
-import br.com.ifba.infrastructure.viewlistener.FuncionarioAlteradoListener;
-import br.com.ifba.infrastructure.viewlistener.FuncionarioAtualizadoListener;
 import br.com.ifba.infrastructure.windowmanager.WindowManager;
-import br.com.ifba.login.termosUso.TermosUso;
 import br.com.ifba.usuario.controller.UsuarioIController;
 import br.com.ifba.usuario.entity.Usuario;
-import jakarta.annotation.PostConstruct;
-import javax.swing.JOptionPane;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -28,14 +23,11 @@ public class EditarFuncionario extends javax.swing.JFrame {
     private Funcionario funcionario;
     @Autowired
     private UsuarioIController usuarioIController;
-    /*@Autowired
-    private FuncionarioAtualizadoListener funcionarioAtualizadoListener;*/
     public EditarFuncionario() { 
         initComponents();
     }
     
-    @PostConstruct
-    private void init() {
+    public void init() {
         this.funcionario = windowManager.getFuncionarioSelecionado();
 
         if (funcionario != null) {
@@ -175,10 +167,6 @@ public class EditarFuncionario extends javax.swing.JFrame {
         usuario.setEmail(email);
         try {
             usuarioIController.update(funcionario, usuario);
-            
-            /*if (funcionarioAtualizadoListener != null) {
-                funcionarioAtualizadoListener.onFuncionarioAtualizado();
-            }*/
             Utils.mostrarSucesso(this, "Dados atualizados com sucesso!");
             dispose();
         } catch (RuntimeException e) {

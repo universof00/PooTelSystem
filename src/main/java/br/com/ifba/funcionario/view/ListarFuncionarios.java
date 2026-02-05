@@ -20,13 +20,12 @@ import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
-/**
- *
- * @author raiii
- */
+
 @Component
+@Lazy
 public class ListarFuncionarios extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ListarFuncionarios.class.getName());
@@ -49,9 +48,9 @@ public class ListarFuncionarios extends javax.swing.JFrame {
         corrigirScroll();
         setLocationRelativeTo(null);
     }
-    
+
     @PostConstruct
-    private void init() {
+    public void init() {
         atualizarTabela();
     }
 
@@ -176,7 +175,9 @@ private void criarModeloTabela() {
 
                 if (funcionario != null) {
                     windowManager.setFuncionarioSelecionado(funcionario);
-                    windowManager.navigate(ListarFuncionarios.this, DetalhesFuncionario.class);
+                    DetalhesFuncionario telaDetalhe = windowManager.navigate(ListarFuncionarios.this, DetalhesFuncionario.class);
+                    telaDetalhe.initFuncionario();
+                    atualizarTabela();
                 }
             }
         }

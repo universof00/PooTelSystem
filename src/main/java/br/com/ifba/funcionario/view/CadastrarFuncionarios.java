@@ -4,15 +4,11 @@
  */
 package br.com.ifba.funcionario.view;
 
-import br.com.ifba.usuario.view.*;
-import br.com.ifba.cliente.controller.ClienteIController;
-import br.com.ifba.cliente.entity.Cliente;
-import br.com.ifba.enums.TipoPerfil;
 import br.com.ifba.funcionario.entity.Funcionario;
 import br.com.ifba.infrastructure.util.Utils;
-import br.com.ifba.login.termosUso.TermosUso;
 import br.com.ifba.usuario.controller.UsuarioIController;
 import br.com.ifba.usuario.entity.Usuario;
+import java.math.BigDecimal;
 import javax.swing.JOptionPane;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -182,9 +178,10 @@ public class CadastrarFuncionarios extends javax.swing.JFrame {
         String senha = txtSenha.getText().trim();
         String servico = txtServico.getText().trim();
 
-        Long salario;
+        BigDecimal salario;
         try {
-            salario = Long.parseLong(txtSalario.getText().trim());
+            String salarioTexto = txtSalario.getText().trim().replace(",", ".");
+            salario = new BigDecimal(salarioTexto);
         } catch (NumberFormatException e) {
             Utils.mostrarErro(this, "Salário inválido. Digite apenas números.");
             return;
@@ -209,7 +206,7 @@ public class CadastrarFuncionarios extends javax.swing.JFrame {
         funcionario.setCpf(cpf);
         funcionario.setTelefone(telefone);
         funcionario.setEndereco(endereco);
-        //funcionario.setSalario(salario);   
+        funcionario.setSalario(salario);   
         funcionario.setServico(servico);  
 
         Usuario usuario = new Usuario();

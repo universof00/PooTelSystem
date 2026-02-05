@@ -20,9 +20,11 @@ import br.com.ifba.infrastructure.viewlistener.FuncionarioAtualizadoListener;
 import br.com.ifba.infrastructure.windowmanager.WindowManager;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 @Component
+@Lazy
 public class DetalhesFuncionario extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(DetalhesFuncionario.class.getName());
@@ -34,21 +36,22 @@ public class DetalhesFuncionario extends javax.swing.JFrame {
     private FuncionarioIController funcionarioIController;
     @Autowired
     private UsuarioIController usuarioIController;
-    /*@Autowired
-    private FuncionarioAtualizadoListener funcionarioAtualizadoListener;*/
     public DetalhesFuncionario() {     
         initComponents();
         configurarTabelaFuncionarios();
     }
-    
-
-    private void initCliente() {
+   
+    @PostConstruct
+    public void initFuncionario() {
         this.funcionario = windowManager.getFuncionarioSelecionado();
-        carregarFuncionario(funcionario);
-        carregarDados();
+        if (this.funcionario != null){
+            carregarFuncionario(funcionario);
+            carregarDados();
+        }
     }
     
     private void carregarDados() {
+        System.out.println("Funcionario: " + funcionario.getNome() + " | Salário: " + funcionario.getSalario());
         lblNome.setText("Nome: " + funcionario.getNome());
         lblCpf.setText("CPF: " + funcionario.getCpf());
         lblTelefone.setText("Telefone: " + funcionario.getTelefone());
@@ -79,12 +82,16 @@ public class DetalhesFuncionario extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) tblDetalhes.getModel();
         model.setRowCount(0);
 
+    // Verificamos se o salário não é nulo para evitar erro de NullPointerException
+        String salarioFormatado = (funcionario.getSalario() != null) 
+            ? "R$ " + funcionario.getSalario().toString() 
+            : "Não informado";
+
         model.addRow(new Object[]{
             funcionario.getServico(),
-            funcionario.getSalario()
+            salarioFormatado  // Agora passamos uma String
         });
     }
-
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -190,9 +197,8 @@ public class DetalhesFuncionario extends javax.swing.JFrame {
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         windowManager.setFuncionarioSelecionado(funcionario);
-        windowManager.navigate(this, EditarFuncionario.class);
-        atualizarDados();
-        configurarTabelaFuncionarios();
+        EditarFuncionario telaEdicao = windowManager.navigate(this, EditarFuncionario.class);
+        telaEdicao.init();
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
@@ -205,9 +211,6 @@ public class DetalhesFuncionario extends javax.swing.JFrame {
 
         if (opc == JOptionPane.YES_OPTION) {
             funcionarioIController.delete(funcionario);
-            /*if (funcionarioAtualizadoListener != null) {
-                funcionarioAtualizadoListener.onFuncionarioAtualizado();
-            }*/
             JOptionPane.showMessageDialog(this, "Funcionário excluído!");
             dispose(); // fecha a tela de detalhes
         }
