@@ -5,6 +5,11 @@
 package br.com.ifba.dashboard;
 
 import br.com.ifba.auditoria.view.AuditoriaLog;
+import br.com.ifba.cliente.view.ListarCliente;
+import br.com.ifba.funcionario.view.ListarFuncionarios;
+import br.com.ifba.hotel.view.HotelLitar;
+import br.com.ifba.infrastructure.windowmanager.WindowManager;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -17,6 +22,10 @@ public class DashAdmin extends javax.swing.JFrame {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(DashAdmin.class.getName());
 
     private AuditoriaLog auditoriaLog;
+    
+    @Autowired
+    private WindowManager windowManager;
+    
     public DashAdmin() {
         initComponents();
     }
@@ -54,14 +63,17 @@ public class DashAdmin extends javax.swing.JFrame {
 
         meCiente.setFont(new java.awt.Font("Liberation Sans", 0, 25)); // NOI18N
         meCiente.setText("Cliente");
+        meCiente.addActionListener(this::meCienteActionPerformed);
         meMenuPrincipal.add(meCiente);
 
         meFuncionario.setFont(new java.awt.Font("Liberation Sans", 0, 25)); // NOI18N
         meFuncionario.setText("Funcionario");
+        meFuncionario.addActionListener(this::meFuncionarioActionPerformed);
         meMenuPrincipal.add(meFuncionario);
 
         meHotel.setFont(new java.awt.Font("Liberation Sans", 0, 25)); // NOI18N
         meHotel.setText("Hotel");
+        meHotel.addActionListener(this::meHotelActionPerformed);
         meMenuPrincipal.add(meHotel);
 
         meSobre.setFont(new java.awt.Font("Liberation Sans", 0, 25)); // NOI18N
@@ -106,11 +118,24 @@ public class DashAdmin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAuditoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAuditoriaActionPerformed
-        if (auditoriaLog == null) {
-        auditoriaLog = new AuditoriaLog();
-    }
-    auditoriaLog.setVisible(true);
+
+        windowManager.navigate(this, AuditoriaLog.class);
     }//GEN-LAST:event_btnAuditoriaActionPerformed
+
+    private void meHotelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_meHotelActionPerformed
+        // TODO add your handling code here:
+        windowManager.navigate(this, HotelLitar.class);
+    }//GEN-LAST:event_meHotelActionPerformed
+
+    private void meFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_meFuncionarioActionPerformed
+        // TODO add your handling code here:
+        windowManager.navigate(this, ListarFuncionarios.class);
+    }//GEN-LAST:event_meFuncionarioActionPerformed
+
+    private void meCienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_meCienteActionPerformed
+        // TODO add your handling code here:
+        windowManager.navigate(this, ListarCliente.class);
+    }//GEN-LAST:event_meCienteActionPerformed
 
     /**
      * @param args the command line arguments
