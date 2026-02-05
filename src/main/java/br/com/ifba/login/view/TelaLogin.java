@@ -242,7 +242,6 @@ public class TelaLogin extends javax.swing.JFrame {
 
         try {
             Usuario usuarioAutenticado = usuarioIController.authenticate(usuario, senha);
-            usuarioAutenticado.setPerfil(TipoPerfil.ADM);
             TipoPerfil perfil = usuarioAutenticado.getPerfil();
             switch(perfil){
                 case ADM -> {
