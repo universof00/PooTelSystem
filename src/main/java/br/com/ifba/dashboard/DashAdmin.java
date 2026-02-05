@@ -42,7 +42,7 @@ public class DashAdmin extends javax.swing.JFrame {
         btnAuditoria.addActionListener(this::btnAuditoriaActionPerformed);
 
         lblImagemAuditoria.setFont(new java.awt.Font("Liberation Sans", 0, 25)); // NOI18N
-        lblImagemAuditoria.setText("Imagem de auditoria");
+        lblImagemAuditoria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/ifba/dashboard/images/pootelimag5 (1).jpg"))); // NOI18N
 
         lblBemVindo.setFont(new java.awt.Font("Liberation Sans", 0, 36)); // NOI18N
         lblBemVindo.setText("Seja Bem-Vindo, ");
@@ -76,28 +76,30 @@ public class DashAdmin extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 227, Short.MAX_VALUE)
+                .addComponent(lblImagemAuditoria)
+                .addGap(221, 221, 221))
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnAuditoria)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(37, 37, 37)
-                            .addComponent(lblBemVindo))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(344, 344, 344)
-                            .addComponent(lblImagemAuditoria))))
-                .addContainerGap(390, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(37, 37, 37)
+                        .addComponent(lblBemVindo))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(362, 362, 362)
+                        .addComponent(btnAuditoria)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(36, 36, 36)
                 .addComponent(lblBemVindo)
-                .addGap(148, 148, 148)
+                .addGap(112, 112, 112)
                 .addComponent(lblImagemAuditoria)
-                .addGap(139, 139, 139)
+                .addGap(73, 73, 73)
                 .addComponent(btnAuditoria)
-                .addContainerGap(209, Short.MAX_VALUE))
+                .addContainerGap(175, Short.MAX_VALUE))
         );
 
         pack();

@@ -45,13 +45,13 @@ public class DashUsuario extends javax.swing.JFrame {
         setPreferredSize(new java.awt.Dimension(965, 677));
 
         lblImagemReserva.setFont(new java.awt.Font("Liberation Sans", 0, 25)); // NOI18N
-        lblImagemReserva.setText("Imagem de reserva");
+        lblImagemReserva.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/ifba/dashboard/images/pootelimag1 (1).jpg"))); // NOI18N
 
         btnReservar.setFont(new java.awt.Font("Liberation Sans", 0, 25)); // NOI18N
         btnReservar.setText("Reservar");
 
         lblImagemMinhasReservas.setFont(new java.awt.Font("Liberation Sans", 0, 25)); // NOI18N
-        lblImagemMinhasReservas.setText("Imagem de Minhas reservas");
+        lblImagemMinhasReservas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/ifba/dashboard/images/pootelimag3 (1).jpg"))); // NOI18N
 
         btnMinhasReservas.setFont(new java.awt.Font("Liberation Sans", 0, 25)); // NOI18N
         btnMinhasReservas.setText("Minhas Reservas");
@@ -80,36 +80,37 @@ public class DashUsuario extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(103, 103, 103)
-                .addComponent(lblImagemReserva)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 220, Short.MAX_VALUE)
-                .addComponent(lblImagemMinhasReservas)
-                .addGap(115, 115, 115))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(136, 136, 136)
-                .addComponent(btnReservar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnMinhasReservas)
-                .addGap(124, 124, 124))
-            .addGroup(layout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addComponent(lblBemVindo)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(159, 159, 159)
+                .addComponent(btnReservar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnMinhasReservas)
+                .addGap(115, 115, 115))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(37, 37, 37)
+                .addComponent(lblImagemReserva)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
+                .addComponent(lblImagemMinhasReservas)
+                .addGap(32, 32, 32))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(60, 60, 60)
-                .addComponent(lblBemVindo)
-                .addGap(176, 176, 176)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblImagemReserva)
-                    .addComponent(lblImagemMinhasReservas))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 191, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblImagemMinhasReservas, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblBemVindo)
+                        .addGap(116, 116, 116)
+                        .addComponent(lblImagemReserva)))
+                .addGap(75, 75, 75)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnReservar)
                     .addComponent(btnMinhasReservas))
-                .addGap(137, 137, 137))
+                .addContainerGap(194, Short.MAX_VALUE))
         );
 
         pack();
