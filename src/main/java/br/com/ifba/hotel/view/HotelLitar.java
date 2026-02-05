@@ -7,6 +7,8 @@ package br.com.ifba.hotel.view;
 import br.com.ifba.hotel.controller.HotelIController;
 import br.com.ifba.hotel.entity.Hotel;
 import br.com.ifba.infrastructure.viewlistener.HotelAtualizadoListener;
+import br.com.ifba.infrastructure.windowmanager.WindowManager;
+import jakarta.annotation.PostConstruct;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
@@ -19,6 +21,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 /**
@@ -26,7 +29,8 @@ import org.springframework.stereotype.Component;
  * @author igo
  */
 @Component
-public final class HotelLitar extends javax.swing.JFrame implements HotelAtualizadoListener{
+@Lazy
+public final class HotelLitar extends javax.swing.JFrame{
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(HotelLitar.class.getName());
     
@@ -47,24 +51,22 @@ public final class HotelLitar extends javax.swing.JFrame implements HotelAtualiz
     @Autowired
     private ApplicationContext applicationContext;
     
+    @Autowired
+    private WindowManager windowManager;
             
-    public HotelLitar(HotelIController hotelController, ApplicationContext applicationContext) {
-        this.hotelController = hotelController;
-        this.applicationContext = applicationContext;
+    public HotelLitar() {
         initComponents();
-        carregarHoteis();
         configurarAcoesTabela();
-        setLocationRelativeTo(null);
+        
         DefaultTableModel modelo = (DefaultTableModel) jtListaDeHoteis.getModel();
-        
         sorter = new TableRowSorter<>(modelo);
-        jtListaDeHoteis.setRowSorter(sorter); // Ativa ordenação automática na tabela
-        anexarListenerBusca();
-        
+        jtListaDeHoteis.setRowSorter(sorter);
+        anexarListenerBusca();   
     }
-    @Override
-    public void onHotelAtualizado() {
-        carregarHoteis(); // ou atualizarTabela()
+    
+    @PostConstruct
+    public void init() {
+        carregarHoteis();
     }
     
     
@@ -90,10 +92,10 @@ public final class HotelLitar extends javax.swing.JFrame implements HotelAtualiz
 
                         if (hotel != null) {
 
-                            HotelDetalhes detalhes = applicationContext.getBean(HotelDetalhes.class);
-                            detalhes.setHotel(hotel);
-                            detalhes.setHotelAtualizadoListener(HotelLitar.this); // se HotelLitar implementa
-                            detalhes.setVisible(true);
+                            windowManager.setHotelSelecionado(hotel);
+                            HotelDetalhes telaDetalhe = windowManager.navigate(HotelLitar.this, HotelDetalhes.class);
+                            telaDetalhe.initHotel();
+                            init();
                         }
                     }
                 }

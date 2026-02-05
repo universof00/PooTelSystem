@@ -4,44 +4,47 @@
  */
 package br.com.ifba.hotel.view;
 
+import br.com.ifba.cliente.view.EditarClientes;
 import br.com.ifba.hotel.controller.HotelIController;
 import br.com.ifba.hotel.entity.Hotel;
 import br.com.ifba.infrastructure.viewlistener.HotelAtualizadoListener;
+import br.com.ifba.infrastructure.windowmanager.WindowManager;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Lazy;
 
 /**
  *
  * @author raiii
  */
 @Component
+@Lazy
 public class HotelDetalhes extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(HotelDetalhes.class.getName());
 
     @Autowired
+    private WindowManager windowManager;
+    @Autowired
     private ApplicationContext applicationContext;
     private Hotel hotel;
     @Autowired 
     private HotelIController hotelIController;
-    private HotelAtualizadoListener hotelAtualizadoListener;
-    
-    public void setHotelAtualizadoListener(HotelAtualizadoListener listener) {
-        this.hotelAtualizadoListener = listener;
-    }
-    
+  
     public HotelDetalhes() {
         initComponents();
         configurarTabela();
         setLocationRelativeTo(null);
     }
     
-    public void setHotel(Hotel hotel) {
-        this.hotel = hotel;
-        carregarHotel();
+    public void initHotel() {
+        this.hotel = windowManager.getHotelSelecionado();
+        if (this.hotel != null) {
+            carregarHotel();
+        }
     }
     
     private void configurarTabela() {
@@ -149,11 +152,9 @@ public class HotelDetalhes extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        HotelAtualizar tela = applicationContext.getBean(HotelAtualizar.class);
-
-        tela.setHotelSelecionado(hotel);
-        tela.setHotelAtualizadoListener(hotelAtualizadoListener); // 👈 ESSENCIAL
-        tela.setVisible(true);
+        windowManager.setHotelSelecionado(hotel);
+        HotelAtualizar telaEdicao = windowManager.navigate(this, HotelAtualizar.class);
+        telaEdicao.init();
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
@@ -167,10 +168,6 @@ public class HotelDetalhes extends javax.swing.JFrame {
 
             if (confirmacao == JOptionPane.YES_OPTION) {
                 hotelIController.delete(hotel.getCnpj());
-
-                if (hotelAtualizadoListener != null) {
-                    hotelAtualizadoListener.onHotelAtualizado();
-                }
 
                 JOptionPane.showMessageDialog(this, "Hotel excluído com sucesso!");
                 dispose();
