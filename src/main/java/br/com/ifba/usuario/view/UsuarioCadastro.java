@@ -31,6 +31,7 @@ public class UsuarioCadastro extends javax.swing.JFrame {
         this.usuarioIController = usuarioIController;
         initComponents();
         setLocationRelativeTo(null);
+        cbTipo.setModel(new javax.swing.DefaultComboBoxModel<>(TipoPerfil.values()));
     }
 
     /**
@@ -58,6 +59,7 @@ public class UsuarioCadastro extends javax.swing.JFrame {
         txtEmail = new javax.swing.JTextField();
         lblSenha = new javax.swing.JLabel();
         txtSenha = new javax.swing.JTextField();
+        cbTipo = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -110,6 +112,10 @@ public class UsuarioCadastro extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(btnTermos)
                 .addGap(85, 85, 85))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(cbTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -132,17 +138,19 @@ public class UsuarioCadastro extends javax.swing.JFrame {
                                     .addComponent(txtSenha, javax.swing.GroupLayout.DEFAULT_SIZE, 271, Short.MAX_VALUE))
                                 .addGap(8, 8, 8))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(136, 136, 136)
-                        .addComponent(btnSalvar))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(132, 132, 132)
-                        .addComponent(jckTermos)))
+                        .addComponent(jckTermos))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(136, 136, 136)
+                        .addComponent(btnSalvar)))
                 .addContainerGap(60, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(31, 31, 31)
+                .addContainerGap()
+                .addComponent(cbTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(3, 3, 3)
                 .addComponent(lblTítulo)
                 .addGap(18, 18, 18)
                 .addComponent(lblNome)
@@ -168,7 +176,7 @@ public class UsuarioCadastro extends javax.swing.JFrame {
                 .addComponent(lblSenha)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                 .addComponent(jckTermos)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnTermos)
@@ -202,7 +210,7 @@ public class UsuarioCadastro extends javax.swing.JFrame {
             Utils.mostrarErro(this, "Você deve aceitar os termos de serviço.");
             return;
         }
-        
+        TipoPerfil tipo = ((TipoPerfil) cbTipo.getSelectedItem());
         Cliente cliente = new Cliente();
         cliente.setNome(nome);
         cliente.setCpf(cpf);
@@ -212,7 +220,7 @@ public class UsuarioCadastro extends javax.swing.JFrame {
         Usuario usuario = new Usuario();
         usuario.setEmail(email);
         usuario.setSenha(senha);
-        usuario.setPerfil(TipoPerfil.CLIENTE);
+        usuario.setPerfil(tipo);
         usuario.setPessoa(cliente);
         
         try{
@@ -237,6 +245,7 @@ public class UsuarioCadastro extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSalvar;
     private javax.swing.JButton btnTermos;
+    private javax.swing.JComboBox<TipoPerfil> cbTipo;
     private javax.swing.JCheckBox jckTermos;
     private javax.swing.JLabel lblCelular;
     private javax.swing.JLabel lblCpf;
