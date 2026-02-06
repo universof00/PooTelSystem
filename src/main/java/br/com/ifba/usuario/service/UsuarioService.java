@@ -45,28 +45,19 @@ public class UsuarioService implements UsuarioIService{
             throw new IllegalStateException("Senha muito curta.");
         }
 
-        // 🔹 Se for CLIENTE
+        // Remova ou condicione os sets fixos
         if (pessoa instanceof Cliente cliente) {
-
-            if (!ValidacaoUtil.telefoneValido(cliente.getTelefone())) {
-                throw new IllegalStateException("Telefone inválido.");
+    // Só define como CLIENTE se o perfil vier vazio da tela
+            if (usuario.getPerfil() == null) {
+                usuario.setPerfil(TipoPerfil.CLIENTE);
             }
-
-            usuario.setPerfil(TipoPerfil.CLIENTE);
-            AuditoriaService.registrar(cliente.getNome(), "SALVAR", "Salvando Dados" + cliente.getId());
             clienteRepository.save(cliente);
-        }
-
-        // 🔹 Se for FUNCIONÁRIO
-        else if (pessoa instanceof Funcionario funcionario) {
-
-            if (!ValidacaoUtil.telefoneValido(funcionario.getTelefone())) {
-                throw new IllegalStateException("Telefone inválido.");
+        } else if (pessoa instanceof Funcionario funcionario) {
+    // Se veio algo da tela (como ADMIN), ele não entra aqui e mantém o ADMIN
+            if (usuario.getPerfil() == null) {
+                usuario.setPerfil(TipoPerfil.FUNCIONARIO);
             }
-
-            usuario.setPerfil(TipoPerfil.FUNCIONARIO);
-            AuditoriaService.registrar(funcionario.getNome(), "SALVAR", "Salvando Dados" + funcionario.getId());
-            funcionarioRepository.save(funcionario);
+        funcionarioRepository.save(funcionario);
         }
         AuditoriaService.registrar(usuario.getEmail(), "SALVAR", "Salvando Dados" + usuario.getId());
         usuarioRepository.save(usuario);

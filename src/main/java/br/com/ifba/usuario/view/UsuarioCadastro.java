@@ -65,7 +65,7 @@ public class UsuarioCadastro extends javax.swing.JFrame {
 
         lblTítulo.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         lblTítulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblTítulo.setText("Cadastro de Cliente");
+        lblTítulo.setText("Cadastro Usuário");
 
         lblNome.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lblNome.setText("Nome Completo: ");
