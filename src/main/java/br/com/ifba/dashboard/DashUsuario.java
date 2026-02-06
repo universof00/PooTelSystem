@@ -5,6 +5,7 @@
 package br.com.ifba.dashboard;
 
 import br.com.ifba.cliente.entity.Cliente;
+import br.com.ifba.cliente.view.AdicionarReservas;
 import br.com.ifba.cliente.view.DetalheCliente;
 import br.com.ifba.infrastructure.windowmanager.WindowManager;
 import br.com.ifba.usuario.entity.Usuario;
@@ -65,6 +66,7 @@ public class DashUsuario extends javax.swing.JFrame {
 
         btnReservar.setFont(new java.awt.Font("Liberation Sans", 0, 25)); // NOI18N
         btnReservar.setText("Reservar");
+        btnReservar.addActionListener(this::btnReservarActionPerformed);
 
         lblImagemMinhasReservas.setFont(new java.awt.Font("Liberation Sans", 0, 25)); // NOI18N
         lblImagemMinhasReservas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/pootelimag3 (1).jpg"))); // NOI18N
@@ -141,6 +143,13 @@ public class DashUsuario extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_btnMinhasReservasActionPerformed
+
+    private void btnReservarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReservarActionPerformed
+        // TODO add your handling code here:
+        windowmanager.setUsuarioSelecionado(user);
+        AdicionarReservas dashReserva = windowmanager.navigate(this, AdicionarReservas.class);
+        dashReserva.init();
+    }//GEN-LAST:event_btnReservarActionPerformed
 
     /**
      * @param args the command line arguments
