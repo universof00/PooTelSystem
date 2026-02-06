@@ -33,13 +33,11 @@ public class TelaLogin extends javax.swing.JFrame {
     
     @Autowired
     private WindowManager windowManager;
-    
+    @Autowired
     private UsuarioIController usuarioIController;
-    public TelaLogin(UsuarioIController usuarioIController) {
-        this.usuarioIController = usuarioIController;
+    
+    public TelaLogin() {
         initComponents();
-        txtUsuario.setText("igo@igo.com");
-        txtSenha.setText("123456789");
         setLocationRelativeTo(null);
     }
 
@@ -249,17 +247,20 @@ public class TelaLogin extends javax.swing.JFrame {
 
         try {
             Usuario usuarioAutenticado = usuarioIController.authenticate(usuario, senha);
+            windowManager.setUsuarioSelecionado(usuarioAutenticado);
             usuarioAutenticado.setPerfil(TipoPerfil.ADM);
             TipoPerfil perfil = usuarioAutenticado.getPerfil();
             switch(perfil){
                 case ADM -> {
-                   windowManager.navigate(this, DashAdmin.class);
+                   DashAdmin dashAdmin = windowManager.navigate(this, DashAdmin.class);
+                   dashAdmin.carregarDados();
                 }
                 case FUNCIONARIO -> {
                     windowManager.navigate(this, DashFuncionario.class);
                 }
                 case CLIENTE -> {
-                   windowManager.navigate(this, DashUsuario.class);
+                   DashUsuario dashUser = windowManager.navigate(this, DashUsuario.class);
+                   dashUser.carregarDados();
                 }
                 default -> JOptionPane.showMessageDialog(rootPane, "O Batman está de olho....");
                     
