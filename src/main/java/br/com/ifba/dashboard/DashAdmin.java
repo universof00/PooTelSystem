@@ -161,7 +161,8 @@ public class DashAdmin extends javax.swing.JFrame {
 
     private void meFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_meFuncionarioActionPerformed
         // TODO add your handling code here:
-        windowManager.navigate(this, ListarFuncionarios.class);
+        ListarFuncionarios dash = windowManager.navigate(this, ListarFuncionarios.class);
+        dash.atualizarTabela();
     }//GEN-LAST:event_meFuncionarioActionPerformed
 
     private void meCienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_meCienteActionPerformed
@@ -186,7 +187,8 @@ public class DashAdmin extends javax.swing.JFrame {
 
     private void meCadastrarQuartoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_meCadastrarQuartoActionPerformed
         // TODO add your handling code here:
-        windowManager.navigate(this, QuartoAdicionar.class);
+        QuartoAdicionar dash = windowManager.navigate(this, QuartoAdicionar.class);
+        dash.carregarHoteis();
     }//GEN-LAST:event_meCadastrarQuartoActionPerformed
 
     /**
