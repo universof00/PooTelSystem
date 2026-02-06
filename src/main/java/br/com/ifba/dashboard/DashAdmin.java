@@ -12,6 +12,7 @@ import br.com.ifba.hotel.view.HotelAdicionar;
 import br.com.ifba.hotel.view.HotelLitar;
 import br.com.ifba.infrastructure.windowmanager.WindowManager;
 import br.com.ifba.quarto.view.QuartoAdicionar;
+import br.com.ifba.usuario.entity.Usuario;
 import br.com.ifba.usuario.view.UsuarioCadastro;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -30,10 +31,17 @@ public class DashAdmin extends javax.swing.JFrame {
     @Autowired
     private WindowManager windowManager;
     
-    public DashAdmin() {
+    private Usuario user;
+    
+    public DashAdmin(WindowManager windowManager) {
+        this.windowManager = windowManager;
         initComponents();
     }
-
+    
+    public void carregarDados(){
+        user = windowManager.getUsuarioSelecionado();
+        lblBemVindo.setText("Seja Bem-Vindo(a), " + user.getPessoa().getNome());
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
