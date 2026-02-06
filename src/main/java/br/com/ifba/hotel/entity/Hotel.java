@@ -42,4 +42,10 @@ public class Hotel {
     
     @OneToMany(mappedBy = "hotel")
     private List<Quarto> quartos;
+    
+    @Override
+    public String toString() {
+        return nome + " (" + cnpj + ")";
+    }
+
 }
