@@ -9,6 +9,7 @@ import br.com.ifba.funcionario.entity.Funcionario;
 import br.com.ifba.hotel.entity.Hotel;
 import br.com.ifba.quarto.entity.Quarto;
 import br.com.ifba.reserva.entity.Reserva;
+import br.com.ifba.usuario.entity.Usuario;
 import javax.swing.JFrame;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -29,6 +30,8 @@ public class WindowManager {
     private Quarto quartoSelecionado;
     
     private Reserva reservaSelecionada;
+    
+    private Usuario usuarioSelecionado;
 
     public void setReservaSelecionada(Reserva reserva) {
         this.reservaSelecionada = reserva;
@@ -69,6 +72,15 @@ public class WindowManager {
     public Cliente getClienteSelecionado() {
         return clienteSelecionado;
     }
+
+    public Usuario getUsuarioSelecionado() {
+        return usuarioSelecionado;
+    }
+
+    public void setUsuarioSelecionado(Usuario usuarioSelecionado) {
+        this.usuarioSelecionado = usuarioSelecionado;
+    }
+    
     
     // Método genérico para abrir qualquer tela que seja um @Component
     public <T extends JFrame> T open(Class<T> screenClass) {
