@@ -6,9 +6,13 @@ package br.com.ifba.dashboard;
 
 import br.com.ifba.auditoria.view.AuditoriaLog;
 import br.com.ifba.cliente.view.ListarCliente;
+import br.com.ifba.funcionario.view.CadastrarFuncionarios;
 import br.com.ifba.funcionario.view.ListarFuncionarios;
+import br.com.ifba.hotel.view.HotelAdicionar;
 import br.com.ifba.hotel.view.HotelLitar;
 import br.com.ifba.infrastructure.windowmanager.WindowManager;
+import br.com.ifba.quarto.view.QuartoAdicionar;
+import br.com.ifba.usuario.view.UsuarioCadastro;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -38,11 +42,16 @@ public class DashAdmin extends javax.swing.JFrame {
         lblImagemAuditoria = new javax.swing.JLabel();
         lblBemVindo = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
-        meMenuPrincipal = new javax.swing.JMenu();
+        meCli = new javax.swing.JMenu();
         meCiente = new javax.swing.JMenuItem();
+        meCadastrarCliente = new javax.swing.JMenuItem();
+        meFun = new javax.swing.JMenu();
         meFuncionario = new javax.swing.JMenuItem();
+        meFuncionarioCadastro = new javax.swing.JMenuItem();
+        meOtel = new javax.swing.JMenu();
         meHotel = new javax.swing.JMenuItem();
-        meSobre = new javax.swing.JMenuItem();
+        meHotelCadastro = new javax.swing.JMenuItem();
+        meCadastrarQuarto = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -58,29 +67,52 @@ public class DashAdmin extends javax.swing.JFrame {
 
         jMenuBar1.setFont(new java.awt.Font("Liberation Sans", 0, 24)); // NOI18N
 
-        meMenuPrincipal.setText("Menu");
-        meMenuPrincipal.setFont(new java.awt.Font("Liberation Sans", 0, 25)); // NOI18N
+        meCli.setText("Cliente");
 
         meCiente.setFont(new java.awt.Font("Liberation Sans", 0, 25)); // NOI18N
         meCiente.setText("Cliente");
         meCiente.addActionListener(this::meCienteActionPerformed);
-        meMenuPrincipal.add(meCiente);
+        meCli.add(meCiente);
+
+        meCadastrarCliente.setFont(new java.awt.Font("Liberation Sans", 0, 25)); // NOI18N
+        meCadastrarCliente.setText("Cadastrar");
+        meCadastrarCliente.addActionListener(this::meCadastrarClienteActionPerformed);
+        meCli.add(meCadastrarCliente);
+
+        jMenuBar1.add(meCli);
+
+        meFun.setText("Funcionario");
 
         meFuncionario.setFont(new java.awt.Font("Liberation Sans", 0, 25)); // NOI18N
         meFuncionario.setText("Funcionario");
         meFuncionario.addActionListener(this::meFuncionarioActionPerformed);
-        meMenuPrincipal.add(meFuncionario);
+        meFun.add(meFuncionario);
+
+        meFuncionarioCadastro.setFont(new java.awt.Font("Liberation Sans", 0, 25)); // NOI18N
+        meFuncionarioCadastro.setText("Cadastrar");
+        meFuncionarioCadastro.addActionListener(this::meFuncionarioCadastroActionPerformed);
+        meFun.add(meFuncionarioCadastro);
+
+        jMenuBar1.add(meFun);
+
+        meOtel.setText("Hotel");
 
         meHotel.setFont(new java.awt.Font("Liberation Sans", 0, 25)); // NOI18N
         meHotel.setText("Hotel");
         meHotel.addActionListener(this::meHotelActionPerformed);
-        meMenuPrincipal.add(meHotel);
+        meOtel.add(meHotel);
 
-        meSobre.setFont(new java.awt.Font("Liberation Sans", 0, 25)); // NOI18N
-        meSobre.setText("Sobre");
-        meMenuPrincipal.add(meSobre);
+        meHotelCadastro.setFont(new java.awt.Font("Liberation Sans", 0, 25)); // NOI18N
+        meHotelCadastro.setText("Cadastrar Hotel");
+        meHotelCadastro.addActionListener(this::meHotelCadastroActionPerformed);
+        meOtel.add(meHotelCadastro);
 
-        jMenuBar1.add(meMenuPrincipal);
+        meCadastrarQuarto.setFont(new java.awt.Font("Liberation Sans", 0, 25)); // NOI18N
+        meCadastrarQuarto.setText("Cadastrar Quarto");
+        meCadastrarQuarto.addActionListener(this::meCadastrarQuartoActionPerformed);
+        meOtel.add(meCadastrarQuarto);
+
+        jMenuBar1.add(meOtel);
 
         setJMenuBar(jMenuBar1);
 
@@ -111,7 +143,7 @@ public class DashAdmin extends javax.swing.JFrame {
                 .addComponent(lblImagemAuditoria)
                 .addGap(73, 73, 73)
                 .addComponent(btnAuditoria)
-                .addContainerGap(175, Short.MAX_VALUE))
+                .addContainerGap(177, Short.MAX_VALUE))
         );
 
         pack();
@@ -137,6 +169,26 @@ public class DashAdmin extends javax.swing.JFrame {
         windowManager.navigate(this, ListarCliente.class);
     }//GEN-LAST:event_meCienteActionPerformed
 
+    private void meCadastrarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_meCadastrarClienteActionPerformed
+        // TODO add your handling code here:
+        windowManager.navigate(this, UsuarioCadastro.class);
+    }//GEN-LAST:event_meCadastrarClienteActionPerformed
+
+    private void meFuncionarioCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_meFuncionarioCadastroActionPerformed
+        // TODO add your handling code here:
+        windowManager.navigate(this, CadastrarFuncionarios.class);
+    }//GEN-LAST:event_meFuncionarioCadastroActionPerformed
+
+    private void meHotelCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_meHotelCadastroActionPerformed
+        // TODO add your handling code here:
+        windowManager.navigate(this, HotelAdicionar.class);
+    }//GEN-LAST:event_meHotelCadastroActionPerformed
+
+    private void meCadastrarQuartoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_meCadastrarQuartoActionPerformed
+        // TODO add your handling code here:
+        windowManager.navigate(this, QuartoAdicionar.class);
+    }//GEN-LAST:event_meCadastrarQuartoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -147,10 +199,15 @@ public class DashAdmin extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JLabel lblBemVindo;
     private javax.swing.JLabel lblImagemAuditoria;
+    private javax.swing.JMenuItem meCadastrarCliente;
+    private javax.swing.JMenuItem meCadastrarQuarto;
     private javax.swing.JMenuItem meCiente;
+    private javax.swing.JMenu meCli;
+    private javax.swing.JMenu meFun;
     private javax.swing.JMenuItem meFuncionario;
+    private javax.swing.JMenuItem meFuncionarioCadastro;
     private javax.swing.JMenuItem meHotel;
-    private javax.swing.JMenu meMenuPrincipal;
-    private javax.swing.JMenuItem meSobre;
+    private javax.swing.JMenuItem meHotelCadastro;
+    private javax.swing.JMenu meOtel;
     // End of variables declaration//GEN-END:variables
 }
