@@ -5,9 +5,11 @@
 package br.com.ifba.quarto.view;
 
 import br.com.ifba.infrastructure.viewlistener.QuartoAtualizadoListener;
+import br.com.ifba.infrastructure.windowmanager.WindowManager;
 import br.com.ifba.quarto.controller.QuartoIController;
 import br.com.ifba.quarto.entity.Quarto;
 import br.com.ifba.quarto.ennum.TipoQuarto;
+import jakarta.annotation.PostConstruct;
 import java.math.BigDecimal;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -21,6 +23,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 /**
@@ -28,12 +31,17 @@ import org.springframework.stereotype.Component;
  * @author igo
  */
 @Component
+@Lazy
 public class QuartoListar extends javax.swing.JFrame implements QuartoAtualizadoListener{
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(QuartoListar.class.getName());
     
+    
+    @Autowired
+    private WindowManager windowManager;
     @Autowired
     private QuartoIController quartoController;
+    
     
     TableRowSorter<DefaultTableModel> sorter;
     
@@ -43,16 +51,18 @@ public class QuartoListar extends javax.swing.JFrame implements QuartoAtualizado
     @Autowired
     private ApplicationContext applicationContext;
     
-    public QuartoListar(QuartoIController quartoController, ApplicationContext applicationContext) {
-        this.quartoController = quartoController;
-        this.applicationContext = applicationContext;
+    public QuartoListar() {
         initComponents();
-        DefaultTableModel model = (DefaultTableModel) jtListaDeQuartos.getModel();
-        sorter = new TableRowSorter<>(model);
+        DefaultTableModel modelo = (DefaultTableModel) jtListaDeQuartos.getModel();
+        sorter = new TableRowSorter<>(modelo);
         jtListaDeQuartos.setRowSorter(sorter);
 
         anexarListenerBusca();
         configurarDuploClique();
+    }
+    
+    @PostConstruct
+    public void init(){
         carregarQuartos();
     }
     
@@ -102,10 +112,10 @@ public class QuartoListar extends javax.swing.JFrame implements QuartoAtualizado
             return;
         }
 
-        QuartoDetalhes tela = applicationContext.getBean(QuartoDetalhes.class);
-        tela.setQuarto(quartoSelecionado);
-        tela.setQuartoAtualizadoListener(QuartoListar.this);
-        tela.setVisible(true);
+        windowManager.setQuartoSelecionado(quartoSelecionado);
+        QuartoDetalhes telaDetalhe = windowManager.navigate(QuartoListar.this, QuartoDetalhes.class);
+        telaDetalhe.initQuarto();
+        init();
     }
     
     @Override

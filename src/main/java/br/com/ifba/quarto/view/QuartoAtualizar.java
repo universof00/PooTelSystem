@@ -5,6 +5,7 @@
 package br.com.ifba.quarto.view;
 
 import br.com.ifba.infrastructure.viewlistener.QuartoAtualizadoListener;
+import br.com.ifba.infrastructure.windowmanager.WindowManager;
 import br.com.ifba.quarto.controller.QuartoIController;
 import br.com.ifba.quarto.ennum.EstadoQuarto;
 import br.com.ifba.quarto.entity.Quarto;
@@ -12,6 +13,7 @@ import br.com.ifba.quarto.ennum.TipoQuarto;
 import java.math.BigDecimal;
 import javax.swing.DefaultComboBoxModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 /**
@@ -20,12 +22,14 @@ import org.springframework.stereotype.Component;
  */
 
 @Component
+@Lazy
 public class QuartoAtualizar extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(QuartoAtualizar.class.getName());
 
+    @Autowired
+    private WindowManager windowManager;
     private Quarto quarto;
-    private QuartoAtualizadoListener quartoAtualizadoListener;
     
     @Autowired
     private QuartoIController quartoControler;
@@ -42,8 +46,12 @@ public class QuartoAtualizar extends javax.swing.JFrame {
         preencherCampos();
     }
 
-    public void setQuartoAtualizadoListener(QuartoAtualizadoListener listener) {
-        this.quartoAtualizadoListener = listener;
+    public void init() {
+        this.quarto = windowManager.getQuartoSelecionado();
+
+        if (quarto != null) {
+            setQuarto(quarto);
+        }
     }
     
     private void preencherCampos() {
@@ -173,9 +181,6 @@ public class QuartoAtualizar extends javax.swing.JFrame {
 
         quartoControler.save(quarto); // UPDATE real
 
-        if (quartoAtualizadoListener != null) {
-            quartoAtualizadoListener.onQuartoAtualizado();
-        }
 
         dispose();    
     }//GEN-LAST:event_btnSalvarActionPerformed

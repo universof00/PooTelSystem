@@ -11,6 +11,7 @@ import br.com.ifba.quarto.ennum.TipoQuarto;
 import java.math.BigDecimal;
 import javax.swing.DefaultComboBoxModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 /**
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Component;
  */
 
 @Component
+@Lazy
 public class QuartoAdicionar extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(QuartoAdicionar.class.getName());

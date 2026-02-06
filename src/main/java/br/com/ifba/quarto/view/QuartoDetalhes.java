@@ -5,12 +5,15 @@
 package br.com.ifba.quarto.view;
 
 import br.com.ifba.infrastructure.viewlistener.QuartoAtualizadoListener;
+import br.com.ifba.infrastructure.windowmanager.WindowManager;
 import br.com.ifba.quarto.controller.QuartoIController;
 import br.com.ifba.quarto.entity.Quarto;
+import jakarta.annotation.PostConstruct;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -20,10 +23,13 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @Scope("prototype")
+@Lazy
 public class QuartoDetalhes extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(QuartoDetalhes.class.getName());
 
+    @Autowired
+    private WindowManager windowManager;
     @Autowired
     private ApplicationContext applicationContext;
 
@@ -37,8 +43,16 @@ public class QuartoDetalhes extends javax.swing.JFrame {
         initComponents();
     }
     
-     public void setQuartoAtualizadoListener(QuartoAtualizadoListener listener) {
-        this.quartoAtualizadoListener = listener;
+    @PostConstruct
+    public void postConstruct() {
+        initQuarto();
+    }
+    
+    public void initQuarto() {
+        this.quarto = windowManager.getQuartoSelecionado();
+        if (this.quarto != null) {
+            carregarQuarto();
+        }
     }
 
     public void setQuarto(Quarto quarto) {
@@ -137,11 +151,9 @@ public class QuartoDetalhes extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        QuartoAtualizar tela = applicationContext.getBean(QuartoAtualizar.class);
-
-        tela.setQuarto(quarto);
-        tela.setQuartoAtualizadoListener(quartoAtualizadoListener); // ESSENCIAL
-        tela.setVisible(true);
+        windowManager.setQuartoSelecionado(quarto);
+        QuartoAtualizar telaEdicao = windowManager.navigate(this, QuartoAtualizar.class);
+        telaEdicao.init();
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed

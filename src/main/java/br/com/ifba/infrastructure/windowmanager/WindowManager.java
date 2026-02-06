@@ -7,6 +7,7 @@ package br.com.ifba.infrastructure.windowmanager;
 import br.com.ifba.cliente.entity.Cliente;
 import br.com.ifba.funcionario.entity.Funcionario;
 import br.com.ifba.hotel.entity.Hotel;
+import br.com.ifba.quarto.entity.Quarto;
 import javax.swing.JFrame;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -23,6 +24,16 @@ public class WindowManager {
     private Funcionario funcionarioSelecionado;
     
     private Hotel hotelSelecionado;
+    
+    private Quarto quartoSelecionado;
+    
+    public void setQuartoSelecionado(Quarto quarto){
+        this.quartoSelecionado = quarto;
+    }
+    
+    public Quarto getQuartoSelecionado(){
+        return quartoSelecionado;
+    }
     
     public void setHotelSelecionado(Hotel hotel){
         this.hotelSelecionado = hotel;
