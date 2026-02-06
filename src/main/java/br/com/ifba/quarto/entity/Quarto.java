@@ -68,4 +68,9 @@ public class Quarto {
     @ManyToOne
     @JoinColumn(name = "funcionario_id")
     private Funcionario responsavel;
+    
+    @Override
+    public String toString() {
+        return "Quarto " + this.numero + " - Diária: R$ " + this.precoDiaria;
+    }
 }
