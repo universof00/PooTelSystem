@@ -17,6 +17,7 @@ public interface ReservaIService {
     void save(Reserva reserva);
     void cancelarReserva(Long idReserva);
     List<Reserva> findByCliente(Long idCliente);
+    public Reserva findById(Long id);
 
     // Métodos extras do CRUD
     Reserva criarReserva(Reserva reserva);

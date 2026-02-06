@@ -35,4 +35,9 @@ public class ReservaController implements ReservaIController {
     public List<Reserva> findByCliente(Long idCliente) {
         return reservaIService.findByCliente(idCliente);
     }
+    
+    @Override
+    public Reserva findById(Long id) {
+        return reservaIService.findById(id);
+    }
 }

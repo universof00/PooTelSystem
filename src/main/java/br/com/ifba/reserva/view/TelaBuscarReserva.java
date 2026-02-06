@@ -4,9 +4,12 @@
  */
 package br.com.ifba.reserva.view;
 
+import br.com.ifba.infrastructure.windowmanager.WindowManager;
 import br.com.ifba.reserva.entity.Reserva;
 import br.com.ifba.reserva.service.ReservaService;
 import javax.swing.JOptionPane;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 /**
@@ -15,14 +18,16 @@ import org.springframework.stereotype.Component;
  */
 
 @Component
+@Lazy
 public class TelaBuscarReserva extends javax.swing.JFrame {
 
-    /**
-     * Creates new form TelaBuscarReserva
-     */
-    private final ReservaService reservaService;
-    public TelaBuscarReserva(ReservaService reservaService) {
-        this.reservaService = reservaService;
+     @Autowired
+    private WindowManager windowManager;
+    
+    @Autowired
+    private ReservaService reservaService;
+    
+    public TelaBuscarReserva() {
         initComponents();
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 

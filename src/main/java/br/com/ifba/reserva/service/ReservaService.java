@@ -62,6 +62,12 @@ public class ReservaService implements ReservaIService {
         return reservaRepository.findByClienteId(idCliente);
     }
     
+    @Override
+    public Reserva findById(Long id) {
+        return reservaRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Reserva não encontrada com o ID: " + id));
+    }
+    
     // Criar reserva 
     public Reserva criarReserva(Reserva reserva){ 
         return reservaRepository.save(reserva); 

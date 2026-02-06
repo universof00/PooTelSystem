@@ -8,6 +8,7 @@ import br.com.ifba.cliente.entity.Cliente;
 import br.com.ifba.funcionario.entity.Funcionario;
 import br.com.ifba.hotel.entity.Hotel;
 import br.com.ifba.quarto.entity.Quarto;
+import br.com.ifba.reserva.entity.Reserva;
 import javax.swing.JFrame;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -26,6 +27,16 @@ public class WindowManager {
     private Hotel hotelSelecionado;
     
     private Quarto quartoSelecionado;
+    
+    private Reserva reservaSelecionada;
+
+    public void setReservaSelecionada(Reserva reserva) {
+        this.reservaSelecionada = reserva;
+    }
+
+    public Reserva getReservaSelecionada() {
+        return reservaSelecionada;
+    }
     
     public void setQuartoSelecionado(Quarto quarto){
         this.quartoSelecionado = quarto;

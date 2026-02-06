@@ -4,11 +4,15 @@
  */
 package br.com.ifba.reserva.view;
 
+import br.com.ifba.infrastructure.windowmanager.WindowManager;
 import br.com.ifba.reserva.entity.Reserva;
 import br.com.ifba.reserva.service.ReservaService;
+import jakarta.annotation.PostConstruct;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 /**
@@ -16,20 +20,98 @@ import org.springframework.stereotype.Component;
  * @author crisl
  */
 @Component
+@Lazy
 public class TelaListarReservas extends javax.swing.JFrame {
-
-    /**
-     * Creates new form TelaListarReservas
-     */
     
-    private final ReservaService reservaService;
-    public TelaListarReservas(ReservaService reservaService) {
-        this.reservaService = reservaService;
+    @Autowired
+    private WindowManager windowManager;
+    @Autowired
+    private ReservaService reservaService;
+    public TelaListarReservas() {
         initComponents();
+        configurarAcoesTabela();
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-
+        tabelaReservas.addMouseListener(new java.awt.event.MouseAdapter() {
+        @Override
+        public void mouseClicked(java.awt.event.MouseEvent evt) {
+        // Verifica se foi clique duplo (2 cliques)
+        if (evt.getClickCount() == 2) {
+            int row = tabelaReservas.getSelectedRow();
+            if (row != -1) {
+                // 1. Pega o ID da reserva da linha selecionada (coluna 0)
+                Long id = (Long) tabelaReservas.getValueAt(row, 0);
+                
+                // 2. Busca o objeto completo (ou passa o ID para o WindowManager)
+                // Aqui você usa o seu Controller/Service
+                Reserva selecionada = reservaService.findById(id);
+                
+                // 3. Abre a tela de detalhes via WindowManager
+                windowManager.setReservaSelecionada(selecionada);
+                windowManager.navigate(TelaListarReservas.this, TelaDetalhesReserva.class).initReserva();
+            }
+        }
+    }
+});
+    }
+    
+    @PostConstruct
+    public void init() {
+        atualizarTabela();
     }
 
+    private void atualizarTabela() {
+        try {
+            List<Reserva> reservas = reservaService.listarReservas();
+            DefaultTableModel model = new DefaultTableModel(
+                new Object[]{"ID Reserva", "Data Entrada", "Data Saída", "Status"}, 0
+            ) {
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    return false; // Isso impede que o usuário digite dentro da tabela
+                }
+            };
+            tabelaReservas.setModel(model);
+
+            model.setRowCount(0);
+
+            for (Reserva r : reservas) {
+                model.addRow(new Object[]{
+                    r.getId(),
+                    r.getDataEntrada(),
+                    r.getDataSaida(),
+                    r.isStatus() ? "ATIVO" : "CANCELADO"
+                });
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Erro ao listar reservas: " + e.getMessage());
+        }
+    }
+    
+    private void configurarAcoesTabela() {
+        tabelaReservas.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent e) {
+                // Verifica se foi clique duplo
+                if (e.getClickCount() == 2) {
+                    int row = tabelaReservas.getSelectedRow();
+                    if (row != -1) {
+                        // Pega o ID da reserva (assumindo que está na coluna 0)
+                        Long idReserva = (Long) tabelaReservas.getValueAt(row, 0);
+                    
+                        // Busca a reserva completa pelo ID (usando o service que já existe)
+                        Reserva reserva = reservaService.findById(idReserva); 
+
+                        if (reserva != null) {
+                            // Salva no WindowManager para a próxima tela usar
+                            windowManager.setReservaSelecionada(reserva);
+                            // Navega para a tela de detalhes (exemplo: TelaDetalheReserva)
+                            windowManager.navigate(TelaListarReservas.this, TelaDetalhesReserva.class);
+                        }
+                    }
+                }
+            }
+        });
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -43,7 +125,6 @@ public class TelaListarReservas extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelaReservas = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
-        btnListar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -63,40 +144,27 @@ public class TelaListarReservas extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
         jLabel1.setText("LISTAGEM DE RESERVAS");
 
-        btnListar.setText("LISTAR");
-        btnListar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnListarActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(27, 144, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(126, 126, 126))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 368, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addContainerGap(53, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 466, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(54, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(247, 247, 247)
-                .addComponent(btnListar)
+                .addGap(120, 120, 120)
+                .addComponent(jLabel1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(27, 27, 27)
+                .addContainerGap(38, Short.MAX_VALUE)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnListar)
-                .addGap(83, 83, 83))
+                .addGap(32, 32, 32)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(51, 51, 51))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -115,51 +183,12 @@ public class TelaListarReservas extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarActionPerformed
-        // TODO add your handling code here:
-        try {
-    // Busca todas as reservas no banco
-    List<Reserva> reservas = reservaService.listarReservas();
-
-    // Pega o modelo da tabela
-    DefaultTableModel model = (DefaultTableModel) tabelaReservas.getModel();
-
-    // Ajusta os cabeçalhos da tabela
-    model.setColumnIdentifiers(new String[] {
-        "ID Reserva", "Data Entrada", "Data Saída", "Status"
-    });
-
-    // Limpa a tabela antes de preencher
-    model.setRowCount(0);
-
-    // Preenche a tabela com os dados das reservas
-    for (Reserva r : reservas) {
-        model.addRow(new Object[]{
-            r.getId(),
-            r.getDataEntrada(),
-            r.getDataSaida(),
-            r.isStatus() ? "ATIVO" : "CANCELADO"
-        });
-    }
-
-    // Mensagem se não houver reservas
-    if (reservas.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Nenhuma reserva encontrada.");
-    }
-
-} catch (Exception e) {
-    JOptionPane.showMessageDialog(this, "Erro ao listar reservas: " + e.getMessage());
-}
-
-    }//GEN-LAST:event_btnListarActionPerformed
-
     /**
      * @param args the command line arguments
      */
    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnListar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;

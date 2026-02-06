@@ -15,5 +15,6 @@ public interface ReservaIController {
     void save(Reserva reserva);
     void cancelarReserva(Long idReserva);
     List<Reserva> findByCliente(Long idCliente);
+    public Reserva findById(Long id);
 }
 

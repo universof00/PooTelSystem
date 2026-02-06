@@ -4,8 +4,12 @@
  */
 package br.com.ifba.reserva.view;
 
+import br.com.ifba.infrastructure.windowmanager.WindowManager;
+import br.com.ifba.reserva.entity.Reserva;
 import br.com.ifba.reserva.service.ReservaService;
 import javax.swing.JOptionPane;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 /**
@@ -14,22 +18,35 @@ import org.springframework.stereotype.Component;
  */
 
 @Component
+@Lazy
 public class TelaDeletarReserva extends javax.swing.JFrame {
 
     /**
      * Creates new form TelaDeletarReserva
      */
-    private final TelaReserva telaReserva;
-    private final ReservaService reservaService;
+    @Autowired
+    private WindowManager windowManager;
     
-    public TelaDeletarReserva(ReservaService reservaService, TelaReserva telaReserva) {
-        this.reservaService = reservaService;
-        this.telaReserva = telaReserva;
-        
+    @Autowired
+    private ReservaService reservaService;
+
+    private Reserva reserva;
+    
+    public TelaDeletarReserva() {
         initComponents();
+        setLocationRelativeTo(null);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        txtIdReserva.setEditable(false);
 
     }
+    
+    public void init() {
+        this.reserva = windowManager.getReservaSelecionada();
+        if (this.reserva != null) {
+            txtIdReserva.setText(String.valueOf(reserva.getId()));
+        }
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -119,8 +136,6 @@ public class TelaDeletarReserva extends javax.swing.JFrame {
 
         if (deletada) {
             JOptionPane.showMessageDialog(this, "Reserva deletada com sucesso!");
-
-            telaReserva.carregarReservas();
 
             this.dispose();
         } else {

@@ -4,10 +4,16 @@
  */
 package br.com.ifba.reserva.view;
 
+import br.com.ifba.infrastructure.windowmanager.WindowManager;
+import br.com.ifba.reserva.controller.ReservaIController;
 import br.com.ifba.reserva.entity.Reserva;
 import br.com.ifba.reserva.service.ReservaService;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import javax.swing.JOptionPane;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 /**
@@ -16,18 +22,41 @@ import org.springframework.stereotype.Component;
  */
 
 @Component
+@Scope("prototype")
+@Lazy
 public class TelaAtualizarReserva extends javax.swing.JFrame {
 
-    /**
-     * Creates new form TelaDeletarReserva
-     */
-     private final ReservaService reservaService;
-     public TelaAtualizarReserva(ReservaService reservaService) {
-        this.reservaService = reservaService;
+    @Autowired
+    private WindowManager windowManager;
+    
+    @Autowired
+    private ReservaService reservaService;
+
+    private Reserva reserva;
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+     public TelaAtualizarReserva() {
         initComponents();
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-
+        txtIdReserva.setEditable(false);
     }
+     
+     public void init() {
+        this.reserva = windowManager.getReservaSelecionada();
+        if (this.reserva != null) {
+            txtIdReserva.setText(String.valueOf(reserva.getId()));
+            // Formata a data para o usuário (ex: 10/02/2024)
+            txtDataInicio.setText(reserva.getDataEntrada().format(formatter));
+            txtDataFim.setText(reserva.getDataSaida().format(formatter));
+            
+            // Define o status no ComboBox
+            if (reserva.isStatus()) {
+                chkStatus.setSelectedItem("ATIVO");
+            } else {
+                chkStatus.setSelectedItem("CANCELADO");
+            }
+        }
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
