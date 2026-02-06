@@ -13,7 +13,6 @@ import br.com.ifba.infrastructure.windowmanager.WindowManager;
 import br.com.ifba.login.termosUso.TermosUso;
 import br.com.ifba.usuario.controller.UsuarioIController;
 import br.com.ifba.usuario.entity.Usuario;
-import br.com.ifba.usuario.view.MenuCliente;
 import br.com.ifba.usuario.view.UsuarioCadastro;
 import javax.swing.JOptionPane;
 import org.springframework.beans.factory.annotation.Autowired;
