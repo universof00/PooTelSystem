@@ -13,6 +13,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import br.com.ifba.infrastructure.windowmanager.WindowManager;
+import br.com.ifba.usuario.entity.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
@@ -29,6 +30,7 @@ public class DetalheCliente extends javax.swing.JFrame {
     @Autowired
     private WindowManager windowManager;
     private Cliente cliente;
+    private Usuario user;
     @Autowired
     private ClienteIController clienteIController;
     /*@Autowired
@@ -45,7 +47,8 @@ public class DetalheCliente extends javax.swing.JFrame {
     }
     
     public void initCliente() {
-        this.cliente = windowManager.getClienteSelecionado();
+        this.user = windowManager.getUsuarioSelecionado();
+        this.cliente = (Cliente) user.getPessoa();
         if (this.cliente != null) {
             carregarDados();
             carregarReservas();
