@@ -38,6 +38,8 @@ public class TelaLogin extends javax.swing.JFrame {
     public TelaLogin(UsuarioIController usuarioIController) {
         this.usuarioIController = usuarioIController;
         initComponents();
+        txtUsuario.setText("igo@igo.com");
+        txtSenha.setText("123456789");
         setLocationRelativeTo(null);
     }
 
