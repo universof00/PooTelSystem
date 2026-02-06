@@ -4,12 +4,16 @@
  */
 package br.com.ifba.servico.view;
 
+import br.com.ifba.infrastructure.windowmanager.WindowManager;
 import br.com.ifba.servico.entity.ServicoAdicional;
 import br.com.ifba.servico.repository.ServicoAdicionalRepository;
 import br.com.ifba.servico.service.ServicoAdicionalService;
 import java.math.BigDecimal;
+import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 /**
@@ -17,17 +21,57 @@ import org.springframework.stereotype.Component;
  * @author crisl
  */
 @Component
+@Lazy
 public class ServicoAdicionalView extends javax.swing.JFrame {
 
-    /**
-     * Creates new form AdicionarServico
-     */
-    public ServicoAdicionalView() {
-        initComponents();
-    }
+    @Autowired
+    private WindowManager windowManager;
     
    @Autowired
     private ServicoAdicionalService service;
+    public ServicoAdicionalView() {
+        initComponents();
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        configurarTabela();
+    }
+    
+    public void init() {
+        this.atualizarTabela();
+        this.limparCampos();
+    }
+    
+    private void configurarTabela() {
+        // Bloqueia a edição direta nas células da tabela
+        jTable1.setDefaultEditor(Object.class, null);
+        
+        // Adiciona evento de clique para preencher os campos ao selecionar uma linha
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                preencherCamposComSelecao();
+            }
+        });
+    }
+    
+    private void preencherCamposComSelecao() {
+        int linha = jTable1.getSelectedRow();
+        if (linha >= 0) {
+            txtNome.setText(jTable1.getValueAt(linha, 1).toString());
+            txtDescricao.setText(jTable1.getValueAt(linha, 2).toString());
+            // Remove o "R$ " para conseguir converter de volta para número
+            String precoStr = jTable1.getValueAt(linha, 3).toString().replace("R$ ", "");
+            txtPreco.setText(precoStr);
+        }
+    }
+    
+    private void limparCampos() {
+        txtNome.setText("");
+        txtDescricao.setText("");
+        txtPreco.setText("");
+        jTable1.clearSelection();
+    }
+   
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -150,25 +194,23 @@ public class ServicoAdicionalView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void atualizarTabela() {
-    // Busca todos os serviços do banco
-    java.util.List<ServicoAdicional> servicos = service.listarTodos();
+        try {
+            List<ServicoAdicional> servicos = service.listarTodos();
+            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+            model.setRowCount(0);
 
-    // Define as colunas da tabela
-    String[] colunas = {"ID", "Nome", "Descrição", "Preço"};
-
-    // Cria a matriz de dados
-    Object[][] dados = new Object[servicos.size()][4];
-    for (int i = 0; i < servicos.size(); i++) {
-        ServicoAdicional s = servicos.get(i);
-        dados[i][0] = s.getId();
-        dados[i][1] = s.getNome();
-        dados[i][2] = s.getDescricao();
-        dados[i][3] = s.getPreco();
+            for (ServicoAdicional s : servicos) {
+                model.addRow(new Object[]{
+                    s.getId(), 
+                    s.getNome(), 
+                    s.getDescricao(), 
+                    "R$ " + s.getPreco()
+                });
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Erro ao carregar tabela: " + e.getMessage());
+        }
     }
-
-    // Atualiza o modelo da JTable
-    jTable1.setModel(new javax.swing.table.DefaultTableModel(dados, colunas));
-}
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         // TODO add your handling code here:
