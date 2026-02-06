@@ -4,6 +4,11 @@
  */
 package br.com.ifba.dashboard;
 
+import br.com.ifba.cliente.entity.Cliente;
+import br.com.ifba.cliente.view.DetalheCliente;
+import br.com.ifba.infrastructure.windowmanager.WindowManager;
+import br.com.ifba.usuario.entity.Usuario;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -18,8 +23,20 @@ public class DashUsuario extends javax.swing.JFrame {
     /**
      * Creates new form DashUsuario
      */
-    public DashUsuario() {
+    
+    @Autowired
+    private WindowManager windowmanager;
+    
+    private Usuario user;
+    
+    public DashUsuario(WindowManager windowmanager) {
+        this.windowmanager = windowmanager;
         initComponents();
+    }
+    
+    public void carregarDados(){
+        user = windowmanager.getUsuarioSelecionado();
+        lblBemVindo.setText("Seja Bem-Vindo(a), " + user.getPessoa().getNome());
     }
 
     /**
@@ -42,7 +59,6 @@ public class DashUsuario extends javax.swing.JFrame {
         meSobre = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(965, 677));
 
         lblImagemReserva.setFont(new java.awt.Font("Liberation Sans", 0, 25)); // NOI18N
         lblImagemReserva.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/pootelimag1 (1).jpg"))); // NOI18N
@@ -55,6 +71,7 @@ public class DashUsuario extends javax.swing.JFrame {
 
         btnMinhasReservas.setFont(new java.awt.Font("Liberation Sans", 0, 25)); // NOI18N
         btnMinhasReservas.setText("Minhas Reservas");
+        btnMinhasReservas.addActionListener(this::btnMinhasReservasActionPerformed);
 
         lblBemVindo.setFont(new java.awt.Font("Liberation Sans", 0, 36)); // NOI18N
         lblBemVindo.setText("Seja Bem-Vindo, ");
@@ -115,6 +132,15 @@ public class DashUsuario extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnMinhasReservasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMinhasReservasActionPerformed
+        // TODO add your handling code here:
+        DetalheCliente dash = windowmanager.navigate(this, DetalheCliente.class);
+        windowmanager.setUsuarioSelecionado(user);
+        dash.initCliente();
+        
+        
+    }//GEN-LAST:event_btnMinhasReservasActionPerformed
 
     /**
      * @param args the command line arguments
