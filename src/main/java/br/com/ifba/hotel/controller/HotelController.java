@@ -6,6 +6,7 @@ package br.com.ifba.hotel.controller;
 
 import br.com.ifba.hotel.entity.Hotel;
 import br.com.ifba.hotel.service.HotelIService;
+import br.com.ifba.quarto.entity.Quarto;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -47,5 +48,10 @@ public class HotelController implements HotelIController {
     @Override
     public List<Hotel> findAll() {
         return service.findAll();
+    }
+
+    @Override
+    public List<Quarto> findQuartosByHotel(Hotel otel) {
+        return service.findQuartosByHotel(otel);
     }
 }

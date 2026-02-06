@@ -4,7 +4,9 @@
  */
 package br.com.ifba.quarto.repository;
 
+import br.com.ifba.hotel.entity.Hotel;
 import br.com.ifba.quarto.entity.Quarto;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -15,4 +17,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface QuartoRepository extends JpaRepository<Quarto, Long>{
     public Quarto findBynumero(String numero);
     public Quarto findByid(Long id);
+    List<Quarto> findByHotel(Hotel hotel);
 }

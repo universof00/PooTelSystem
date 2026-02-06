@@ -7,6 +7,8 @@ package br.com.ifba.hotel.service;
 import br.com.ifba.auditoria.AuditoriaService;
 import br.com.ifba.hotel.entity.Hotel;
 import br.com.ifba.hotel.repository.HotelRepository;
+import br.com.ifba.quarto.entity.Quarto;
+import br.com.ifba.quarto.repository.QuartoRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,9 @@ import org.springframework.stereotype.Service;
 public class HotelService implements HotelIService {
     @Autowired
     private HotelRepository repository;
+    
+    @Autowired
+    private QuartoRepository quartoRepository;
 
     @Override
     public Hotel save(Hotel hotel) {
@@ -55,5 +60,10 @@ public class HotelService implements HotelIService {
     @Override
     public List<Hotel> findAll() {
         return repository.findAll();
+    }
+    
+    @Override
+    public List<Quarto> findQuartosByHotel(Hotel hotel) {
+        return quartoRepository.findByHotel(hotel);
     }
 }

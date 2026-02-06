@@ -5,6 +5,7 @@
 package br.com.ifba.hotel.controller;
 
 import br.com.ifba.hotel.entity.Hotel;
+import br.com.ifba.quarto.entity.Quarto;
 import java.util.List;
 import org.springframework.stereotype.Controller;
 
@@ -20,4 +21,6 @@ public interface HotelIController {
     Hotel findBycnpj(String cnpj);
     Hotel findByNome(String nome);
     List<Hotel> findAll();
+
+    public List<Quarto> findQuartosByHotel(Hotel otel);
 }
