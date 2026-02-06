@@ -4,12 +4,15 @@
  */
 package br.com.ifba.quarto.view;
 
+import br.com.ifba.hotel.controller.HotelIController;
+import br.com.ifba.hotel.entity.Hotel;
 import br.com.ifba.quarto.controller.QuartoIController;
 import br.com.ifba.quarto.ennum.EstadoQuarto;
 import br.com.ifba.quarto.entity.Quarto;
 import br.com.ifba.quarto.ennum.TipoQuarto;
 import java.math.BigDecimal;
-import javax.swing.DefaultComboBoxModel;
+import java.util.List;
+import javax.swing.JOptionPane;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
@@ -31,15 +34,27 @@ public class QuartoAdicionar extends javax.swing.JFrame {
     
     @Autowired
     private QuartoIController quartoControler;
-
-    public QuartoAdicionar(QuartoIController quartoControoler) {
-        this.quartoControler = quartoControler;
-        
-        initComponents(); 
+    
+    @Autowired
+    private HotelIController otel;
+    
+    public QuartoAdicionar() {
+        initComponents();
         cbTipo.setModel(new javax.swing.DefaultComboBoxModel<>(TipoQuarto.values()));
         cbEstado.setModel(new javax.swing.DefaultComboBoxModel<>(EstadoQuarto.values()));
-        
+
     }
+
+    
+    public void carregarHoteis() {
+        List<Hotel> hoteis = otel.findAll();
+
+        cbHotel.removeAllItems();
+        for (Hotel h : hoteis) {
+            cbHotel.addItem(h);
+        }
+    }
+
     
     private QuartoListar telaPrincipal;
     
@@ -67,6 +82,8 @@ public class QuartoAdicionar extends javax.swing.JFrame {
         cbTipo = new javax.swing.JComboBox<>();
         lblEstado = new javax.swing.JLabel();
         cbEstado = new javax.swing.JComboBox<>();
+        cbHotel = new javax.swing.JComboBox<>();
+        lblOtel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -92,16 +109,20 @@ public class QuartoAdicionar extends javax.swing.JFrame {
         lblEstado.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lblEstado.setText("Estado do Quarto");
 
+        lblOtel.setFont(new java.awt.Font("Liberation Sans", 0, 14)); // NOI18N
+        lblOtel.setText("Hotel");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(120, 120, 120)
+                .addComponent(btnSalvar)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
                 .addGap(48, 48, 48)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblEstado)
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblQuantidade)
@@ -117,11 +138,13 @@ public class QuartoAdicionar extends javax.swing.JFrame {
                                         .addComponent(lblNumero, javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(lblQuartoTexto, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                     .addComponent(lblPrecoDiaria))))
-                        .addContainerGap(56, Short.MAX_VALUE))))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(120, 120, 120)
-                .addComponent(btnSalvar)
-                .addGap(0, 0, Short.MAX_VALUE))
+                        .addContainerGap(56, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblOtel)
+                            .addComponent(lblEstado)
+                            .addComponent(cbHotel, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -148,7 +171,11 @@ public class QuartoAdicionar extends javax.swing.JFrame {
                 .addComponent(lblEstado)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cbEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
+                .addGap(27, 27, 27)
+                .addComponent(lblOtel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cbHotel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 110, Short.MAX_VALUE)
                 .addComponent(btnSalvar)
                 .addGap(51, 51, 51))
         );
@@ -158,24 +185,31 @@ public class QuartoAdicionar extends javax.swing.JFrame {
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         // TODO add your handling code here:
-        String numero = txtNumero.getText().trim();
+         String numero = txtNumero.getText().trim();
         TipoQuarto tipo = (TipoQuarto) cbTipo.getSelectedItem();
         int qtd = Integer.parseInt(txtCapacidade.getText().trim());
         BigDecimal preco = new BigDecimal(txtPrecoDiaria.getText());
         EstadoQuarto estado = (EstadoQuarto) cbEstado.getSelectedItem();
+        Hotel hotelSelecionado = (Hotel) cbHotel.getSelectedItem();
+
+        if (hotelSelecionado == null) {
+            JOptionPane.showMessageDialog(this, "Selecione um hotel");
+            return;
+        }
+
         Quarto novoQuarto = new Quarto();
-        
         novoQuarto.setNumero(numero);
         novoQuarto.setTipo(tipo);
         novoQuarto.setCapacidade(qtd);
         novoQuarto.setPrecoDiaria(preco);
         novoQuarto.setEstado(estado);
-        
+        novoQuarto.setHotel(hotelSelecionado);
+
         quartoControler.save(novoQuarto);
-        
+        JOptionPane.showMessageDialog(rootPane, "Quarto salvo com sucesso!");
         if (this.telaPrincipal != null) {
-                this.telaPrincipal.carregarQuartos();
-            }
+            this.telaPrincipal.carregarQuartos();
+        }
         
     }//GEN-LAST:event_btnSalvarActionPerformed
 
@@ -187,9 +221,11 @@ public class QuartoAdicionar extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSalvar;
     private javax.swing.JComboBox<EstadoQuarto> cbEstado;
+    private javax.swing.JComboBox<Hotel> cbHotel;
     private javax.swing.JComboBox<TipoQuarto> cbTipo;
     private javax.swing.JLabel lblEstado;
     private javax.swing.JLabel lblNumero;
+    private javax.swing.JLabel lblOtel;
     private javax.swing.JLabel lblPrecoDiaria;
     private javax.swing.JLabel lblQuantidade;
     private javax.swing.JLabel lblQuartoTexto;
